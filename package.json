@@ -1,0 +1,17 @@
+{
+  "name": "ekezakenya",
+  "version": "1.0.0",
+  "description": "Ekezakenya App.",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "server": "npm start --prefix server",
+    "client": "npm start --prefix client",
+    "start": "concurrently \"npm run server\" \"npm run client\""
+  },
+  "author": "Festus Ribiro",
+  "license": "ISC",
+  "dependencies": {
+    "concurrently": "^6.0.0"
+  }
+}
