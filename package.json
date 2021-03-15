@@ -5,9 +5,10 @@
   "main": "index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "server": "npm start --prefix server",
     "client": "npm start --prefix client",
-    "start": "concurrently \"npm run server\" \"npm run client\""
+    "server": "npm start --prefix server",
+    "admin": "npm start --prefix admin",
+    "start": "concurrently \"npm run server\" \"npm run client\" \"npm run admin\""
   },
   "author": "Festus Ribiro",
   "license": "ISC",

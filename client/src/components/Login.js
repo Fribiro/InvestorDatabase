@@ -63,7 +63,7 @@ export default class Login extends Component {
       email: formData.email,
       password: formData.password,
     }).then((res) => {
-      console.log(res);
+      //console.log(res);
       if (res.status === 200) {
         this.setState({
           redirect: "/profile",

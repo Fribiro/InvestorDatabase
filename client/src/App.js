@@ -10,7 +10,7 @@ import Login from "./components/Login";
 import About from "./components/About";
 import Contact from "./components/Contact";
 import Profile from "./components/profile/Profile";
-import LoginOverlay from "./components/LoginOverlay"
+import LoginOverlay from "./components/LoginOverlay";
 function App() {
   return (
     <div className="App">

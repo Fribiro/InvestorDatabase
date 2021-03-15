@@ -41,14 +41,14 @@ exports.login = async (req, res) => {
             message: "Email or Password is incorrect",
           });
         } else {
-          // const accesstoken = createAccessToken(results.Id);
-          // const refreshtoken = createRefreshToken(results.Id);
-          // //insert the refreshtoken into the db
-          // results.refreshtoken = refreshtoken;
-          // console.log(results);
-          // //send refreshtoken as a cookie and the accesstoken as a regular response
-          // sendRefreshToken(res, refreshtoken);
-          // sendAccessToken(res, req, accesstoken);
+          const accesstoken = createAccessToken(results.Id);
+          const refreshtoken = createRefreshToken(results.Id);
+          //insert the refreshtoken into the db
+          results.refreshtoken = refreshtoken;
+          console.log(results);
+          //send refreshtoken as a cookie and the accesstoken as a regular response
+          sendRefreshToken(res, refreshtoken);
+          sendAccessToken(res, req, accesstoken);
         }
         res.status(200).json({ message: "Welcome Back" });
       }
@@ -102,7 +102,7 @@ exports.investorsignup = (req, res) => {
       if (error) {
         console.log(error);
       } else {
-        console.log(results);
+        //console.log(results);
         res.status(201).json({
           results,
         });
@@ -160,7 +160,7 @@ exports.entrepreneursignup = (req, res) => {
           if (error) {
             console.log(error);
           } else {
-            console.log(results);
+            //console.log(results);
             res.status(201).json({
               results
             })

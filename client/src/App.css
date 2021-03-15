@@ -62,6 +62,7 @@ h2 {
   display: none;
   /*remove the default caret icon on dropdown menu*/
 }
+
 .navbar {
   background-color: #333;
   height: 60px;
@@ -73,9 +74,16 @@ h2 {
   font-weight: bold;
 }
 
+.dropdown-menu {
+  background-color: #333;
+}
 a.dropdown-item {
   font-size: 14px;
-  color: #000 !important;
+  color: #fff !important;
+}
+
+a.dropdown-item:hover {
+  background-color: transparent;
 }
 
 .navbar-light .navbar-brand {
@@ -703,7 +711,8 @@ input[type=submit]:hover {
 
   .navbar .nav-item .dropdown-menu {
     margin-top: 0;
-    background: rgba(255, 255, 255, 0.8);
+    background-color: #333;
+    /* background: rgba(255, 255, 255, 0.8); */
     /*rgba(121, 124, 124, 0.8)*/
   }
 
