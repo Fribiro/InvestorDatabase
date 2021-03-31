@@ -144,7 +144,7 @@ exports.entrepreneursignup = (req, res) => {
     }
       //do 8 runds of hashing
       let hashedPassword = await bcrypt.hash(epassword, 8);
-      console.log(hashedPassword);
+      //console.log(hashedPassword);
       //test
       //res.send('testing');
 

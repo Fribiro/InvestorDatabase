@@ -552,6 +552,7 @@ input[type=submit]:hover {
   background-color: #efefef;
   box-shadow: 0 0 15px 5px rgba(0, 0, 0, 0.2);
   width: 240px;
+  justify-content: center;
 }
 .profileNavClickable {
   cursor: pointer;
@@ -562,7 +563,7 @@ input[type=submit]:hover {
   height: 150px;
   width: 150px;
   align-self: center;
-  margin: 20px 0 0 45px;
+  margin: 20px 0 0 0;
   padding: 0;
 }
 
@@ -642,9 +643,16 @@ input[type=submit]:hover {
   font-weight: 600;
   color: #3DB2C7;
 }
-@media only screen and (max-width: 767px) {
+@media only screen and (max-width: 768px) {
+  body {
+    overflow-x: hidden !important;
+  }
+  .navbar {
+    width: 768px;
+  }
+
   .navbar-nav.ml-auto {
-    background: rgba(0, 0, 0, 0.5);
+    background: #00000080;
   }
 
   .navbar toggler {
@@ -663,12 +671,13 @@ input[type=submit]:hover {
   }
   .profileNav {
     height: 300px;
+    justify-content: center;
   }
 
   .userHeader {
     height: 100px;
     width: 100px;
-    margin: 20px 0 0 29px;
+    margin: 20px 0 0 0;
   }
 
   .userHeader img {
@@ -679,16 +688,31 @@ input[type=submit]:hover {
   }
 
   .userNav {
-    margin: 140px 0 0 0;
+    margin: 0 0 0 0;
     padding: 0 0 0 30px;
   }
 
   .userProfile {
     grid-template-columns: 30% 70%;
+    margin-left: 30px;
   }
 
   .usernav, ul {
     padding: 0;
+  }
+
+  .sideheaders {
+    margin: 0;
+  }
+
+  .profile-edit-btn {
+    width: 60%;
+    margin-left: 60px;
+  }
+
+  .userProfile {
+    grid-column-gap: 10px;
+    overflow-x: hidden;
   }
 }
 

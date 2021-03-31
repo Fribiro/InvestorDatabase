@@ -11,6 +11,9 @@ import About from "./components/About";
 import Contact from "./components/Contact";
 import Profile from "./components/profile/Profile";
 import LoginOverlay from "./components/LoginOverlay";
+import InvestorCards from "./components/protected/InvestorCards";
+import EntrepreneurCards from "./components/protected/EntrepreneurCards";
+
 function App() {
   return (
     <div className="App">
@@ -24,6 +27,8 @@ function App() {
           <Route exact path="/profile" component={Profile} />
           <Route exact path="/login" component={Login} />
           <Route exact path="/signup" component={LoginOverlay} />
+          <Route exact path="/InvestorCards" component={InvestorCards} />
+          <Route exact path="/EntrepreneurCards" component={EntrepreneurCards} />
         </Switch>
       </Router>
     </div>
