@@ -1,6 +1,8 @@
 const express = require("express");
 const authController = require("../controllers/auth");
 const { isAuth } = require("../middleware/auth");
+const { verify } = require("jsonwebtoken");
+
 
 const router = express.Router();
 
@@ -9,6 +11,8 @@ router.post("/entrepreneursignup", authController.entrepreneursignup);
 router.post("/investorsignup", authController.investorsignup);
 
 router.post("/login", authController.login);
+
+router.post("/refresh_token", authController.refreshtoken);
 
 router.post("/logout", (_req, res) => {
   res.clearCookie("refreshtoken", { path: "/refresh_token" });
@@ -31,5 +35,6 @@ router.post("/protected", async (req, res) => {
     });
   }
 });
+
 
 module.exports = router;

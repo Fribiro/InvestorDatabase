@@ -5,12 +5,33 @@
  const dotenv = require("dotenv"); 
 
 const cors = require("cors");
+const cookieParser = require("cookie-parser");
 
  dotenv.config({
    path: "./.env",
  });
 
+
  const app = express();
+
+app.use(function(req, res, next) {
+  res.header(
+    "Access-Control-Allow-Origin",
+    "*",);
+    res.header(
+      "Access-Control-Allow-Headers",
+      "Origin, x-access-token, Content-Type, Accept"
+    );
+    // "Content-Range", "users 0-8/26",
+    // "Access-Control-Expose-Headers","Content-Range",
+  
+    res.header("Content-Range", " 0-8/23");
+    res.header("Access-Control-Expose-Headers", "Content-Range");
+    // res.header["X-Total-Count"] = '23';
+    // res.header["Access-Control-Expose-Headers"] = "X-Total-Count";
+  next();
+});
+
  app.use(cors());
 
 
@@ -38,6 +59,8 @@ const cors = require("cors");
  //Parse JSON bodies as sent by API clients
  app.use(express.json());
 
+app.use(cookieParser());
+
  //view engine setup
 app.engine('hbs', hbs({
   extname: 'hbs',
@@ -49,7 +72,7 @@ app.set('view engine', 'hbs');
 
  //define routes
  app.use("/", require("./routes/admin"));
- app.use("/", require("./routes/pages"));
+//  app.use("/", require("./routes/pages"));
  app.use("/auth", require("./routes/auth"));
  app.use(express.static("public"));
 

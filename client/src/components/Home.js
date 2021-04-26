@@ -139,7 +139,7 @@ export default class Home extends Component {
             <div className="section-three-color-overlay"></div>
             <video
               style={{ maxWidth: "100%", height: "auto", objectFit: "2s" }}
-              autoplay
+              autoPlay
               loop
               muted
             >

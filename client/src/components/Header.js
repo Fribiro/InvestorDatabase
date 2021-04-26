@@ -24,7 +24,7 @@ export default class Header extends Component {
                         <li className="nav-item dropdown">
                         <Link className="nav-link dropdown-toggle" to="investor" id="navbarDropdown" data-toggle="dropdown">
                             
-                            Invest
+                            Investors
                         </Link>
                         <div className="dropdown-menu" aria-labelledby="navbarDropdown">
                             <Link className="dropdown-item" to="#">Venture Capitalists</Link>
@@ -36,7 +36,7 @@ export default class Header extends Component {
                         </li>
                         <li className="nav-item dropdown">
                         <Link className="nav-link dropdown-toggle" to="entrepreneur" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"> 
-                            Get Funding
+                            Entrepreneurs
                         </Link>
                         <div className="dropdown-menu" aria-labelledby="navbarDropdown">
                             <Link className="dropdown-item" to="#">Agribusiness</Link>

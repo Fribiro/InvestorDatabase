@@ -1,12 +1,14 @@
 const mysql = require("mysql");
 const jwt = require("jsonwebtoken");
 const bcrypt = require("bcryptjs");
+const cookieParser = require("cookie-parser")
 const {
   createAccessToken,
   createRefreshToken,
   sendAccessToken,
   sendRefreshToken,
 } = require("../middleware/token");
+
 
 // TODO: write the dbconnection and import it into the neccessary pages
 const db = mysql.createConnection({
@@ -32,10 +34,10 @@ exports.login = async (req, res) => {
       [email],
       async (error, results) => {
         //bcryptcompare compares the password being typed with the one in the db
-        //console.log(results);
+        
         if (
           !results ||
-          !(await bcrypt.compare(password, results[0].password))
+          !(await bcrypt.compare(req.body.password, results[0].password))
         ) {
           res.status(401).json({
             message: "Email or Password is incorrect",
@@ -43,14 +45,13 @@ exports.login = async (req, res) => {
         } else {
           const accesstoken = createAccessToken(results.Id);
           const refreshtoken = createRefreshToken(results.Id);
-          //insert the refreshtoken into the db
+          
           results.refreshtoken = refreshtoken;
           console.log(results);
-          //send refreshtoken as a cookie and the accesstoken as a regular response
           sendRefreshToken(res, refreshtoken);
-          sendAccessToken(res, req, accesstoken);
+          sendAccessToken(req, res, accesstoken);
         }
-        res.status(200).json({ message: "Welcome Back" });
+        //res.status(200).json({ message: "Welcome Back" });
       }
     );
   } catch (error) {
@@ -87,11 +88,8 @@ exports.investorsignup = (req, res) => {
         message: 'Passwords do not match',
       });
     }
-    //do 8 runds of hashing
-    let hashedPassword = await bcrypt.hash(ipassword, 8);
-    console.log(hashedPassword);
-    //test
-    //res.send('testing');
+    //do 10 runds of hashing
+    let hashedPassword = await bcrypt.hash(ipassword, 10);
 
     db.query('INSERT INTO investorSignup SET ?', {
       firstName: ifirstName,
@@ -113,7 +111,7 @@ exports.investorsignup = (req, res) => {
 
 //signup function for entrepreneurs
 exports.entrepreneursignup = (req, res) => {
-  console.log(req.body); //grabs data we sent from the Form
+  console.log(req.body); 
 
   const {
     efirstName,
@@ -123,7 +121,6 @@ exports.entrepreneursignup = (req, res) => {
     econfirmPassword,
   } = req.body;
 
-  //hinder sql injection by allowing each person to use only one email address
   db.query(
     "SELECT email FROM entrepreneurSignup WHERE email = ?",
     [eemail],
@@ -132,7 +129,6 @@ exports.entrepreneursignup = (req, res) => {
         console.log(error);
       }
       if (results.length > 0) {
-        //prevent use of an email already in the db
          res.json({
           message:"email exists",
         });
@@ -142,11 +138,8 @@ exports.entrepreneursignup = (req, res) => {
         message: 'Passwords do not match',
       });
     }
-      //do 8 runds of hashing
-      let hashedPassword = await bcrypt.hash(epassword, 8);
-      //console.log(hashedPassword);
-      //test
-      //res.send('testing');
+      
+      let hashedPassword = await bcrypt.hash(epassword, 10);
 
       db.query(
         "INSERT INTO entrepreneurSignup SET ?",
@@ -167,6 +160,43 @@ exports.entrepreneursignup = (req, res) => {
           }
         }
       );
+    }
+  );
+};
+
+//get a new access token with a refresh token
+exports.refreshtoken = (req, res) => {
+  const token = req.cookies.refreshtoken;
+  //if we don't have a token in our request
+  if (!token) return res.send({ accesstoken: "" });
+  //if we have a token, verify it
+  let payload = null;
+  try {
+    payload = verify(token, process.env.REFRESH_TOKEN_SECRET);
+  } catch (err) {
+    return res.send({ accesstoken: "" });
+  }
+  //if the token is valid, check if the user exists
+  db.query(
+    "SELECT * FROM entrepreneurSignup WHERE email = ?",
+    [email],
+    async (error, results) => {
+      //bcryptcompare compares the password being typed with the one in the db
+      //console.log(results);
+      if (results.id === payload.userId) {
+        if (!result) {
+          return res.send({ accesstoken: "" });
+        } else if (results.refreshtoken !== token) {
+          return res.send({ accesstoken: "" });
+        }
+      } else {
+        const accesstoken = createAccessToken(results.Id);
+        const refreshtoken = createRefreshToken(results.Id);
+
+        sendRefreshToken(res, refreshtoken);
+        sendAccessToken(res, req, accesstoken);
+      }
+      res.status(200).json({ message: "Welcome Back" });
     }
   );
 };

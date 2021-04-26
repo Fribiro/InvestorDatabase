@@ -7,7 +7,7 @@ export default class PersonalDetails extends Component {
             <div className="row">
               <div className="col-md-6">
                 <div className="profile-head">
-                  <h5>Kshiti Ghelani</h5>
+                  <h5>Festus Ribiro</h5>
                   <h6>Web Developer and Designer</h6>
                 </div>
               </div>
@@ -40,7 +40,7 @@ export default class PersonalDetails extends Component {
                         <label>User Id</label>
                       </div>
                       <div className="col-md-6">
-                        <p>Kshiti123</p>
+                        <p>1</p>
                       </div>
                     </div>
                     <div className="row">
@@ -48,7 +48,7 @@ export default class PersonalDetails extends Component {
                         <label>Name</label>
                       </div>
                       <div className="col-md-6">
-                        <p>Kshiti Ghelani</p>
+                        <p>Festus Ribiro</p>
                       </div>
                     </div>
                     <div className="row">
@@ -56,7 +56,7 @@ export default class PersonalDetails extends Component {
                         <label>Email</label>
                       </div>
                       <div className="col-md-6">
-                        <p>kshitighelani@gmail.com</p>
+                        <p>fesri@gmail.com</p>
                       </div>
                     </div>
                     <div className="row">
@@ -72,7 +72,7 @@ export default class PersonalDetails extends Component {
                         <label>Gender</label>
                       </div>
                       <div className="col-md-6">
-                        <p>Female</p>
+                        <p>Male</p>
                       </div>
                     </div>
                     <div className="row">
@@ -99,14 +99,7 @@ export default class PersonalDetails extends Component {
                         <p>kshitighelani@gmail.com</p>
                       </div>
                     </div>
-                    <div className="row">
-                      <div className="col-md-6">
-                        <label>Email</label>
-                      </div>
-                      <div className="col-md-6">
-                        <p>kshitighelani@gmail.com</p>
-                      </div>
-                    </div>
+                    
                   </div>
                 </div>
               </div>

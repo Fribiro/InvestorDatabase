@@ -41,6 +41,7 @@ export default class InvestorSignup extends Component {
       pwdState: null,
       message: "",
       redirect: null,
+      accesstoken: "",
     };
   }
 

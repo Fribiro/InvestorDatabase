@@ -1,34 +1,22 @@
-const express = require("express");
-const auth = require("../middleware/auth");
-const router = express.Router();
+// const express = require("express");
+// const auth = require("../middleware/auth");
+// const router = express.Router();
+// const { isAuth } = require("../middleware/auth");
+// const controller = require("../controllers/usercontrollers")
 
-router.get("/", (req, res) => {
-  res.render("index");
-});
+// router.get("/", controller.allAccess);
 
-router.get("/signup", (req, res) => {
-  res.render("signup");
-});
+// router.get("/signup");
 
-router.get("/login", (req, res) => {
-  res.render("signup");
-});
+// router.get("/login");
 
-router.get("/investor", (req, res) => {
-  res.render("investor");
-});
+// router.get("/investor", [authJwt.verifyToken], controller.invBoard);
 
-router.get('/entrepreneur', (req, res) => {
-  res.render('entrepreneur');
-});
+// router.get("/entrepreneur", [authJwt.verifyToken], controller.entBoard);
 
-router.get("/about", (req, res) => {
-  res.render("about");
-});
+// router.get("/about");
 
-router.get("/profile", (req, res) => {
-  res.render("profile");
-});
+// router.get("/profile", [authJwt.verifyToken], controller.entBoard);
 
 
-module.exports = router;
+// module.exports = router;

@@ -1,6 +1,8 @@
 import React, { Component } from 'react'
 import Axios from "axios";
 import { Redirect } from "react-router-dom";
+import { navigate } from "@reach/router";
+import { UserContext } from "../App";
 
 const emailRegex = RegExp(
   /^[a-zA-Z0-9.!#$%&’*+/=?^_`{|}~-]+@[a-zA-Z0-9-]+(?:\.[a-zA-Z0-9-]+)*$/
@@ -20,6 +22,7 @@ const formValid = ({ formErrors, ...rest }) => {
   return valid
 };
 export default class Login extends Component {
+  static contextType = UserContext;
   constructor(props) {
     super(props);
     this.state = {
@@ -30,8 +33,10 @@ export default class Login extends Component {
         password: "",
       },
       message: "",
+      redirect: null,
     };
   }
+
   handleSubmit = (e) => {
     e.preventDefault();
   };
@@ -57,25 +62,31 @@ export default class Login extends Component {
     this.setState({ formErrors, [name]: value });
   };
 
-  submitLogin = (e) => {
+  submitLogin = async (e) => {
     let formData = { ...this.state };
-    Axios.post("http://localhost:5500/auth/login", {
+
+    const user = this.context;
+
+    const result = Axios.post("http://localhost:5500/auth/login", {
       email: formData.email,
       password: formData.password,
+      credentials: "include",
+      headers: {
+        "Content-Type": "application/json",
+      },
     }).then((res) => {
       //console.log(res);
-      if (res.status === 200) {
+      if (result.accesstoken) {
         this.setState({
+          user: result.accesstoken,
           redirect: "/profile",
         });
+        navigate("/");
+        //console.log(res.data.accesstoken);
         console.log("Logged in");
-      } else if (res.status === 400) {
+      } else {
         this.setState({
-          message: res.data.message,
-        });
-      } else if (res.status === 401) {
-        this.setState({
-          message: res.data.message,
+          message: result.message,
         });
       }
     });
@@ -86,6 +97,7 @@ export default class Login extends Component {
     if (this.state.redirect) {
       return <Redirect to={this.state.redirect} />;
     }
+
     return (
       <div className="root-container">
         <div className="box-container login">
@@ -117,9 +129,6 @@ export default class Login extends Component {
                 {formErrors.password.length > 0 && (
                   <small className="danger-error">{formErrors.password}</small>
                 )}
-                {this.state.message && (
-                  <small className="danger-error">{this.state.message}</small>
-                )}
               </div>
 
               <button
@@ -136,3 +145,4 @@ export default class Login extends Component {
     );
   }
 }
+
