@@ -38,7 +38,6 @@ export default class InvestorSignup extends Component {
         ipassword: "",
         iconfirmPassword: "",
       },
-      pwdState: null,
       message: "",
       redirect: null,
       accesstoken: "",
@@ -57,11 +56,11 @@ export default class InvestorSignup extends Component {
     switch (name) {
       case "ifirstName":
         formErrors.ifirstName =
-          value.length < 3 ? "minimum 3 characaters required" : "";
+          value.length < 3 ? "min. 3 characaters" : "";
         break;
       case "ilastName":
         formErrors.ilastName =
-          value.length < 3 ? "minimum 3 characaters required" : "";
+          value.length < 3 ? "min. 3 characaters" : "";
         break;
       case "eemail":
         formErrors.iemail = emailRegex.test(value)
@@ -93,19 +92,16 @@ export default class InvestorSignup extends Component {
       ipassword: formData.ipassword,
       iconfirmPassword: formData.iconfirmPassword,
     }).then((res) => {
-      console.log(res);
       if (res.status === 201) {
-        console.log(res);
         this.setState({
           redirect: "/login",
         });
-        console.log("Success");
-      } else {
-        this.setState({
-          message: res.data.message,
-        });
-      }
-    });
+      } 
+    }, (e) => {
+         this.setState({
+           message: e.response.data.message,
+         });    
+     });
   };
 
   showEntrepreneurs = (e) => {
@@ -117,20 +113,6 @@ export default class InvestorSignup extends Component {
   render() {
     const { formErrors } = this.state;
 
-    let pwdWeak = false,
-      pwdMedium = false,
-      pwdStrong = false;
-
-    if (this.state.pwdState === "weak") {
-      pwdWeak = true;
-    } else if (this.state.pwdState === "medium") {
-      pwdWeak = true;
-      pwdMedium = true;
-    } else if (this.state.pwdState === "strong") {
-      pwdWeak = true;
-      pwdMedium = true;
-      pwdStrong = true;
-    }
     if (this.state.redirect) {
       return <Redirect to={this.state.redirect} />;
     }
@@ -138,31 +120,33 @@ export default class InvestorSignup extends Component {
       <div className="inner-container">
         <div className="header">Register</div>
         <div className="box">
-          <div className="input-group ">
-            <label htmlFor="ifirstName">First name</label>
-            <input
-              type="text"
-              name="ifirstName"
-              className={formErrors.ifirstName.length > 0 ? "error" : null}
-              placeholder="First Name"
-              onChange={this.handleChange}
-            />
-            {formErrors.ifirstName.length > 0 && (
-              <small className="danger-error">{formErrors.ifirstName}</small>
-            )}
-          </div>
-          <div className="input-group lastName">
-            <label htmlFor="ilastName">Last Name</label>
-            <input
-              type="text"
-              name="ilastName"
-              className={formErrors.ilastName.length > 0 ? "error" : null}
-              placeholder="Last Name"
-              onChange={this.handleChange}
-            />
-            {formErrors.ilastName.length > 0 && (
-              <small className="danger-error">{formErrors.ilastName}</small>
-            )}
+          <div className="name-control">
+            <div className="input-group ">
+              <label htmlFor="ifirstName">First name</label>
+              <input
+                type="text"
+                name="ifirstName"
+                className={formErrors.ifirstName.length > 0 ? "error" : null}
+                placeholder="First Name"
+                onChange={this.handleChange}
+              />
+              {formErrors.ifirstName.length > 0 && (
+                <small className="danger-error">{formErrors.ifirstName}</small>
+              )}
+            </div>
+            <div className="input-group lastName">
+              <label htmlFor="ilastName">Last Name</label>
+              <input
+                type="text"
+                name="ilastName"
+                className={formErrors.ilastName.length > 0 ? "error" : null}
+                placeholder="Last Name"
+                onChange={this.handleChange}
+              />
+              {formErrors.ilastName.length > 0 && (
+                <small className="danger-error">{formErrors.ilastName}</small>
+              )}
+            </div>
           </div>
 
           <div className="input-group">
@@ -190,19 +174,6 @@ export default class InvestorSignup extends Component {
             {formErrors.ipassword.length > 0 && (
               <small className="danger-error">{formErrors.ipassword}</small>
             )}
-            {this.state.password && (
-              <div className="password-state">
-                <div
-                  className={"pwd pwd-weak " + (pwdWeak ? "show" : "")}
-                ></div>
-                <div
-                  className={"pwd pwd-medium " + (pwdMedium ? "show" : "")}
-                ></div>
-                <div
-                  className={"pwd pwd-strong " + (pwdStrong ? "show" : "")}
-                ></div>
-              </div>
-            )}
           </div>
           <div className="input-group">
             <label htmlFor="iconfirmPassword">Confirm Password</label>
@@ -221,6 +192,9 @@ export default class InvestorSignup extends Component {
               </small>
             )}
           </div>
+          {this.state.message && (
+            <small className="danger-error">{this.state.message}</small>
+          )}
           <button
             type="button"
             className="login-btn"
@@ -228,6 +202,7 @@ export default class InvestorSignup extends Component {
           >
             Register
           </button>
+          
         </div>
       </div>
     );

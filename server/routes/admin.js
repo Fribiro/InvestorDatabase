@@ -19,11 +19,13 @@ router.get("/users", (req, res) => {
       res.send(results)
       console.log(results)
     }
+    
   });
 });
 
 //get one user
 router.get("/users/:id", (req, res) => {
+  
   let sql = "SELECT * FROM entrepreneurSignup WHERE id= ? ";
   let query = db.query(sql, [req.params.id], (err, results) => {
     if (err) throw err;
@@ -54,13 +56,30 @@ router.post("/users", (req, res) => {
 });
 
 //edit user
-router.put("/users", (req, res) => {
+router.post("/update", (req, res) => {
   
-  const userid = req.body.id;
-  let sql ="UPDATE investorSignup SET firstName='" +req.body.firstName +"',lastName='"+req.body.lastName +"', email='" +req.body.email +"', password='" +req.body.password +"' WHERE id="+ userid;
+  let id = req.body.id;
+  let data = {
+    firstName: req.body.firstName,
+    lastName: req.body.lastName,
+    email: req.body.email,
+    password: req.body.password,
+  };
+  let sql =
+    "UPDATE investorSignup SET firstName='" +
+    req.body.firstName +
+    "',lastName='" +
+    req.body.lastName +
+    "', email='" +
+    req.body.email +
+    "', password='" +
+    req.body.password +
+    "' WHERE id=" +
+    id;
   let query = db.query(sql, (err, results) => {
     if (err) throw err;
     else {
+      console.log(results)
       res.send(results);
     }
   });

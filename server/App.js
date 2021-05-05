@@ -2,7 +2,8 @@
  const path = require("path");
  const mysql = require("mysql");
  const hbs = require("express-handlebars");
- const dotenv = require("dotenv"); 
+ const dotenv = require("dotenv");
+ const fileUpload = require("express-fileupload"); 
 
 const cors = require("cors");
 const cookieParser = require("cookie-parser");
@@ -25,15 +26,14 @@ app.use(function(req, res, next) {
     // "Content-Range", "users 0-8/26",
     // "Access-Control-Expose-Headers","Content-Range",
   
-    res.header("Content-Range", " 0-8/23");
-    res.header("Access-Control-Expose-Headers", "Content-Range");
-    // res.header["X-Total-Count"] = '23';
-    // res.header["Access-Control-Expose-Headers"] = "X-Total-Count";
+    // res.header("Access-Control-Expose-Headers", "Content-Range");
+    // res.header("Content-Range", " 0-8/26");
+    res.header("X-Total-Count", "29");
+    res.header("Access-Control-Expose-Headers", "X-Total-Count");
   next();
 });
 
  app.use(cors());
-
 
  const db = mysql.createConnection({
    host: process.env.DATABASE_HOST,
@@ -60,6 +60,10 @@ app.use(function(req, res, next) {
  app.use(express.json());
 
 app.use(cookieParser());
+app.use(
+  fileUpload()
+  // This is where you add your fileupload settings. Refer to the documentation
+);
 
  //view engine setup
 app.engine('hbs', hbs({
@@ -72,9 +76,11 @@ app.set('view engine', 'hbs');
 
  //define routes
  app.use("/", require("./routes/admin"));
+ app.use("/imageupload", require("./routes/imgupload"));
 //  app.use("/", require("./routes/pages"));
  app.use("/auth", require("./routes/auth"));
  app.use(express.static("public"));
+ app.use(express.static("upload"));
 
  const publicDirectory = path.join(__dirname, "public");
  app.use(express.static(publicDirectory));

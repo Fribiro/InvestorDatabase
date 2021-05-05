@@ -6,6 +6,13 @@ const emailRegex = RegExp(
   /^[a-zA-Z0-9.!#$%&’*+/=?^_`{|}~-]+@[a-zA-Z0-9-]+(?:\.[a-zA-Z0-9-]+)*$/
 );
 
+const strongPassword = RegExp(
+  "(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*[^A-Za-z0-9])(?=.{8,})"
+);
+const mediumPassword = RegExp(
+  "((?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*[^A-Za-z0-9])(?=.{6,}))|((?=.*[a-z])(?=.*[A-Z])(?=.*[^A-Za-z0-9])(?=.{8,}))"
+);
+
 const formValid = ({ formErrors, ...rest }) => {
   let valid = true;
 
@@ -38,9 +45,8 @@ export default class EntrepreneurSignup extends Component {
         epassword: "",
         econfirmPassword: "",
       },
-      pwdState: null,
       message: "",
-      redirect: null
+      redirect: null,
     };
   }
 
@@ -56,11 +62,10 @@ export default class EntrepreneurSignup extends Component {
     switch (name) {
       case "efirstName":
         formErrors.efirstName =
-          value.length < 3 ? "minimum 3 characaters required" : "";
+          value.length < 3 ? "min. 3 characaters" : "";
         break;
       case "elastName":
-        formErrors.elastName =
-          value.length < 3 ? "minimum 3 characaters required" : "";
+        formErrors.elastName = value.length < 3 ? "min. 3 characaters" : "";
         break;
       case "eemail":
         formErrors.eemail = emailRegex.test(value)
@@ -68,8 +73,25 @@ export default class EntrepreneurSignup extends Component {
           : "invalid email address";
         break;
       case "epassword":
-        formErrors.epassword =
-          value.length < 6 ? "minimum 6 characaters required" : "";
+        // formErrors.epassword =
+        //   value.length < 6 ? "minimum 6 characaters required" : "";
+        switch (name) {
+          case "strongpwd":
+            formErrors.epassword.strongpwd = strongPassword.test(value)
+              ? ""
+              : "strong password";
+            break;
+          case "mediumpwd":
+            formErrors.epassword.mediumpwd = mediumPassword.test(value)
+              ? ""
+              : "medium password";
+            break;
+          case "weakpwd":
+            formErrors.epassword.weakpwd =  "weak password";
+            break;
+          default:
+            break;
+        }
         break;
       case "econfirmPassword":
         formErrors.econfirmPassword =
@@ -94,17 +116,15 @@ export default class EntrepreneurSignup extends Component {
     }).then((res) => {
       console.log(res);
       if (res.status === 201) {
-        console.log(res);
         this.setState({
           redirect: "/login",
         });
-        console.log("Success");
-      } else {
-        this.setState({
-          message: res.data.message,
-        });
-      }
-    });
+      } 
+    }, (e) => {
+         this.setState({
+           message: e.response.data.message,
+         });    
+     });
   }
 
   showEntrepreneurs = (e) => {
@@ -116,20 +136,6 @@ export default class EntrepreneurSignup extends Component {
   render() {
     const { formErrors } = this.state;
 
-    let pwdWeak = false,
-      pwdMedium = false,
-      pwdStrong = false;
-
-    if (this.state.pwdState === "weak") {
-      pwdWeak = true;
-    } else if (this.state.pwdState === "medium") {
-      pwdWeak = true;
-      pwdMedium = true;
-    } else if (this.state.pwdState === "strong") {
-      pwdWeak = true;
-      pwdMedium = true;
-      pwdStrong = true;
-    }
     if(this.state.redirect){
     return <Redirect to={this.state.redirect}/>
     }
@@ -137,31 +143,33 @@ export default class EntrepreneurSignup extends Component {
       <div className="inner-container">
         <div className="header">Register</div>
         <div className="box">
-          <div className="input-group ">
-            <label htmlFor="efirstName">First name</label>
-            <input
-              type="text"
-              name="efirstName"
-              className={formErrors.efirstName.length > 0 ? "error" : null}
-              placeholder="First Name"
-              onChange={this.handleChange}
-            />
-            {formErrors.efirstName.length > 0 && (
-              <small className="danger-error">{formErrors.efirstName}</small>
-            )}
-          </div>
-          <div className="input-group lastName">
-            <label htmlFor="elastName">Last Name</label>
-            <input
-              type="text"
-              name="elastName"
-              className={formErrors.elastName.length > 0 ? "error" : null}
-              placeholder="Last Name"
-              onChange={this.handleChange}
-            />
-            {formErrors.elastName.length > 0 && (
-              <small className="danger-error">{formErrors.elastName}</small>
-            )}
+          <div className="name-control">
+            <div className="input-group ">
+              <label htmlFor="efirstName">First name</label>
+              <input
+                type="text"
+                name="efirstName"
+                className={formErrors.efirstName.length > 0 ? "error" : null}
+                placeholder="First Name"
+                onChange={this.handleChange}
+              />
+              {formErrors.efirstName.length > 0 && (
+                <small className="danger-error">{formErrors.efirstName}</small>
+              )}
+            </div>
+            <div className="input-group lastName">
+              <label htmlFor="elastName">Last Name</label>
+              <input
+                type="text"
+                name="elastName"
+                className={formErrors.elastName.length > 0 ? "error" : null}
+                placeholder="Last Name"
+                onChange={this.handleChange}
+              />
+              {formErrors.elastName.length > 0 && (
+                <small className="danger-error">{formErrors.elastName}</small>
+              )}
+            </div>
           </div>
 
           <div className="input-group">
@@ -176,10 +184,6 @@ export default class EntrepreneurSignup extends Component {
             {formErrors.eemail.length > 0 && (
               <small className="danger-error">{formErrors.eemail}</small>
             )}
-
-            {this.state.message && (
-              <small className="danger-error">{this.state.message}</small>
-            )}
           </div>
           <div className="input-group">
             <label htmlFor="epassword">Password</label>
@@ -190,21 +194,13 @@ export default class EntrepreneurSignup extends Component {
               placeholder="Password"
               onChange={this.handleChange}
             />
-            {formErrors.epassword.length > 0 && (
+            {/* {formErrors.epassword.length > 0 && (
               <small className="danger-error">{formErrors.epassword}</small>
-            )}
-            {this.state.password && (
-              <div className="password-state">
-                <div
-                  className={"pwd pwd-weak " + (pwdWeak ? "show" : "")}
-                ></div>
-                <div
-                  className={"pwd pwd-medium " + (pwdMedium ? "show" : "")}
-                ></div>
-                <div
-                  className={"pwd pwd-strong " + (pwdStrong ? "show" : "")}
-                ></div>
-              </div>
+            )} */}
+            {formErrors.epassword.mediumpwd && (
+              <small className="danger-error">
+                {formErrors.epassword.mediumpwd}
+              </small>
             )}
           </div>
           <div className="input-group">
@@ -218,15 +214,15 @@ export default class EntrepreneurSignup extends Component {
               placeholder="Password"
               onChange={this.handleChange}
             />
-            {formErrors.econfirmPassword.length > 0 && (
+            {/* {formErrors.econfirmPassword.length > 0 && (
               <small className="danger-error">
                 {formErrors.econfirmPassword}
               </small>
-            )}
-            {this.state.message && (
-              <small className="danger-error">{this.state.message}</small>
-            )}
+            )} */}
           </div>
+          {this.state.message && (
+            <small className="danger-error">{this.state.message}</small>
+          )}
           <button
             type="button"
             className="login-btn"

@@ -1,6 +1,6 @@
 import React, { Component } from 'react'
 import { BrowserRouter as Router, Switch, Route, Link } from "react-router-dom";
-
+import Avatar from "@material-ui/core/Avatar";
 
 export default class Header extends Component {
     render() {
@@ -55,6 +55,9 @@ export default class Header extends Component {
                         <li className="nav-item">
                         <Link className="nav-link" to="login">Login</Link>
                         </li>
+                        {/* <li>
+                            <Avatar icon="user"/>
+                        </li> */}
                     </ul>
                 </div>
         </div>

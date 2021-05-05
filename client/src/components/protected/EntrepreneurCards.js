@@ -6,9 +6,19 @@ import { Icon } from "@iconify/react";
 import arrowRight from "@iconify-icons/mdi/arrow-right";
 import locationIcon from "@iconify-icons/codicon/location";
 import { Link } from 'react-router-dom';
+import { Redirect } from "react-router-dom";
+import { useSelector } from "react-redux";
+import { selectUser } from "../../state/user";
 
 const EntrepreneurCards = () => {
   const [visible, setVisible] = useState(true);
+
+  const [selectedFile, setSelectedFile] = useState(null);
+  const user = useSelector(selectUser);
+  if (!user.accesstoken) {
+    return <Redirect from="" to="login" noThrow />;
+  }
+
   return (
     <div>
       {visible ? <Header /> : null}

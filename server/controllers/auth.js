@@ -28,6 +28,7 @@ exports.login = async (req, res) => {
         res.status(400).json({
         message: "Please provide an email and password",
       });
+      return;
     }
     db.query(
       "SELECT * FROM entrepreneurSignup WHERE email = ?",
@@ -56,8 +57,7 @@ exports.login = async (req, res) => {
     );
   } catch (error) {
     console.log(error);
-  } finally {
-  }
+  } 
 };
 
 //signup function for investors
@@ -77,16 +77,24 @@ exports.investorsignup = (req, res) => {
     if (error) {
       console.log(error);
     }
+    if (!iemail || !ipassword || !ifirstName || !ilastName) {
+      res.status(400).json({
+        message: "All fields are required",
+      });
+      return;
+    }
     if (results.length > 0) {
       //prevent use of an email already in the db
-      res.json({
+      res.status(400).json({
         message: "Email exists",
       });
       return;
-    } else if (ipassword !== iconfirmPassword) {
-      res.json({
-        message: 'Passwords do not match',
+    }
+    if (ipassword !== iconfirmPassword) {
+      res.status(400).json({
+        message: "Passwords do not match",
       });
+      return;
     }
     //do 10 runds of hashing
     let hashedPassword = await bcrypt.hash(ipassword, 10);
@@ -125,18 +133,24 @@ exports.entrepreneursignup = (req, res) => {
     "SELECT email FROM entrepreneurSignup WHERE email = ?",
     [eemail],
     async (error, results) => {
-      if (error) {
-        console.log(error);
-      }
-      if (results.length > 0) {
-         res.json({
-          message:"email exists",
+     
+      if (!eemail || !epassword ||  !efirstName || !elastName) {
+        res.status(400).json({
+          message: "All fields are required",
         });
         return;
-      } else if (epassword !== econfirmPassword) {
-        res.json({
-        message: 'Passwords do not match',
-      });
+      }
+      if (results.length > 0) {
+         res.status(400).json({
+           message: "email already exists",
+         });
+      return;
+      }
+      if (epassword !== econfirmPassword) {
+        res.status(400).json({
+          message: "Passwords do not match",
+        });
+      return;
     }
       
       let hashedPassword = await bcrypt.hash(epassword, 10);
@@ -153,7 +167,6 @@ exports.entrepreneursignup = (req, res) => {
           if (error) {
             console.log(error);
           } else {
-            //console.log(results);
             res.status(201).json({
               results
             })
@@ -196,7 +209,6 @@ exports.refreshtoken = (req, res) => {
         sendRefreshToken(res, refreshtoken);
         sendAccessToken(res, req, accesstoken);
       }
-      res.status(200).json({ message: "Welcome Back" });
     }
   );
 };

@@ -1114,6 +1114,7 @@ i.fa.fa-quote-left {
   color: #3e3e42;
   background: rgba(15, 15, 15, 0.01);
   width: 100%;
+  outline: antiquewhite;
 }
 .input-group input.error {
   border: 1px solid red;

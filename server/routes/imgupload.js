@@ -1,0 +1,58 @@
+const express = require("express");
+const auth = require("../middleware/auth");
+const router = express.Router();
+const mysql = require("mysql");
+
+const db = mysql.createConnection({
+  host: process.env.DATABASE_HOST,
+  user: process.env.DATABASE_USER,
+  password: process.env.DATABASE_PASSWORD,
+  database: process.env.DATABASE,
+});
+
+router.get("/", (req, res) => {
+  let sql = "SELECT * FROM entrepreneurSignup";
+  let query = db.query(sql, (err, results) => {
+    if (err) throw err;
+    else {
+      res.send(results);
+      //console.log(results);
+    }
+  });
+});
+
+router.put("/", (req, res) => {
+  let sampleFile;
+  let uploadPath;
+
+  if (!req.files || Object.keys(req.files).length === 0) {
+    return res.status(400).send("No files were uploaded.");
+  }
+
+  // name of the input is sampleFile
+  sampleFile = req.files.sampleFile;
+  uploadPath = __dirname + "/upload/" + sampleFile.name;
+
+  console.log(sampleFile);
+
+  // Use mv() to place file on the server
+  sampleFile.mv(uploadPath, function (err) {
+    if (err) return res.status(500).send(err);
+    let id = req.body.id;
+    let query = db.query(
+      'UPDATE ent_profile SET profile_img = ? WHERE id ="1"',
+      [sampleFile.name],
+      (err, results) => {
+        // Once done, release connection
+        if (err) throw err;
+        else {
+          res.send(results);
+        }
+      }
+    );
+
+    // res.send('File uploaded!');
+  });
+});
+
+module.exports = router;
