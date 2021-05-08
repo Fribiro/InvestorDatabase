@@ -1,6 +1,6 @@
 import React, { useState, } from 'react'
-import Footer from '../Footer';
-import Header from '../Header';
+import Footer from '../../components/headerFooter/Footer';
+import Header from '../../components/headerFooter/Header';
 import "./protected.css";
 import { Icon } from "@iconify/react";
 import arrowRight from "@iconify-icons/mdi/arrow-right";
@@ -12,8 +12,7 @@ import { selectUser } from "../../state/user";
 
 const EntrepreneurCards = () => {
   const [visible, setVisible] = useState(true);
-
-  const [selectedFile, setSelectedFile] = useState(null);
+  
   const user = useSelector(selectUser);
   if (!user.accesstoken) {
     return <Redirect from="" to="login" noThrow />;

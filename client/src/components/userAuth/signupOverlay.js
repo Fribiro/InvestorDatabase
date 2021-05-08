@@ -1,11 +1,7 @@
 import React, { Component } from 'react'
-
-import Header from "./Header";
-import Footer from "./Footer";
-
 import InvestorSignup from './InvestorSignup'
 import EntrepreneurSignup from './EntrepreneurSignup';
-export default class LoginOverlay extends Component {
+export default class SignupOverlay extends Component {
   state = {
     visible: true,
   };
@@ -29,7 +25,7 @@ export default class LoginOverlay extends Component {
   render() {
     return (
       <div className="root-container">
-        {this.state.visible ? <Header /> : null}
+        
         <div className="box-controller">
           <div
             className={
@@ -55,7 +51,7 @@ export default class LoginOverlay extends Component {
           {this.state.isLoginOpen && <EntrepreneurSignup/>}
           {this.state.isRegisterOpen && <InvestorSignup/>}
         </div>
-        {this.state.visible ? <Footer /> : null}
+        
       </div>
     );
   }

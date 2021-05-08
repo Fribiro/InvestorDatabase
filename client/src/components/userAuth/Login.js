@@ -1,29 +1,14 @@
-import React, { Component, useState, useContext,useEffect } from "react";
+import React, { useState, useContext,useEffect } from "react";
 import Axios from "axios";
 import { Link, Redirect } from "react-router-dom";
-import { navigate } from "@reach/router";
-import {userContext} from "../usercontext"
-import {useDispatch} from 'react-redux'
-import { accesstoken } from '../state/user'
-import { UserContext } from "../App";
+//import {userContext} from "../../usercontext"
+//import {useDispatch} from 'react-redux'
+//import { accesstoken } from '../../state/user'
+import { UserContext } from "../../App";
 
 const emailRegex = RegExp(
   /^[a-zA-Z0-9.!#$%&’*+/=?^_`{|}~-]+@[a-zA-Z0-9-]+(?:\.[a-zA-Z0-9-]+)*$/
 );
-
-const formValid = ({ formErrors, ...rest }) => {
-  let valid = true;
-
-  Object.values(formErrors).forEach((val) => {
-    val.length > 0 && (valid = false);
-  });
-
-  Object.values(rest).forEach((val) => {
-    val === null && (valid = false);
-  });
-
-  return valid
-};
 
 const Login = () => {
   //const {handleUserChange, user} = useContext(userContext)
@@ -36,16 +21,12 @@ const Login = () => {
   });
   const [email, setEmail] = useState("")
   const [password, setPassword] = useState("");
-  const dispatch = useDispatch()
-
-  const handleSubmit = (e) => {
-    e.preventDefault();
-  };
+  //const dispatch = useDispatch()
 
   const handleChange = (e) => {
     e.preventDefault();
     const { name, value } = e.target;
-let error;
+    let error;
     switch (name) {
       case "email":
           error= emailRegex.test(value)
@@ -59,13 +40,11 @@ let error;
         break;
     }
     setFormErrors({ [name]: error });
-    // setEmail({ email, [name]: value });
-    // setPassword({ password, [name]: value });
   };
 
   const submitLogin = (e) => {
-  
-    const result = Axios.post("http://localhost:5500/auth/login", {
+  e.preventDefault();
+    Axios.post("http://localhost:5500/auth/login", {
       email,
      password,
       credentials: "include",
@@ -138,7 +117,9 @@ let error;
                 Login
               </button>
               <small className="text-right">
-                <Link to="/resetpassword" style={{color: '#3DB2C7'}}>Forgot password</Link>
+                <Link to="/forgotpassword" style={{ color: "#3DB2C7" }}>
+                  Forgot password
+                </Link>
               </small>
             </div>
           </div>

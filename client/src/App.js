@@ -3,29 +3,30 @@ import { BrowserRouter as Router, Switch, Route, } from "react-router-dom";
 import './App.css';
 import Axios from "axios";
 import { navigate } from "@reach/router";
-import DotLoader from "react-spinners/DotLoader";
+//import DotLoader from "react-spinners/DotLoader";
 
-import Home from "./components/Home";
-import Entrepreneur from "./components/Entrepreneur";
-import Investor from "./components/Investor";
-import Login from "./components/Login";
-import About from "./components/About";
-import Contact from "./components/Contact";
+import Home from "./components/public/Home";
+import Entrepreneur from "./components/public/Entrepreneur";
+import Investor from "./components/public/Investor";
+import Login from "./components/userAuth/Login";
+import About from "./components/public/About";
+import Contact from "./components/public/Contact";
 import Profile from "./components/profile/Profile";
-import LoginOverlay from "./components/LoginOverlay";
 import InvestorCards from "./components/protected/InvestorCards";
 import EntrepreneurCards from "./components/protected/EntrepreneurCards";
-import UserContextProvider from './usercontext'
-import { useDispatch } from "react-redux";
-import { accesstoken, refreshtoken } from "./state/user";
-import ResetPassword from "./components/PasswordReset";
+//import UserContextProvider from './usercontext'
+//import { useDispatch } from "react-redux";
+//import { accesstoken, refreshtoken } from "./state/user";
+import PasswordForget from "./components/passwordReset/PasswordForget";
+import SignupOverlay from "./components/userAuth/signupOverlay";
+
 export const UserContext = React.createContext([]);
 
 function App() {
 
   const [user, setUser] = useState([]);
   const [loading, setLoading] = useState(true);
-  const dispatch = useDispatch();
+  //const dispatch = useDispatch();
 
   const logoutCallback = async () => {
     Axios.post("http://localhost:5500/logout", {
@@ -88,8 +89,8 @@ function App() {
             <Route exact path="/login">
               <Login />
             </Route>
-            <Route exact path="/resetpassword" component={ResetPassword} />
-            <Route exact path="/signup" component={LoginOverlay} />
+            <Route exact path="/forgotpassword" component={PasswordForget} />
+            <Route exact path="/signup" component={SignupOverlay} />
             <Route exact path="/InvestorCards" component={InvestorCards} />
             <Route
               exact

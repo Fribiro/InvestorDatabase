@@ -1,7 +1,7 @@
 import React, { Component } from 'react'
 //import { BrowserRouter as Router, Switch, Route, Link } from "react-router-dom";
-import Header from "./Header";
-import Footer from "./Footer";
+import Footer from "../../components/headerFooter/Footer";
+import Header from "../../components/headerFooter/Header";
 
 export default class About extends Component {
     state = {

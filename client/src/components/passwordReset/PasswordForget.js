@@ -1,18 +1,15 @@
-import React, { Component, useState, useContext, useEffect } from "react";
-import Axios from "axios";
-import { Redirect } from "react-router-dom";
-import { navigate } from "@reach/router";
-import { userContext } from "../usercontext";
-import { useDispatch } from "react-redux";
-import { accesstoken } from "../state/user";
-import { UserContext } from "../App";
+import React, { useState } from "react";
+//import Axios from "axios";
 
 const emailRegex = RegExp(
   /^[a-zA-Z0-9.!#$%&’*+/=?^_`{|}~-]+@[a-zA-Z0-9-]+(?:\.[a-zA-Z0-9-]+)*$/
 );
 
-const ResetPassword = () => {
+const PasswordForget = () => {
   const [email, setEmail] = useState("");
+  const [formErrors, setFormErrors] = useState({
+    email: "",
+  });
 
   const handleSubmit = (e) => {
     e.preventDefault();
@@ -21,23 +18,22 @@ const ResetPassword = () => {
   const handleChange = (e) => {
     e.preventDefault();
     const { name, value } = e.target;
-
+    let error;
     switch (name) {
       case "email":
-        email = emailRegex.test(value)
-          ? ""
-          : "invalid email address";
+        error = emailRegex.test(value) ? "" : "Invalid email address";
         break;
       default:
         break;
     }
+    setFormErrors({ [name]: error });
   };
 
   return (
     <div className="root-container">
       <div className="box-container login">
         <div className="inner-container">
-          <div className="header">Reset Password</div>
+          <div className="header">Forgot Password</div>
           <div className="box">
             <div className="input-group">
               <label htmlFor="email">Email</label>
@@ -52,12 +48,12 @@ const ResetPassword = () => {
                   setEmail(e.target.value);
                 }}
               />
-              {email && (
-                <small className="danger-error">{email}</small>
+              {formErrors.email && (
+                <small className="danger-error">{formErrors.email}</small>
               )}
             </div>
 
-            <button type="button" className="login-btn" >
+            <button type="button" className="login-btn" onClick={handleSubmit}>
               Submit
             </button>
           </div>
@@ -67,4 +63,4 @@ const ResetPassword = () => {
   );
 };
 
-export default ResetPassword;
+export default PasswordForget;

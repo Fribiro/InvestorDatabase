@@ -1,9 +1,9 @@
 import React, { Component } from 'react'
 import { BrowserRouter as Link } from "react-router-dom";
-import Header from "./Header";
-import Footer from "./Footer";;
+import Footer from "../../components/headerFooter/Footer";
+import Header from "../../components/headerFooter/Header";
 
-export default class Entrepreneur extends Component {
+export default class Investor extends Component {
   state = {
     visible: true,
   };
@@ -12,9 +12,9 @@ export default class Entrepreneur extends Component {
         return (
           <div>
             {this.state.visible ? <Header /> : null}
-            <header className="intro">
+            <header>
               <div className="investor-header nav-anime">
-                <img src="/img/workdream.jpg" alt="" />
+                <img src="/img/invword.jpg" alt="" />
               </div>
             </header>
 
@@ -22,26 +22,26 @@ export default class Entrepreneur extends Component {
               <i className="fa fa-quote-left" aria-hidden="true"></i>
               <br />
               <h3>
-                Don’t try to do everything by yourself, but try to connect with
-                people and resources. Having that discipline and perseverance is
-                really important.
+                It's not how much money you make, but how much money you keep,
+                how hard it works for you, and how many generations you keep it
+                for.
               </h3>
               <br />
               <i className="fa fa-quote-right" aria-hidden="true"></i>
               <br />
-              <h4> - Chieu Cao, Co-founder of Perkbox</h4>
+              <h4> - Robert Kiyosaki</h4>
             </section>
             <div className="category-content">
               <div className="row-one">
                 <div className="grid-one-one">
                   <div className="card">
                     <img
-                      src="/img/agri.jpg"
+                      src="/img/venture1.jpg"
                       className="card-img-top"
                       alt="..."
                     />
                     <div className="card-body">
-                      <h4>Agribusiness</h4>
+                      <h4>Venture Capitalist</h4>
                       <p className="card-text">
                         Some quick example text to build on the card title and
                         make up the bulk of the card's content.
@@ -53,12 +53,12 @@ export default class Entrepreneur extends Component {
                 <div className="grid-one-two">
                   <div className="card">
                     <img
-                      src="/img/entertainment.jpg"
+                      src="/img/angel.jpg"
                       className="card-img-top"
                       alt="..."
                     />
                     <div className="card-body">
-                      <h4>Entertainment</h4>
+                      <h4>Angel Investors</h4>
                       <p className="card-text">
                         Some quick example text to build on the card title and
                         make up the bulk of the card's content.
@@ -70,12 +70,12 @@ export default class Entrepreneur extends Component {
                 <div className="grid-one-three">
                   <div className="card">
                     <img
-                      src="/img/fashion.jpg"
+                      src="/img/accelerator.jpg"
                       className="card-img-top"
                       alt="..."
                     />
                     <div className="card-body">
-                      <h4>Fashion</h4>
+                      <h4>Accelerators & Incubators</h4>
                       <p className="card-text">
                         Some quick example text to build on the card title and
                         make up the bulk of the card's content.
@@ -89,12 +89,12 @@ export default class Entrepreneur extends Component {
                 <div className="grid-two-one">
                   <div className="card">
                     <img
-                      src="/img/f&b.jpg"
+                      src="/img/corporate.jpg"
                       className="card-img-top"
                       alt="..."
                     />
                     <div className="card-body">
-                      <h4>Food &amp; Beverage</h4>
+                      <h4>Corporate Investors</h4>
                       <p className="card-text">
                         Some quick example text to build on the card title and
                         make up the bulk of the card's content.
@@ -106,12 +106,12 @@ export default class Entrepreneur extends Component {
                 <div className="grid-two-two">
                   <div className="card">
                     <img
-                      src="/img/logistics.jpg"
+                      src="/img/p2p.jpg"
                       className="card-img-top"
                       alt="..."
                     />
                     <div className="card-body">
-                      <h4>Supply &amp; logistics</h4>
+                      <h4>Peer-to-peer</h4>
                       <p className="card-text">
                         Some quick example text to build on the card title and
                         make up the bulk of the card's content.

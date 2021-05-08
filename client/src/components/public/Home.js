@@ -1,6 +1,6 @@
 import React, { Component } from 'react'
-import Header from "./Header";
-import Footer from "./Footer";
+import Footer from "../../components/headerFooter/Footer";
+import Header from "../../components/headerFooter/Header";
 import Carousel from "react-bootstrap/Carousel";
 
 export default class Home extends Component {

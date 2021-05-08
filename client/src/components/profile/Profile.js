@@ -1,17 +1,17 @@
-import React, { Component, useState, useContext } from "react";
+import React, { useState, useContext } from "react";
 //import {BrowserRouter as Link} from 'react-router-dom'
 import PersonalDetails from "./PersonalDetails";
 import BusinessDetails from "./BusinessDetails";
-import Header from "../../components/Header";
-import Footer from "../../components/Footer";
+import Header from "../../components/headerFooter/Header";
+import Footer from "../../components/headerFooter/Footer";
 import { Redirect } from "react-router-dom";
 import Axios from "axios";
-import {useSelector} from  "react-redux";
-import {selectUser} from "../../state/user"
+//import {useSelector} from  "react-redux";
+//import {selectUser} from "../../state/user"
 import IconButton from '@material-ui/core/IconButton'
 import EditIcon from '@material-ui/icons/Edit';
 import Tooltip from "@material-ui/core/Tooltip";
-import Avatar from "@material-ui/core/Avatar";
+//import Avatar from "@material-ui/core/Avatar";
 import { UserContext } from "../../App";
 
 const Profile = () => {
