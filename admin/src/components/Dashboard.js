@@ -14,7 +14,7 @@ const Dashboard = () => {
             <div class="social-icons">
                 <span class="ti-bell"></span>
                 <span class="ti-comment"></span>
-                <div></div>
+               
             </div>
         </header>
         

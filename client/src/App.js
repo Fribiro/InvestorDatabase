@@ -17,8 +17,9 @@ import InvestorCards from "./components/protected/InvestorCards";
 import EntrepreneurCards from "./components/protected/EntrepreneurCards";
 import UserContextProvider from './usercontext'
 import { useDispatch } from "react-redux";
-import { userSet } from "./state/user";
-
+import { accesstoken, refreshtoken } from "./state/user";
+import ResetPassword from "./components/PasswordReset";
+export const UserContext = React.createContext([]);
 
 function App() {
 
@@ -40,21 +41,23 @@ function App() {
 
   //get a new accesstoken if a refreshtoken exists
   useEffect(() => {
-    const checkRefreshToken = () => {
-      
-        Axios.post("http://localhost:5500/auth/refresh_token", {
-          method: "POST",
-          credentials: "include", //adds the cookie
-          headers: {
-            'Content-Type': 'application/json'
-          }
-        }).then((res) => {
-      
-        dispatch(userSet(res.data.accesstoken));
-      
-      setLoading(false);
-    })
-    }
+       async function checkRefreshToken() {
+         Axios.post("http://localhost:5500/auth/refresh_token", {
+           method: "POST",
+           credentials: "include",
+           headers: {
+             "Content-Type": "application/json",
+           },
+         }).then((res) => {
+           setUser({
+             accesstoken: res.data.accesstoken,
+           });
+           //dispatch(refreshtoken(res.data.refreshtoken));
+           //dispatch(accesstoken(res.data.accesstoken));
+
+           setLoading(false);
+         });
+       }
     checkRefreshToken();
   }, []);
 
@@ -72,7 +75,7 @@ function App() {
   // );
 
   return (
-    
+    <UserContext.Provider value={[user, setUser]}>
       <div className="App">
         <Router>
           <Switch>
@@ -83,8 +86,9 @@ function App() {
             <Route exact path="/contact" component={Contact} />
             <Route exact path="/profile" component={Profile} />
             <Route exact path="/login">
-              <Login/>
+              <Login />
             </Route>
+            <Route exact path="/resetpassword" component={ResetPassword} />
             <Route exact path="/signup" component={LoginOverlay} />
             <Route exact path="/InvestorCards" component={InvestorCards} />
             <Route
@@ -95,7 +99,7 @@ function App() {
           </Switch>
         </Router>
       </div>
-  
+    </UserContext.Provider>
   );
 }
 

@@ -1,8 +1,13 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { BrowserRouter as Router, Switch, Route, Link } from "react-router-dom";
+import {$} from "react-jquery-plugin"
 
 const Sidebar = () => {
+
+  useEffect(() => {
+      
+  }, [])
     return (
       <div>
         <input type="checkbox" id="sidebar-toggle"></input>
@@ -25,17 +30,43 @@ const Sidebar = () => {
                 </Link>
               </li>
 
-              <li>
-                <Link to="/users">
+              <li className="dropmenu">
+                <Link>
                   <FontAwesomeIcon icon="users" size="lg" />
-                  <span>Users</span>
                 </Link>
+                <label htmlFor="btn">Users</label>
+                <input type="checkbox" id="btn" />
+                <ul className="subMenu" id="subMenu">
+                  <li>
+                    <Link className="" to="/entrepreneurs">
+                      Entrepreneur
+                    </Link>
+                  </li>
+                  <li>
+                    <Link className="" to="/investors">
+                      Investor
+                    </Link>
+                  </li>
+                </ul>
               </li>
-              <li>
-                <Link to="/posts">
+              <li className="dropmenu">
+                <Link>
                   <FontAwesomeIcon icon="folder" size="lg" />
-                  <span>Posts</span>
                 </Link>
+                <label htmlFor="btn-2">Posts</label>
+                <input type="checkbox" id="btn-2" />
+                <ul className="subMenu" id="subMenu">
+                  <li>
+                    <Link className="" to="/entrepreneurPosts">
+                      Entrepreneur
+                    </Link>
+                  </li>
+                  <li>
+                    <Link className="" to="/investorPosts">
+                      Investor
+                    </Link>
+                  </li>
+                </ul>
               </li>
               <li>
                 <Link to="/payments">

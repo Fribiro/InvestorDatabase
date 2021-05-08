@@ -180,34 +180,35 @@ exports.entrepreneursignup = (req, res) => {
 //get a new access token with a refresh token
 exports.refreshtoken = (req, res) => {
   const token = req.cookies.refreshtoken;
-  //if we don't have a token in our request
+  
   if (!token) return res.send({ accesstoken: "" });
-  //if we have a token, verify it
+  
   let payload = null;
   try {
     payload = verify(token, process.env.REFRESH_TOKEN_SECRET);
   } catch (err) {
     return res.send({ accesstoken: "" });
   }
-  //if the token is valid, check if the user exists
+  
   db.query(
     "SELECT * FROM entrepreneurSignup WHERE email = ?",
     [email],
     async (error, results) => {
-      //bcryptcompare compares the password being typed with the one in the db
-      //console.log(results);
+      
       if (results.id === payload.userId) {
-        if (!result) {
+        if (!results) {
           return res.send({ accesstoken: "" });
-        } else if (results.refreshtoken !== token) {
+        }
+        if (results.refreshtoken !== token) {
           return res.send({ accesstoken: "" });
         }
       } else {
         const accesstoken = createAccessToken(results.Id);
         const refreshtoken = createRefreshToken(results.Id);
+        results.refreshtoken = refreshtoken;
 
         sendRefreshToken(res, refreshtoken);
-        sendAccessToken(res, req, accesstoken);
+        return res.status(200).json({ accesstoken });
       }
     }
   );

@@ -43,26 +43,71 @@
 .sidebar-menu {
     padding: 1rem;
 }
-
+ol,ul {
+    padding-left: .5rem;
+}
 .sidebar li {
     margin-bottom: 1.5rem;
 }
 .brand span{
     color: #3DB2C7;
+    font-family: 'Abril Fatface',cursive;
 }
 .sidebar a {
     color: #fff;
     font-size: .8rem;
 }
-
+.sidebar a:hover {
+    color: #3DB2C7;
+    text-decoration: none;
+}
 .sidebar a span:last-child {
     padding-left: .6rem;
 }
-
+a.nav-link.dropdown-toggle {
+    padding: 0;
+}
 #sidebar-toggle:checked ~ .sidebar {
     width: 60px;
 }
-
+#btn {
+    display: none;
+}
+#btn-2 {
+    display: none;
+}
+.subMenu {
+    display: none;
+    padding-left: 2rem;
+}
+[id^=btn]:checked + ul {
+    display: block;
+}
+[id^=btn-2]:checked+ul {
+    display: block;
+}
+label {
+    padding-left: .5rem;
+    font-size: 13px;
+    cursor: pointer;
+}
+.dropmenu:hover {
+    color: #3DB2C7;
+}
+label a:hover {
+    color: #3DB2C7;
+    text-decoration: none;
+}
+.dropdown .dropdown-toggle:after {
+    display: none;
+    /*remove the default caret icon on dropdown menu*/
+}
+.nav-item .dropdown-menu {
+    display: none;
+}
+.nav-item:hover .dropdown-menu {
+    display: block;
+}
 #sidebar-toggle:checked ~ .sidebar .sidebar-header h3 span,
 #sidebar-toggle:checked ~ .sidebar li span:last-child {
     display: none;
@@ -224,7 +269,11 @@ main {
     background: #efefef;
     text-align: left;
 }
-
+.table td,
+.table th {
+    padding: .3rem !important;
+    vertical-align: middle !important;
+}
 th, td {
     font-size: .9rem;
     padding: 1rem 1rem;
@@ -380,9 +429,11 @@ tbody tr:nth-child(even) {
     .sidebar .sidebar-header,
     .sidebar li {
         display: flex;
-        justify-content: center;
+        justify-content: inherit;
     }
-
+    label {
+        display: none;
+    }
     .main-content {
         margin-left: 60px;
     }

@@ -12,12 +12,13 @@ import IconButton from '@material-ui/core/IconButton'
 import EditIcon from '@material-ui/icons/Edit';
 import Tooltip from "@material-ui/core/Tooltip";
 import Avatar from "@material-ui/core/Avatar";
+import { UserContext } from "../../App";
 
 const Profile = () => {
   const [visible, setVisible] = useState(true);
-  // const {user} = useContext(userContext);
+  const [user] = useContext(UserContext);
   const [sampleFile, setSampleFile] = useState(null);
-  const user = useSelector(selectUser);
+  //const user = useSelector(selectUser);
       if (!user.accesstoken) {
         return <Redirect from='' to='login' noThrow />
       }
@@ -86,7 +87,7 @@ const Profile = () => {
                   <li
                     className="profileNavClickable"
                     onClick={() => {
-                      setVisible({ visible: false });
+                      setVisible({ visible: true });
                     }}
                   >
                     Business Profile

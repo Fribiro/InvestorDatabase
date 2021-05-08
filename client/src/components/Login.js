@@ -1,10 +1,11 @@
-import React, { Component, useState, setState, useContext,useEffect } from "react";
+import React, { Component, useState, useContext,useEffect } from "react";
 import Axios from "axios";
-import { Redirect } from "react-router-dom";
+import { Link, Redirect } from "react-router-dom";
 import { navigate } from "@reach/router";
 import {userContext} from "../usercontext"
 import {useDispatch} from 'react-redux'
-import {userSet} from '../state/user'
+import { accesstoken } from '../state/user'
+import { UserContext } from "../App";
 
 const emailRegex = RegExp(
   /^[a-zA-Z0-9.!#$%&’*+/=?^_`{|}~-]+@[a-zA-Z0-9-]+(?:\.[a-zA-Z0-9-]+)*$/
@@ -26,6 +27,7 @@ const formValid = ({ formErrors, ...rest }) => {
 
 const Login = () => {
   //const {handleUserChange, user} = useContext(userContext)
+  const [user, setUser] = useContext(UserContext);
   const [message, setMessage] = useState("");
   const [redirect, setRedirect] = useState("");
   const [formErrors, setFormErrors] = useState({
@@ -43,23 +45,20 @@ const Login = () => {
   const handleChange = (e) => {
     e.preventDefault();
     const { name, value } = e.target;
-    
-  //   setFormErrors({
-  //       email: "",
-  //       password: "",
-  // });
-
+let error;
     switch (name) {
       case "email":
-        formErrors.email = emailRegex.test(value) ? "" : "invalid email address";
+          error= emailRegex.test(value)
+          ? ""
+          : "invalid email address"
         break;
       case "password":
-        formErrors.password = value.length < 6 ? "minimum 6 characaters required" : "";
+           error= value.length < 6 ? "minimum 6 characaters required" : ""
         break;
       default:
         break;
     }
-    setFormErrors({ [name]: value });
+    setFormErrors({ [name]: error });
     // setEmail({ email, [name]: value });
     // setPassword({ password, [name]: value });
   };
@@ -74,8 +73,12 @@ const Login = () => {
         "Content-Type": "application/json",
       },
     }).then((res) => {
-       dispatch(userSet(res.data.accesstoken));
-        setRedirect('/profile');
+      setUser({
+        accesstoken: res.data.accesstoken,
+        
+      });
+        //dispatch(accesstoken(res.data.accesstoken));
+        setRedirect("/profile");
         console.log("Logged in");
     },(err)=>{
       setMessage(err.response.data.message);
@@ -83,12 +86,13 @@ const Login = () => {
        //dispatch(userSet(null));
     });
   };
-
+  useEffect(() => {
+    console.log(user);
+  }, [user]);
     
     if (redirect) {
       return <Redirect to={redirect} />;
-    }
-    return (
+    }else    return (
       <div className="root-container">
         <div className="box-container login">
           <div className="inner-container">
@@ -133,6 +137,9 @@ const Login = () => {
               <button type="button" className="login-btn" onClick={submitLogin}>
                 Login
               </button>
+              <small className="text-right">
+                <Link to="/resetpassword" style={{color: '#3DB2C7'}}>Forgot password</Link>
+              </small>
             </div>
           </div>
         </div>
