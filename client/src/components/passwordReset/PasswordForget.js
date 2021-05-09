@@ -1,5 +1,6 @@
 import React, { useState } from "react";
-//import Axios from "axios";
+import Axios from "axios";
+import { Link, Redirect } from "react-router-dom";
 
 const emailRegex = RegExp(
   /^[a-zA-Z0-9.!#$%&’*+/=?^_`{|}~-]+@[a-zA-Z0-9-]+(?:\.[a-zA-Z0-9-]+)*$/
@@ -10,10 +11,8 @@ const PasswordForget = () => {
   const [formErrors, setFormErrors] = useState({
     email: "",
   });
-
-  const handleSubmit = (e) => {
-    e.preventDefault();
-  };
+  const [message, setMessage] = useState("");
+  const [redirect, setRedirect] = useState("");
 
   const handleChange = (e) => {
     e.preventDefault();
@@ -29,6 +28,26 @@ const PasswordForget = () => {
     setFormErrors({ [name]: error });
   };
 
+  const forgotPassword = (e) => {
+    e.preventDefault();
+
+    Axios.post("http://localhost:5500/forgotPassword", {
+      email,
+    }).then((res) => {
+        if (res.status === 201) {
+          console.log(res.data.link)
+          setRedirect('/resetpassword');
+        }
+      },(err) => {
+        setMessage(err.response.data.message);
+      }
+    );
+  };
+
+  if (redirect) {
+      return <Redirect to={redirect} />;
+  }
+
   return (
     <div className="root-container">
       <div className="box-container login">
@@ -41,7 +60,6 @@ const PasswordForget = () => {
                 type="text"
                 name="email"
                 value={email}
-                className={email ? "error" : null}
                 placeholder="Email"
                 onChange={(e) => {
                   handleChange(e);
@@ -52,8 +70,12 @@ const PasswordForget = () => {
                 <small className="danger-error">{formErrors.email}</small>
               )}
             </div>
-
-            <button type="button" className="login-btn" onClick={handleSubmit}>
+            {message && <small className="danger-error">{message}</small>}
+            <button
+              type="button"
+              className="login-btn"
+              onClick={forgotPassword}
+            >
               Submit
             </button>
           </div>

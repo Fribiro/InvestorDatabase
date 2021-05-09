@@ -1,5 +1,5 @@
-import React, { useContext } from "react";
-import { BrowserRouter as Link } from "react-router-dom";
+import React, { useState, useContext } from "react";
+import { BrowserRouter as Router, Switch, Route, Link } from "react-router-dom";
 import Avatar from "@material-ui/core/Avatar";
 import { UserContext } from "../../App";
 

@@ -3,8 +3,8 @@ import { BrowserRouter as Router, Switch, Route, } from "react-router-dom";
 import './App.css';
 import Axios from "axios";
 import { navigate } from "@reach/router";
-//import DotLoader from "react-spinners/DotLoader";
-
+import DotLoader from "react-spinners/DotLoader";
+import { Link, Redirect } from "react-router-dom";
 import Home from "./components/public/Home";
 import Entrepreneur from "./components/public/Entrepreneur";
 import Investor from "./components/public/Investor";
@@ -19,6 +19,7 @@ import EntrepreneurCards from "./components/protected/EntrepreneurCards";
 //import { accesstoken, refreshtoken } from "./state/user";
 import PasswordForget from "./components/passwordReset/PasswordForget";
 import SignupOverlay from "./components/userAuth/signupOverlay";
+import ResetPassword from "./components/passwordReset/ResetPassword";
 
 export const UserContext = React.createContext([]);
 
@@ -26,6 +27,7 @@ function App() {
 
   const [user, setUser] = useState([]);
   const [loading, setLoading] = useState(true);
+  const [redirect, setRedirect] = useState("");
   //const dispatch = useDispatch();
 
   const logoutCallback = async () => {
@@ -35,8 +37,7 @@ function App() {
     });
     //create user from context
     setUser({});
-    //navigate back to the home page
-    navigate("/");
+    setRedirect("/");
   };
 
 
@@ -62,18 +63,22 @@ function App() {
     checkRefreshToken();
   }, []);
 
-  // if (loading) return (
-  //   <div
-  //     className="loader"
-  //     style={{display: "flex", justifyContent: "center", textAlign: "center", alignItems: "center", verticalAlign: "middle", height: "100vh"}}
-  //   >
-  //     <DotLoader
-  //       color={"#3DB2C7"}
-  //       loading={loading}
-  //       size={60}
-  //     />
-  //   </div>
-  // );
+  if (loading) return (
+    <div
+      className="loader"
+      style={{display: "flex", justifyContent: "center", textAlign: "center", alignItems: "center", verticalAlign: "middle", height: "100vh"}}
+    >
+      <DotLoader
+        color={"#3DB2C7"}
+        loading={loading}
+        size={60}
+      />
+    </div>
+  );
+
+    if (redirect) {
+      return <Redirect to={redirect} />;
+    }
 
   return (
     <UserContext.Provider value={[user, setUser]}>
@@ -90,6 +95,7 @@ function App() {
               <Login />
             </Route>
             <Route exact path="/forgotpassword" component={PasswordForget} />
+            <Route exact path="/resetpassword" component={ResetPassword} />
             <Route exact path="/signup" component={SignupOverlay} />
             <Route exact path="/InvestorCards" component={InvestorCards} />
             <Route

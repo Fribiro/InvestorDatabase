@@ -48,7 +48,6 @@ exports.login = async (req, res) => {
           const refreshtoken = createRefreshToken(results.Id);
           
           results.refreshtoken = refreshtoken;
-          console.log(results);
           sendRefreshToken(res, refreshtoken);
           sendAccessToken(req, res, accesstoken);
         }

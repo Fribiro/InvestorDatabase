@@ -76,6 +76,7 @@ app.set('view engine', 'hbs');
 
  //define routes
  app.use("/", require("./routes/admin"));
+  app.use("/", require("./routes/passwordReset"));
  app.use("/imageupload", require("./routes/imgupload"));
 //  app.use("/", require("./routes/pages"));
  app.use("/auth", require("./routes/auth"));
