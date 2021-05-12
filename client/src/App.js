@@ -20,6 +20,9 @@ import EntrepreneurCards from "./components/protected/EntrepreneurCards";
 import PasswordForget from "./components/passwordReset/PasswordForget";
 import SignupOverlay from "./components/userAuth/signupOverlay";
 import ResetPassword from "./components/passwordReset/ResetPassword";
+import InvViewProfile from "./components/profile/InvViewProfile";
+import EntViewProfile from "./components/profile/EntViewProfile";
+
 
 export const UserContext = React.createContext([]);
 
@@ -43,8 +46,8 @@ function App() {
 
   //get a new accesstoken if a refreshtoken exists
   useEffect(() => {
-       async function checkRefreshToken() {
-         Axios.post("http://localhost:5500/auth/refresh_token", {
+       
+         Axios.post("http://localhost:5500/auth/refreshtoken", {
            method: "POST",
            credentials: "include",
            headers: {
@@ -59,22 +62,20 @@ function App() {
 
            setLoading(false);
          });
-       }
-    checkRefreshToken();
   }, []);
 
-  if (loading) return (
-    <div
-      className="loader"
-      style={{display: "flex", justifyContent: "center", textAlign: "center", alignItems: "center", verticalAlign: "middle", height: "100vh"}}
-    >
-      <DotLoader
-        color={"#3DB2C7"}
-        loading={loading}
-        size={60}
-      />
-    </div>
-  );
+  // if (loading) return (
+  //   <div
+  //     className="loader"
+  //     style={{display: "flex", justifyContent: "center", textAlign: "center", alignItems: "center", verticalAlign: "middle", height: "100vh"}}
+  //   >
+  //     <DotLoader
+  //       color={"#3DB2C7"}
+  //       loading={loading}
+  //       size={60}
+  //     />
+  //   </div>
+  // );
 
     if (redirect) {
       return <Redirect to={redirect} />;
@@ -91,18 +92,14 @@ function App() {
             <Route exact path="/about" component={About} />
             <Route exact path="/contact" component={Contact} />
             <Route exact path="/profile" component={Profile} />
-            <Route exact path="/login">
-              <Login />
-            </Route>
+            <Route exact path="/login"><Login /></Route>
             <Route exact path="/forgotpassword" component={PasswordForget} />
             <Route exact path="/resetpassword" component={ResetPassword} />
             <Route exact path="/signup" component={SignupOverlay} />
             <Route exact path="/InvestorCards" component={InvestorCards} />
-            <Route
-              exact
-              path="/EntrepreneurCards"
-              component={EntrepreneurCards}
-            />
+            <Route exact path="/EntrepreneurCards" component={EntrepreneurCards}/>
+            <Route exact path="/InvViewProfile" component={InvViewProfile}/>
+            <Route exact path="/EntViewProfile" component={EntViewProfile}/>
           </Switch>
         </Router>
       </div>

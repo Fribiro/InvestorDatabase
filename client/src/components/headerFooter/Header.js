@@ -37,70 +37,102 @@ const Header = () => {
                   About
                 </Link>
               </li>
-              <li className="nav-item dropdown">
-                <Link
-                  className="nav-link dropdown-toggle"
-                  to="investor"
-                  id="navbarDropdown"
-                  data-toggle="dropdown"
-                >
-                  Investors
-                </Link>
-                <div className="dropdown-menu" aria-labelledby="navbarDropdown">
-                  <Link className="dropdown-item" to="#">
-                    Venture Capitalists
+              {!user.accesstoken ? (
+                <li className="nav-item dropdown">
+                  <Link
+                    className="nav-link dropdown-toggle"
+                    to="investor"
+                    id="navbarDropdown"
+                    data-toggle="dropdown"
+                  >
+                    Investors
                   </Link>
-                  <Link className="dropdown-item" to="#">
-                    Angel Investors
+                  <div
+                    className="dropdown-menu"
+                    aria-labelledby="navbarDropdown"
+                  >
+                    <Link className="dropdown-item" to="#">
+                      Venture Capitalists
+                    </Link>
+                    <Link className="dropdown-item" to="#">
+                      Angel Investors
+                    </Link>
+                    <Link className="dropdown-item" to="#">
+                      Accelerators & Incubators
+                    </Link>
+                    <Link className="dropdown-item" to="#">
+                      Corporate Investors
+                    </Link>
+                    <Link className="dropdown-item" to="#">
+                      Peer-To-Peer
+                    </Link>
+                  </div>
+                </li>
+              ) : null}
+              {!user.accesstoken ? (
+                <li className="nav-item dropdown">
+                  <Link
+                    className="nav-link dropdown-toggle"
+                    to="entrepreneur"
+                    id="navbarDropdown"
+                    role="button"
+                    data-toggle="dropdown"
+                    aria-haspopup="true"
+                    aria-expanded="false"
+                  >
+                    Entrepreneurs
                   </Link>
-                  <Link className="dropdown-item" to="#">
-                    Accelerators & Incubators
-                  </Link>
-                  <Link className="dropdown-item" to="#">
-                    Corporate Investors
-                  </Link>
-                  <Link className="dropdown-item" to="#">
-                    Peer-To-Peer
-                  </Link>
-                </div>
-              </li>
-              <li className="nav-item dropdown">
-                <Link
-                  className="nav-link dropdown-toggle"
-                  to="entrepreneur"
-                  id="navbarDropdown"
-                  role="button"
-                  data-toggle="dropdown"
-                  aria-haspopup="true"
-                  aria-expanded="false"
-                >
-                  Entrepreneurs
-                </Link>
-                <div className="dropdown-menu" aria-labelledby="navbarDropdown">
-                  <Link className="dropdown-item" to="#">
-                    Agribusiness
-                  </Link>
-                  <Link className="dropdown-item" to="#">
-                    Entertainment
-                  </Link>
-                  <Link className="dropdown-item" to="#">
-                    Fashion
-                  </Link>
-                  <Link className="dropdown-item" to="#">
-                    Food and Beverages
-                  </Link>
-                  <Link className="dropdown-item" to="#">
-                    Supply chain & logistics
-                  </Link>
-                </div>
-              </li>
+                  <div
+                    className="dropdown-menu"
+                    aria-labelledby="navbarDropdown"
+                  >
+                    <Link className="dropdown-item" to="#">
+                      Agribusiness
+                    </Link>
+                    <Link className="dropdown-item" to="#">
+                      Entertainment
+                    </Link>
+                    <Link className="dropdown-item" to="#">
+                      Fashion
+                    </Link>
+                    <Link className="dropdown-item" to="#">
+                      Food and Beverages
+                    </Link>
+                    <Link className="dropdown-item" to="#">
+                      Supply chain & logistics
+                    </Link>
+                  </div>
+                </li>
+              ) : null}
               <li className="nav-item">
                 <Link className="nav-link" to="#">
                   Contacts
                 </Link>
               </li>
+              {user.accesstoken ? (
+                <li className="nav-item dropdown">
+                  <Link
+                    className="nav-link"
+                    to="InvestorCards"
+                    id="navbarDropdown"
+                  >
+                    Investors
+                  </Link>
+                </li>
+              ) : null}
+              {user.accesstoken ? (
+                <li className="nav-item">
+                  <Link
+                    className="nav-link"
+                    to="EntrepreneurCards"
+                    id="navbarDropdown"
+                  >
+                    Entrepreneurs
+                  </Link>
+                </li>
+              ) : null}
               {!user.accesstoken ? (
-                <div  style={{display: 'flex'}}>
+                <div style={{ display: "flex" }}>
                   <li className="nav-item">
                     <Link className="nav-link" to="signup">
                       Register

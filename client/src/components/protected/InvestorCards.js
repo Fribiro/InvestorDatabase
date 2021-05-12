@@ -1,7 +1,7 @@
 import React, { useState, } from "react";
 import Footer from "../../components/headerFooter/Footer";
 import Header from "../../components/headerFooter/Header";
-import "./protected.css";
+import "./invcards.css";
 import { Icon } from "@iconify/react";
 import arrowRight from "@iconify-icons/mdi/arrow-right";
 import locationIcon from "@iconify-icons/codicon/location";
@@ -14,13 +14,13 @@ const InvestorCards = () => {
   const [visible, setVisible] = useState(true);
 
   const user = useSelector(selectUser);
-  if (!user.accesstoken) {
-    return <Redirect from="" to="login" noThrow />;
-  }
+  // if (!user.accesstoken) {
+  //   return <Redirect from="" to="login" noThrow />;
+  // }
 
   return (
     <div>
-      {visible ? <Header /> : null}
+      <Header />
       <header className="">
         <div className="about-header nav-anime">
           <div className="about-header-img">
@@ -41,7 +41,7 @@ const InvestorCards = () => {
           <h2>Investors</h2>
           <p></p>
           <div className="row">
-            <div className="iCard col-md-3 text-center">
+            <div className="iCardinv col-md-3 text-center">
               <div className="profile">
                 <img
                   src="/img/user1.jpg"
@@ -56,7 +56,7 @@ const InvestorCards = () => {
                     Festus Ribiro
                   </h6>
                   <p class="location justify-content-center">
-                    <Icon className="location-icon" icon={locationIcon} />{" "}
+                    <Icon className="location-icon" color={"#3DB2C7"} icon={locationIcon} />{" "}
                     Nairobi, Kenya
                   </p>
                 </div>
@@ -69,14 +69,14 @@ const InvestorCards = () => {
                   <p>Tech, Real Estate, Entertainment</p>
                 </div>
                 <div className="viewmore text-center align-items-center d-flex justify-content-center pt-2 pb-2">
-                  <Link>
+                  <Link to="InvViewProfile">
                     <span className="details">View Details</span>
                     <Icon className="arrow-right" icon={arrowRight} />
                   </Link>
                 </div>
               </div>
             </div>
-            <div className="iCard col-md-3 text-center">
+            <div className="iCardinv col-md-3 text-center">
               <div className="profile">
                 <img
                   src="/img/user2.jpg"
@@ -104,14 +104,14 @@ const InvestorCards = () => {
                   <p>Fashion, Art, Entertainment</p>
                 </div>
                 <div className="viewmore text-center align-items-center d-flex justify-content-center pt-2 pb-2">
-                  <Link>
+                  <Link to="InvViewProfile">
                     <span className="details">View Details</span>
                     <Icon className="arrow-right" icon={arrowRight} />
                   </Link>
                 </div>
               </div>
             </div>
-            <div className="iCard col-md-3 text-center">
+            <div className="iCardinv col-md-3 text-center">
               <div className="profile">
                 <img
                   src="/img/user3.jpg"
@@ -139,14 +139,14 @@ const InvestorCards = () => {
                   <p>Cars, Travel, Photography</p>
                 </div>
                 <div className="viewmore text-center align-items-center d-flex justify-content-center pt-2 pb-2">
-                  <Link>
+                  <Link to="InvViewProfile">
                     <span className="details">View Details</span>
                     <Icon className="arrow-right" icon={arrowRight} />
                   </Link>
                 </div>
               </div>
             </div>
-            <div className="iCard col-md-3 text-center">
+            <div className="iCardinv col-md-3 text-center">
               <div className="profile">
                 <img
                   src="/img/user4.jpg"
@@ -181,7 +181,7 @@ const InvestorCards = () => {
                 </div>
               </div>
             </div>
-            <div className="iCard col-md-3 text-center">
+            <div className="iCardinv col-md-3 text-center">
               <div className="profile">
                 <img
                   src="/img/user5.jpg"
@@ -216,7 +216,7 @@ const InvestorCards = () => {
                 </div>
               </div>
             </div>
-            <div className="iCard col-md-3 text-center">
+            <div className="iCardinv col-md-3 text-center">
               <div className="profile">
                 <img
                   src="/img/user6.jpg"
@@ -251,7 +251,7 @@ const InvestorCards = () => {
                 </div>
               </div>
             </div>
-            <div className="iCard col-md-3 text-center">
+            <div className="iCardinv col-md-3 text-center">
               <div className="profile">
                 <img
                   src="/img/user6.jpg"
@@ -286,7 +286,7 @@ const InvestorCards = () => {
                 </div>
               </div>
             </div>
-            <div className="iCard col-md-3 text-center">
+            <div className="iCardinv col-md-3 text-center">
               <div className="profile">
                 <img
                   src="/img/user6.jpg"
@@ -324,7 +324,7 @@ const InvestorCards = () => {
           </div>
         </div>
       </section>
-      {visible ? <Footer /> : null}
+      <Footer />
     </div>
   );
 };

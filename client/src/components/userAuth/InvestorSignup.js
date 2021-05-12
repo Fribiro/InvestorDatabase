@@ -5,7 +5,9 @@ import { Redirect } from "react-router-dom";
 const emailRegex = RegExp(
   /^[a-zA-Z0-9.!#$%&’*+/=?^_`{|}~-]+@[a-zA-Z0-9-]+(?:\.[a-zA-Z0-9-]+)*$/
 );
-
+const strongPassword = RegExp(
+  "(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*[^A-Za-z0-9])(?=.{8,})"
+);
 
 export default class InvestorSignup extends Component {
   constructor(props) {
@@ -40,21 +42,20 @@ export default class InvestorSignup extends Component {
 
     switch (name) {
       case "ifirstName":
-        formErrors.ifirstName =
-          value.length < 3 ? "min. 3 characaters" : "";
+        formErrors.ifirstName = value.length < 3 ? "Min. 3 characaters" : "";
         break;
       case "ilastName":
-        formErrors.ilastName =
-          value.length < 3 ? "min. 3 characaters" : "";
+        formErrors.ilastName = value.length < 3 ? "Min. 3 characaters" : "";
         break;
-      case "eemail":
+      case "iemail":
         formErrors.iemail = emailRegex.test(value)
           ? ""
-          : "invalid email address";
+          : "Invalid email address";
         break;
       case "ipassword":
-        formErrors.ipassword =
-          value.length < 6 ? "minimum 6 characaters required" : "";
+        formErrors.ipassword = strongPassword.test(value)
+          ? ""
+          : "Weak password";
         break;
       case "iconfirmPassword":
         formErrors.iconfirmPassword =
@@ -171,11 +172,6 @@ export default class InvestorSignup extends Component {
               placeholder="Password"
               onChange={this.handleChange}
             />
-            {formErrors.iconfirmPassword.length > 0 && (
-              <small className="danger-error">
-                {formErrors.iconfirmPassword}
-              </small>
-            )}
           </div>
           {this.state.message && (
             <small className="danger-error">{this.state.message}</small>

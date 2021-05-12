@@ -58,25 +58,9 @@ export default class EntrepreneurSignup extends Component {
           : "invalid email address";
         break;
       case "epassword":
-        // formErrors.epassword =
-        //   value.length < 6 ? "minimum 6 characaters required" : "";
-        switch (name) {
-          case "strongpwd":
-            formErrors.epassword.strongpwd = strongPassword.test(value)
-              ? ""
-              : "strong password";
-            break;
-          case "mediumpwd":
-            formErrors.epassword.mediumpwd = mediumPassword.test(value)
-              ? ""
-              : "medium password";
-            break;
-          case "weakpwd":
-            formErrors.epassword.weakpwd =  "weak password";
-            break;
-          default:
-            break;
-        }
+        formErrors.epassword = strongPassword.test(value)
+          ? ""
+          : "Weak password";
         break;
       case "econfirmPassword":
         formErrors.econfirmPassword =
@@ -182,10 +166,8 @@ export default class EntrepreneurSignup extends Component {
             {/* {formErrors.epassword.length > 0 && (
               <small className="danger-error">{formErrors.epassword}</small>
             )} */}
-            {formErrors.epassword.mediumpwd && (
-              <small className="danger-error">
-                {formErrors.epassword.mediumpwd}
-              </small>
+            {formErrors.epassword.length > 0 && (
+              <small className="danger-error">{formErrors.epassword}</small>
             )}
           </div>
           <div className="input-group">
@@ -199,11 +181,6 @@ export default class EntrepreneurSignup extends Component {
               placeholder="Password"
               onChange={this.handleChange}
             />
-            {/* {formErrors.econfirmPassword.length > 0 && (
-              <small className="danger-error">
-                {formErrors.econfirmPassword}
-              </small>
-            )} */}
           </div>
           {this.state.message && (
             <small className="danger-error">{this.state.message}</small>

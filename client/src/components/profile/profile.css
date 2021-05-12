@@ -1,0 +1,137 @@
+.viewProfileBody {
+    margin: 20px 40px;
+}
+.entProfileSec1 {
+    display: grid;
+    grid-template-columns: 70% 30%;
+    height: 350px;
+    background-color: #E5E8E8;
+    opacity: .9;
+}
+.businessSummary {
+    grid-column: 1;
+    grid-row: 1;
+    border-left: 10px solid #3DB2C7;
+}
+.invNumbers {
+    grid-column: 2;
+    grid-row: 1;
+}
+.businessSummary h3 {
+    color: #3DB2C7;
+    margin: 30px 40px 10px 30px;
+    text-align: left;
+    padding-left: 20px;
+    font-weight: bold;
+    font-family: 'Abril Fatface',cursive;
+}
+.businessSummary p {
+    margin: 0 40px;
+}
+.invNumbers {
+    margin: 30px 40px 10px 30px;
+}
+.invNumbers h3 {
+    font-family: 'Bebas Neue', cursive;
+    color: #333;
+    
+}
+.styled-table td {
+    height: 40px;
+    border-bottom: 1px solid black;
+}
+.td2 {
+    text-align: right;
+    padding-left: 15px;
+}
+table {
+    border-spacing: 20px 0;
+}
+.entProfileSec2 {
+    height: 450px;
+    margin: 30px 0;
+    text-align: center;
+    opacity: .9;
+}
+.entProfileSec2 h3 {
+    color: #3DB2C7;
+    font-family: 'Abril Fatface', cursive;
+    font-weight: bold;
+    margin: 30px 40px 10px 30px;
+}
+.entProfileSec3 {
+    height: 450px;
+    margin: 30px 0;
+    background-color: #E5E8E8;
+    border-right: 10px solid #3DB2C7;
+    opacity: .9;
+}
+.entProfileSec3 h3 {
+    color: #3DB2C7;
+    font-family: 'Abril Fatface', cursive;
+    font-weight: bold;
+    margin: 30px 40px 10px 40px;
+    padding-top: 30px;
+}
+.entProfileSec3 p {
+    margin: 0 40px;
+    text-align: justify;
+}
+.entProfileSec4 {
+    height: 500px;
+    margin: 30px 0;
+    border-left: 10px solid #3DB2C7;
+}
+.entProfileSec4-grid {
+    display: grid;
+    grid-template-columns: 50% 50%;
+}
+.entProfileSec4 h3 {
+    color: #3DB2C7;
+    font-family: 'Abril Fatface', cursive;
+    font-weight: bold;
+    margin: 30px 40px 10px 40px;
+    padding-top: 30px;
+}
+.entProfileSec4 p {
+    margin: 0 20px;
+    text-align: justify;
+    color: white;
+}
+.entProfileSec4-img {
+    grid-column: 2;
+    grid-row: 1;
+    filter: brightness(95%);
+    object-fit: cover
+}
+
+.entProfileSec4-img img {
+    width: 100%;
+    object-fit: cover;
+    height: 400px;
+    filter: brightness(70%);
+}
+
+.entProfileSec4-text {
+    grid-column: 1;
+    grid-row: 1;
+    margin: 0 20px;
+}
+.entProfileSec5 {
+    height: 350px;
+    margin: 30px 0;
+    background-color: #E5E8E8;
+    border-right: 10px solid #3DB2C7;
+    opacity: .9;
+}
+.entProfileSec5 h3 {
+    color: #3DB2C7;
+    font-family: 'Abril Fatface', cursive;
+    font-weight: bold;
+    margin: 30px 40px 10px 40px;
+    padding-top: 30px;
+}
+.entProfileSec5 p {
+    margin: 0 40px;
+    text-align: justify;
+}

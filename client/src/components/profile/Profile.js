@@ -24,28 +24,31 @@ const Profile = () => {
       }
 
 
-    const fileChangedHandler = (e) => {
-      sampleFile({ sampleFile: e.target.files[0] });
-      console.log(e.target.files[0])
+    const fileChangeHandler = (e) => {
+      setSampleFile(e.target.files[0]);
+      console.log(sampleFile);
     };
 
     const uploadHandler = () => {
-      const fileInput = document.getElementById('imageInput');
-      fileInput.click();
+      // const fileInput = document.getElementById('imageInput');
+      // fileInput.click();
 
-      // const fd = new FormData();
-      // fd.append('image', sampleFile, sampleFile.name)
-      Axios.put("http://localhost:5500/imageupload").then((res) => {
+      const fd = new FormData();
+      fd.append('image', sampleFile, sampleFile.name)
+      Axios.put("http://localhost:5500/imageupload",{sampleFile: sampleFile.name}).then((res) => {
         console.log(res);
         if (res.data.results) {
           console.log(res);
-          res.send("Profile picture updated successfully");
+          console.log("Profile picture updated successfully");
         } else {
-          res.send("Profile picture update failed");
+          console.log("Profile picture update failed");
         }
       });
     };
-    
+    const profileImg = () => {
+
+    }
+
       return (
         <div>
           <Header />
@@ -58,20 +61,6 @@ const Profile = () => {
                   alt=""
                 />
                 {/* <Avatar size={100} /> */}
-                <input
-                  id="imageInput"
-                  hidden="hidden"
-                  type="file"
-                  name="sampleFile"
-                  accept="image/*"
-                  onChange={fileChangedHandler}
-                />
-                <Tooltip title="Edit profile picture" placement="top">
-                  <IconButton htmlFor="imageInput" onClick={uploadHandler}>
-                    <EditIcon style={{ color: "#3DB2C7" }} />
-                  </IconButton>
-                </Tooltip>
-                {/* <button onClick={uploadHandler}>Upload!</button> */}
               </div>
               <div className="userNav">
                 <ul className="sideheaders">
@@ -87,7 +76,7 @@ const Profile = () => {
                   <li
                     className="profileNavClickable"
                     onClick={() => {
-                      setVisible({ visible: true });
+                      setVisible({ visible: false });
                     }}
                   >
                     Business Profile
@@ -95,6 +84,21 @@ const Profile = () => {
                   <li>Location</li>
                   <li>Email</li>
                 </ul>
+
+                <input
+                  id="imageInput"
+                  // hidden="hidden"
+                  type="file"
+                  name="sampleFile"
+                  accept="image/*"
+                  onChange={fileChangeHandler}
+                />
+                {/* <Tooltip title="Edit profile picture" placement="top">
+                  <IconButton htmlFor="imageInput" onClick={uploadHandler}>
+                    <EditIcon style={{ color: "#3DB2C7" }} />
+                  </IconButton>
+                </Tooltip> */}
+                <button onClick={uploadHandler}>Upload!</button>
               </div>
             </div>
 
