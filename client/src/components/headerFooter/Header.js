@@ -1,10 +1,35 @@
 import React, { useState, useContext } from "react";
-import { BrowserRouter as Router, Switch, Route, Link } from "react-router-dom";
 import Avatar from "@material-ui/core/Avatar";
+import SearchIcon from "@material-ui/icons/Search";
 import { UserContext } from "../../App";
 
+import { Link, Redirect } from "react-router-dom";
+
 const Header = () => {
-  const [user] = useContext(UserContext);
+  const [user, setUser] = useContext(UserContext);
+  const [redirect, setRedirect] = useState("");
+  const [searchText, setSearchText] = useState("");
+  const excludeColumns = ["id", "color"];
+  //const [user, setUser] = useState([]);
+
+  const logOutCallback = async () => {
+    await fetch("http://localhost:5500/auth/logout", {
+      method: "POST",
+    });
+    //create user from context
+    setUser({});
+    //navigate back to the home page
+    console.log("Logged out");
+    setRedirect("/");
+  };
+
+  const handleChange = (value) => {
+    setSearchText(value);
+  };
+
+  if (redirect) {
+    return <Redirect to={redirect} />;
+  }
 
   return (
     <div>
@@ -38,70 +63,17 @@ const Header = () => {
                 </Link>
               </li>
               {!user.accesstoken ? (
-                <li className="nav-item dropdown">
-                  <Link
-                    className="nav-link dropdown-toggle"
-                    to="investor"
-                    id="navbarDropdown"
-                    data-toggle="dropdown"
-                  >
+                <li className="nav-item">
+                  <Link className="nav-link" to="investor">
                     Investors
                   </Link>
-                  <div
-                    className="dropdown-menu"
-                    aria-labelledby="navbarDropdown"
-                  >
-                    <Link className="dropdown-item" to="#">
-                      Venture Capitalists
-                    </Link>
-                    <Link className="dropdown-item" to="#">
-                      Angel Investors
-                    </Link>
-                    <Link className="dropdown-item" to="#">
-                      Accelerators & Incubators
-                    </Link>
-                    <Link className="dropdown-item" to="#">
-                      Corporate Investors
-                    </Link>
-                    <Link className="dropdown-item" to="#">
-                      Peer-To-Peer
-                    </Link>
-                  </div>
                 </li>
               ) : null}
               {!user.accesstoken ? (
-                <li className="nav-item dropdown">
-                  <Link
-                    className="nav-link dropdown-toggle"
-                    to="entrepreneur"
-                    id="navbarDropdown"
-                    role="button"
-                    data-toggle="dropdown"
-                    aria-haspopup="true"
-                    aria-expanded="false"
-                  >
+                <li className="nav-item">
+                  <Link className="nav-link" to="entrepreneur">
                     Entrepreneurs
                   </Link>
-                  <div
-                    className="dropdown-menu"
-                    aria-labelledby="navbarDropdown"
-                  >
-                    <Link className="dropdown-item" to="#">
-                      Agribusiness
-                    </Link>
-                    <Link className="dropdown-item" to="#">
-                      Entertainment
-                    </Link>
-                    <Link className="dropdown-item" to="#">
-                      Fashion
-                    </Link>
-                    <Link className="dropdown-item" to="#">
-                      Food and Beverages
-                    </Link>
-                    <Link className="dropdown-item" to="#">
-                      Supply chain & logistics
-                    </Link>
-                  </div>
                 </li>
               ) : null}
               <li className="nav-item">
@@ -110,23 +82,15 @@ const Header = () => {
                 </Link>
               </li>
               {user.accesstoken ? (
-                <li className="nav-item dropdown">
-                  <Link
-                    className="nav-link"
-                    to="InvestorCards"
-                    id="navbarDropdown"
-                  >
+                <li className="nav-item">
+                  <Link className="nav-link" to="InvestorCards">
                     Investors
                   </Link>
                 </li>
               ) : null}
               {user.accesstoken ? (
                 <li className="nav-item">
-                  <Link
-                    className="nav-link"
-                    to="EntrepreneurCards"
-                    id="navbarDropdown"
-                  >
+                  <Link className="nav-link" to="EntrepreneurCards">
                     Entrepreneurs
                   </Link>
                 </li>
@@ -145,9 +109,29 @@ const Header = () => {
                   </li>
                 </div>
               ) : null}
+              {/* {!user.accesstoken ? (
+                <div class="searchBox">
+                  <input class="searchInput"type="text" name="" placeholder="Search"/>
+                  <button class="searchButton" href="#">
+                      <SearchIcon class="material-icons"/>
+                  </button>
+                </div>
+              ) : null} */}
               {user.accesstoken ? (
                 <li>
-                  <Avatar icon="user" />
+                  <Link className="nav-link" to="" onClick={logOutCallback}>
+                    Logout
+                  </Link>
+                </li>
+              ) : null}
+              {user.accesstoken ? (
+                <li>
+                  <Link className="nav-link" to="profile">
+                    <Avatar
+                      icon="user"
+                      style={{ height: "30px", width: "30px" }}
+                    />
+                  </Link>
                 </li>
               ) : null}
             </ul>

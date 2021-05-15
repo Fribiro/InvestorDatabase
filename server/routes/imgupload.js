@@ -22,27 +22,25 @@ router.get("/", (req, res) => {
 });
 
 router.put("/", (req, res) => {
-  let sampleFile;
-  let uploadPath;
-
-  if (!req.files || Object.keys(req.files).length === 0) {
-    return res.status(400).send("No files were uploaded.");
-  }
+  //let sampleFile;
+  ///let uploadPath;
 
   // name of the input is sampleFile
-  sampleFile = req.files.sampleFile;
-  uploadPath = __dirname + "/upload/" + sampleFile.name;
+  const {sampleFile} = req.body;
+  // if (!req.files || Object.keys(req.files).length === 0) {
+  //   return res.status(400).send("No files were uploaded.");
+  // }
+
+  //uploadPath = __dirname + "/upload/" + sampleFile.name;
 
   console.log(sampleFile);
 
   // Use mv() to place file on the server
-  sampleFile.mv(uploadPath, function (err) {
-    if (err) return res.status(500).send(err);
-    let id = req.body.id;
+  
+    //let id = req.body.id;
+    let data = {profile_img: req.body.sampleFile}
     let query = db.query(
-      'UPDATE ent_profile SET profile_img = ? WHERE id ="1"',
-      [sampleFile.name],
-      (err, results) => {
+      'UPDATE entrepreneurSignup SET ?',data,(err, results) => {
         // Once done, release connection
         if (err) throw err;
         else {
@@ -52,7 +50,7 @@ router.put("/", (req, res) => {
     );
 
     // res.send('File uploaded!');
-  });
+  //});
 });
 
 module.exports = router;

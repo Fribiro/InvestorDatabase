@@ -22,6 +22,8 @@ import SignupOverlay from "./components/userAuth/signupOverlay";
 import ResetPassword from "./components/passwordReset/ResetPassword";
 import InvViewProfile from "./components/profile/InvViewProfile";
 import EntViewProfile from "./components/profile/EntViewProfile";
+import LoginOverlay from "./components/userAuth/loginOverlay";
+import Wallet from "./components/protected/Wallet";
 
 
 export const UserContext = React.createContext([]);
@@ -47,7 +49,7 @@ function App() {
   //get a new accesstoken if a refreshtoken exists
   useEffect(() => {
        
-         Axios.post("http://localhost:5500/auth/refreshtoken", {
+         Axios.post("http://localhost:5500/auth/refresh_token", {
            method: "POST",
            credentials: "include",
            headers: {
@@ -92,14 +94,19 @@ function App() {
             <Route exact path="/about" component={About} />
             <Route exact path="/contact" component={Contact} />
             <Route exact path="/profile" component={Profile} />
-            <Route exact path="/login"><Login /></Route>
+            <Route exact path="/login" component={Login} />
             <Route exact path="/forgotpassword" component={PasswordForget} />
             <Route exact path="/resetpassword" component={ResetPassword} />
             <Route exact path="/signup" component={SignupOverlay} />
             <Route exact path="/InvestorCards" component={InvestorCards} />
-            <Route exact path="/EntrepreneurCards" component={EntrepreneurCards}/>
-            <Route exact path="/InvViewProfile" component={InvViewProfile}/>
-            <Route exact path="/EntViewProfile" component={EntViewProfile}/>
+            <Route
+              exact
+              path="/EntrepreneurCards"
+              component={EntrepreneurCards}
+            />
+            <Route exact path="/InvViewProfile" component={InvViewProfile} />
+            <Route exact path="/EntViewProfile" component={EntViewProfile} />
+            <Route exact path="/Wallet" component={Wallet} />
           </Switch>
         </Router>
       </div>

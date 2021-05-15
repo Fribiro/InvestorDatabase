@@ -1,4 +1,4 @@
-import React, { useState, useContext, useEffect } from "react";
+import React, { useState, useContext,useEffect } from "react";
 import Axios from "axios";
 import { Link, Redirect } from "react-router-dom";
 //import {userContext} from "../../usercontext"
@@ -10,7 +10,7 @@ const emailRegex = RegExp(
   /^[a-zA-Z0-9.!#$%&’*+/=?^_`{|}~-]+@[a-zA-Z0-9-]+(?:\.[a-zA-Z0-9-]+)*$/
 );
 
-const Login = () => {
+const EntLogin = () => {
   //const {handleUserChange, user} = useContext(userContext)
   const [user, setUser] = useContext(UserContext);
   const [message, setMessage] = useState("");
@@ -19,7 +19,7 @@ const Login = () => {
     email: "",
     password: "",
   });
-  const [email, setEmail] = useState("");
+  const [email, setEmail] = useState("")
   const [password, setPassword] = useState("");
   //const dispatch = useDispatch()
 
@@ -29,10 +29,12 @@ const Login = () => {
     let error;
     switch (name) {
       case "email":
-        error = emailRegex.test(value) ? "" : "invalid email address";
+          error= emailRegex.test(value)
+          ? ""
+          : "invalid email address"
         break;
       case "password":
-        error = value.length < 6 ? "minimum 6 characaters required" : "";
+           error= value.length < 6 ? "minimum 6 characaters required" : ""
         break;
       default:
         break;
@@ -41,39 +43,36 @@ const Login = () => {
   };
 
   const submitLogin = (e) => {
-    e.preventDefault();
-    Axios.post("http://localhost:5500/auth/login", {
+  e.preventDefault();
+    Axios.post("http://localhost:5500/auth/entlogin", {
       email,
-      password,
+     password,
       credentials: "include",
       headers: {
         "Content-Type": "application/json",
       },
-    }).then(
-      (res) => {
+    }).then((res) => {
         setUser({
-          accesstoken: res.data.accesstoken,
-        });
-        setRedirect("/EntViewProfile");
-        console.log("Logged in");
-
+        accesstoken: res.data.accesstoken,
+      });
+      setRedirect("/EntViewProfile");
+      console.log("Logged in");
+     
         //dispatch(accesstoken(res.data.accesstoken));
-      },
-      (err) => {
-        setMessage(err.response.data.message);
-
-        //dispatch(userSet(null));
-      }
-    );
+        
+    },(err)=>{
+      setMessage(err.response.data.message);
+      
+       //dispatch(userSet(null));
+    });
   };
   useEffect(() => {
     console.log(user);
   }, [user]);
-
-  if (redirect) {
-    return <Redirect to={redirect} />;
-  } else
-    return (
+    
+    if (redirect) {
+      return <Redirect to={redirect} />;
+    }else    return (
       <div className="root-container">
         <div
           className="box-container login"
@@ -131,6 +130,7 @@ const Login = () => {
         </div>
       </div>
     );
-};
+  
+}
 
-export default Login;
+export default EntLogin

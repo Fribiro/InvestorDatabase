@@ -36,7 +36,8 @@ const PasswordForget = () => {
     }).then((res) => {
         if (res.status === 201) {
           console.log(res.data.link)
-          setRedirect('/resetpassword');
+          
+          setRedirect('/resetpassword/:id/:token');
         }
       },(err) => {
         setMessage(err.response.data.message);

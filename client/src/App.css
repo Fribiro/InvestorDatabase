@@ -112,7 +112,64 @@ a.dropdown-item:hover {
 .nav-link {
   padding: .2rem 1rem;
 }
+.searchBox {
+  position: absolute;
+  left: 50%;
+  transform: translate(-50%, 50%);
+  background: #2f3640;
+  height: 20px;
+  border-radius: 40px;
+  padding: 10px;
 
+}
+
+.searchBox:hover>.searchInput {
+  width: 240px;
+  padding: 0 6px;
+}
+
+.searchBox:hover>.searchButton {
+  background: white;
+  color: #2f3640;
+}
+
+.material-icons {
+  font-size: 10px;
+}
+
+.searchButton {
+  color: white;
+  float: right;
+  width: 20px;
+  height: 20px;
+  border-radius: 50%;
+  background: #2f3640;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  transition: 0.4s;
+}
+
+.searchInput {
+  border: none;
+  background: none;
+  outline: none;
+  float: left;
+  padding: 0;
+  color: white;
+  font-size: 16px;
+  transition: 0.4s;
+  line-height: 40px;
+  width: 0px;
+
+}
+
+@media screen and (max-width: 620px) {
+  .searchBox:hover>.searchInput {
+    width: 150px;
+    padding: 0 6px;
+  }
+}
 div#navbarSupportedContent {
   margin-inline-start: 180px;
 }
@@ -1064,7 +1121,7 @@ i.fa.fa-quote-left {
   visibility: visible;
 }
 .login {
-  margin-top: 120px;
+  margin-top: 0;
 }
 /* Header */
 .header {

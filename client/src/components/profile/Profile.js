@@ -4,7 +4,7 @@ import PersonalDetails from "./PersonalDetails";
 import BusinessDetails from "./BusinessDetails";
 import Header from "../../components/headerFooter/Header";
 import Footer from "../../components/headerFooter/Footer";
-import { Redirect } from "react-router-dom";
+import { Link, Redirect } from "react-router-dom";
 import Axios from "axios";
 //import {useSelector} from  "react-redux";
 //import {selectUser} from "../../state/user"
@@ -79,26 +79,26 @@ const Profile = () => {
                       setVisible({ visible: false });
                     }}
                   >
-                    Business Profile
+                    <Link to="EntViewProfile" style={{textDecoration: 'none', color: '#333'}}>Business Profile</Link>
                   </li>
                   <li>Location</li>
                   <li>Email</li>
                 </ul>
 
-                <input
+                {/* <input
                   id="imageInput"
                   // hidden="hidden"
                   type="file"
                   name="sampleFile"
                   accept="image/*"
                   onChange={fileChangeHandler}
-                />
+                /> */}
                 {/* <Tooltip title="Edit profile picture" placement="top">
                   <IconButton htmlFor="imageInput" onClick={uploadHandler}>
                     <EditIcon style={{ color: "#3DB2C7" }} />
                   </IconButton>
                 </Tooltip> */}
-                <button onClick={uploadHandler}>Upload!</button>
+                {/* <button onClick={uploadHandler}>Upload!</button> */}
               </div>
             </div>
 

@@ -28,7 +28,7 @@ const ResetPassword = () => {
   const resetPassword = (e) => {
     e.preventDefault();
 
-    Axios.post("http://localhost:5500/resetPassword/;id/token", {
+    Axios.post("http://localhost:5500/resetPassword/:id/:token", {
       password,
     }).then(
       (res) => {
@@ -43,7 +43,7 @@ const ResetPassword = () => {
   };
 
   useEffect(() => {
-    Axios.get("http://localhost:5500/resetPassword/;id/token", {
+    Axios.get("http://localhost:5500/resetPassword/:id/:token", {
       password,
     }).then(
       (res) => {

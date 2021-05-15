@@ -10,7 +10,7 @@ const emailRegex = RegExp(
   /^[a-zA-Z0-9.!#$%&’*+/=?^_`{|}~-]+@[a-zA-Z0-9-]+(?:\.[a-zA-Z0-9-]+)*$/
 );
 
-const Login = () => {
+const InvLogin = () => {
   //const {handleUserChange, user} = useContext(userContext)
   const [user, setUser] = useContext(UserContext);
   const [message, setMessage] = useState("");
@@ -42,7 +42,7 @@ const Login = () => {
 
   const submitLogin = (e) => {
     e.preventDefault();
-    Axios.post("http://localhost:5500/auth/login", {
+    Axios.post("http://localhost:5500/auth/invlogin", {
       email,
       password,
       credentials: "include",
@@ -51,12 +51,12 @@ const Login = () => {
       },
     }).then(
       (res) => {
-        setUser({
-          accesstoken: res.data.accesstoken,
-        });
-        setRedirect("/EntViewProfile");
-        console.log("Logged in");
-
+          setUser({
+            accesstoken: res.data.accesstoken,
+          });
+          setRedirect("/profile");
+          console.log("Logged in");
+        
         //dispatch(accesstoken(res.data.accesstoken));
       },
       (err) => {
@@ -75,10 +75,7 @@ const Login = () => {
   } else
     return (
       <div className="root-container">
-        <div
-          className="box-container login"
-          style={{ marginTop: "0 !important" }}
-        >
+        <div className="box-container login" style={{ marginTop: "0 !important" }}>
           <div className="inner-container">
             <div className="header">Login</div>
             <div className="box">
@@ -133,4 +130,4 @@ const Login = () => {
     );
 };
 
-export default Login;
+export default InvLogin;

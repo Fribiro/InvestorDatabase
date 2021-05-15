@@ -2,6 +2,9 @@ const mysql = require("mysql");
 const jwt = require("jsonwebtoken");
 const bcrypt = require("bcryptjs");
 const cookieParser = require("cookie-parser")
+const { verify } = require("jsonwebtoken");
+
+
 const {
   createAccessToken,
   createRefreshToken,
@@ -35,7 +38,7 @@ exports.login = async (req, res) => {
       [email],
       async (error, results) => {
         //bcryptcompare compares the password being typed with the one in the db
-        
+
         if (
           !results ||
           !(await bcrypt.compare(req.body.password, results[0].password))
@@ -46,7 +49,7 @@ exports.login = async (req, res) => {
         } else {
           const accesstoken = createAccessToken(results.Id);
           const refreshtoken = createRefreshToken(results.Id);
-          
+
           results.refreshtoken = refreshtoken;
           sendRefreshToken(res, refreshtoken);
           sendAccessToken(req, res, accesstoken);
@@ -57,6 +60,45 @@ exports.login = async (req, res) => {
   } catch (error) {
     console.log(error);
   } 
+};
+
+exports.invlogin = async (req, res) => {
+  try {
+    const { email, password } = req.body;
+
+    if (!email || !password) {
+      res.status(400).json({
+        message: "Please provide an email and password",
+      });
+      return;
+    }
+    db.query(
+      "SELECT *  FROM investorSignup  WHERE email = ?",
+      [email],
+      async (error, results) => {
+        //bcryptcompare compares the password being typed with the one in the db
+
+        if (
+          !results ||
+          !(await bcrypt.compare(req.body.password, results[0].password))
+        ) {
+          res.status(401).json({
+            message: "Email or Password is incorrect",
+          });
+        } else {
+          const accesstoken = createAccessToken(results.Id);
+          const refreshtoken = createRefreshToken(results.Id);
+
+          results.refreshtoken = refreshtoken;
+          sendRefreshToken(res, refreshtoken);
+          sendAccessToken(req, res, accesstoken);
+        }
+        //res.status(200).json({ message: "Welcome Back" });
+      }
+    );
+  } catch (error) {
+    console.log(error);
+  }
 };
 
 //signup function for investors
@@ -180,13 +222,13 @@ exports.entrepreneursignup = (req, res) => {
 exports.refreshtoken = (req, res) => {
   const token = req.cookies.refreshtoken;
   
-  if (!token) return res.send({ accesstoken: "" });
+  if (!token) return res.send("No refreshtoken");//res.send({ accesstoken: "" });
   
   let payload = null;
   try {
     payload = verify(token, process.env.REFRESH_TOKEN_SECRET);
   } catch (err) {
-    return res.send({ accesstoken: "" });
+    return res.send('Invalid token')//res.send({ accesstoken: "" });
   }
   
   db.query(
@@ -204,10 +246,11 @@ exports.refreshtoken = (req, res) => {
       } else {
         const accesstoken = createAccessToken(results.Id);
         const refreshtoken = createRefreshToken(results.Id);
-        results.refreshtoken = refreshtoken;
+        //store in db
+        results[0].refreshtoken = refreshtoken;
 
         sendRefreshToken(res, refreshtoken);
-        return res.status(200).json({ accesstoken });
+        return res.send({ accesstoken });
       }
     }
   );

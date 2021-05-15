@@ -45,11 +45,11 @@ router.post("/forgotPassword", (req, res, next) => {
             id: results.id,
           };
           const token = jwt.sign(payload, secret, { expiresIn: "2m" });
-          const link = `http://localhost:3002/resetpassword/${results[0].id}/${token}`;
+          const link = `http://localhost:3002/resetPassword/${results[0].id}/${token}`; //http://192.168.0.16:3002
           console.log(results[0].id);
+          //userid = results[0].id;
           console.log(link);
-          res.status(201).json({ link });
-
+          res.status(201).json({link});
         }
           
 
@@ -58,28 +58,28 @@ router.post("/forgotPassword", (req, res, next) => {
 
 router.get("/resetPassword/:id/:token", (req, res, next) => {
     const {id, token} = req.params
+    res.send(req.params)
+    // db.query(
+    //   "SELECT * FROM entrepreneurSignup WHERE id = ?",
+    //   [req.params.id],
+    //   async (error, results) => {
+    //     if(results.length === 0 ) {
+    //       res.status(400).json({message: "Invalid id"});
+    //       return
+    //     }
 
-    db.query(
-      "SELECT * FROM entrepreneurSignup WHERE id = ?",
-      [req.params.id],
-      async (error, results) => {
-        if(results.length === 0 ) {
-          res.status(400).json({message: "Invalid id"});
-          return
-        }
-
-        const secret = process.env.JWT_SECRET + results.password;
-        try {
-          const payload = jwt.verify(token, secret)
-          res.status(201).json({
-            results,
-          });
-        } catch (error) {
-          console.log(error.message)
-          res.send(error.message)
-        }
-      }
-    );
+    //     const secret = process.env.JWT_SECRET + results.password;
+    //     try {
+    //       const payload = jwt.verify(token, secret)
+    //       res.status(201).json({
+    //         results,
+    //       });
+    //     } catch (error) {
+    //       console.log(error.message)
+    //       res.send(error.message)
+    //     }
+    //   }
+    // );
 });
 
 router.post("/resetPassword/:id/:token", (req, res, next) => {

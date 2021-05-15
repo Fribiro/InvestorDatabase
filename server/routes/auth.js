@@ -11,11 +11,12 @@ router.post("/entrepreneursignup", authController.entrepreneursignup);
 router.post("/investorsignup", authController.investorsignup);
 
 router.post("/login", authController.login);
+router.post("/invlogin", authController.invlogin);
 
 router.post("/refresh_token", authController.refreshtoken);
 
 router.post("/logout", (_req, res) => {
-  res.clearCookie("refreshtoken", { path: "/refresh_token" });
+  res.clearCookie("refreshtoken", { path: "/auth/refresh_token" });
   return res.send({
     message: "Logged out",
   });

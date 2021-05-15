@@ -1,4 +1,4 @@
-import React, { useState, } from "react";
+import React, { useState,useEffect } from "react";
 import Footer from "../../components/headerFooter/Footer";
 import Header from "../../components/headerFooter/Header";
 import "./invcards.css";
@@ -10,13 +10,77 @@ import { Redirect } from "react-router-dom";
 import { useSelector } from "react-redux";
 import { selectUser } from "../../state/user";
 
+import SearchIcon from "@material-ui/icons/Search";
+import IconButton from "@material-ui/core/IconButton";
+import Axios from "axios";
+import $ from "jquery";
+
 const InvestorCards = () => {
   const [visible, setVisible] = useState(true);
-
+  const [users, setUsers] = useState([]);
+  const [userdetails, setUserdetails] = useState([]);
+  const [searchText, setSearchText] = useState("");
   const user = useSelector(selectUser);
   // if (!user.accesstoken) {
   //   return <Redirect from="" to="login" noThrow />;
   // }
+
+  const getUser = (id) => {
+    Axios.get("http://localhost:5500/investor/${id}").then((res) => {
+      console.log(res.data);
+      setUserdetails(res.data[0]);
+      $("#myModal").modal("show");
+    });
+  };
+  useEffect(() => {
+    Axios.get("http://localhost:5500/investor").then((res) => {
+      console.log(res.data);
+      setUsers(res.data);
+      //console.log(users);
+    });
+  }, []);
+  const updateUsers = (id) => {
+    Axios.put("http://localhost:5500/investorupdate", {}).then((res) => {
+      setUsers(
+        users.map((val) => {
+          return val.id === id
+            ? {
+                firstName: val.firstName,
+                lastName: val.lastName,
+                email: val.email,
+              }
+            : val;
+        })
+      );
+      $("#editmodal").modal("show");
+    });
+  };
+  const handleChange = (value) => {
+    setSearchText(value);
+    filterUsers(value);
+  };
+
+  const excludeColumns = ["id"];
+
+  const filterUsers = (value) => {
+    Axios.get("http://localhost:5500/investor").then((res) => {
+      console.log(res.data);
+      //setUsers(res.data);
+
+      const lowercasedValue = value.toLowerCase().trim();
+      if (lowercasedValue === "") setUsers(res.data);
+      else {
+        const filterUsers = users.filter((item) => {
+          return Object.keys(item).some((key) =>
+            excludeColumns.includes(key)
+              ? false
+              : item[key].toString().toLowerCase().includes(lowercasedValue)
+          );
+        });
+        setUsers(filterUsers);
+      }
+    });
+  };
 
   return (
     <div>
@@ -36,291 +100,64 @@ const InvestorCards = () => {
           </div>
         </div>
       </header>
+      <input
+        style={{ marginLeft: 5, textAlign: 'center' }}
+        type="text"
+        placeholder="Search for investors..."
+        value={searchText}
+        className='text-align-center'
+        onChange={(e) => handleChange(e.target.value)}
+      />
       <section className="testimonials">
         <div className="testimonial-container">
           <h2>Investors</h2>
           <p></p>
           <div className="row">
-            <div className="iCardinv col-md-3 text-center">
-              <div className="profile">
-                <img
-                  src="/img/user1.jpg"
-                  alt=""
-                  className="user justify-content-center"
-                />
-                <div className="text-center">
-                  <h6
-                    style={{ color: "#333" }}
-                    className="name justify-content-center"
-                  >
-                    Festus Ribiro
-                  </h6>
-                  <p class="location justify-content-center">
-                    <Icon className="location-icon" color={"#3DB2C7"} icon={locationIcon} />{" "}
-                    Nairobi, Kenya
-                  </p>
+            {users.map((val, key) => {
+              return (
+                <div className="iCardinv col-md-3 text-center">
+                  <div className="profile">
+                    <img
+                      src="/img/user1.jpg"
+                      alt=""
+                      className="user justify-content-center"
+                    />
+                    <div className="text-center">
+                      <h6
+                        style={{ color: "#333" }}
+                        className="name justify-content-center"
+                      >
+                        {val.firstName} {val.lastName}
+                      </h6>
+                      <p class="location justify-content-center">
+                        <Icon
+                          className="location-icon"
+                          color={"#3DB2C7"}
+                          icon={locationIcon}
+                        />{" "}
+                        {val.location}
+                      </p>
+                    </div>
+                    <div class="text-center">
+                      {/* <span class="total d-block pt-2">Investment Range</span> */}
+                      <span className="amt-range">{val.investmentRange}</span>
+                    </div>
+                    <div class="text-center expertise">
+                      <span>Expertise</span>
+                      <p>{val.expertise}</p>
+                    </div>
+                    <div className="viewmore text-center align-items-center d-flex justify-content-center pt-2 pb-2">
+                      <Link to="InvViewProfile">
+                        <span className="details">View Details</span>
+                        <Icon className="arrow-right" icon={arrowRight} />
+                      </Link>
+                    </div>
+                  </div>
                 </div>
-                <div class="text-center">
-                  {/* <span class="total d-block pt-2">Investment Range</span> */}
-                  <span className="amt-range">Ksh1,000,000 - Ksh10,000,000</span>
-                </div>
-                <div class="text-center expertise">
-                  <span>Expertise</span>
-                  <p>Tech, Real Estate, Entertainment</p>
-                </div>
-                <div className="viewmore text-center align-items-center d-flex justify-content-center pt-2 pb-2">
-                  <Link to="InvViewProfile">
-                    <span className="details">View Details</span>
-                    <Icon className="arrow-right" icon={arrowRight} />
-                  </Link>
-                </div>
-              </div>
-            </div>
-            <div className="iCardinv col-md-3 text-center">
-              <div className="profile">
-                <img
-                  src="/img/user2.jpg"
-                  alt=""
-                  className="user justify-content-center"
-                />
-                <div className="text-center">
-                  <h6
-                    style={{ color: "#333" }}
-                    className="name justify-content-center"
-                  >
-                    Julie Esther
-                  </h6>
-                  <p class="location justify-content-center">
-                    <Icon className="location-icon" icon={locationIcon} />{" "}
-                    Nairobi, Kenya
-                  </p>
-                </div>
-                <div class="text-center">
-                  {/* <span class="total d-block pt-2">Investment Range</span> */}
-                  <span className="amt-range">Ksh500,000 - Ksh1,000,000</span>
-                </div>
-                <div class="text-center expertise">
-                  <span>Expertise</span>
-                  <p>Fashion, Art, Entertainment</p>
-                </div>
-                <div className="viewmore text-center align-items-center d-flex justify-content-center pt-2 pb-2">
-                  <Link to="InvViewProfile">
-                    <span className="details">View Details</span>
-                    <Icon className="arrow-right" icon={arrowRight} />
-                  </Link>
-                </div>
-              </div>
-            </div>
-            <div className="iCardinv col-md-3 text-center">
-              <div className="profile">
-                <img
-                  src="/img/user3.jpg"
-                  alt=""
-                  className="user justify-content-center"
-                />
-                <div className="text-center">
-                  <h6
-                    style={{ color: "#333" }}
-                    className="name justify-content-center"
-                  >
-                    Dennis Dyllan
-                  </h6>
-                  <p class="location justify-content-center">
-                    <Icon className="location-icon" icon={locationIcon} />{" "}
-                    Mombasa, Kenya
-                  </p>
-                </div>
-                <div class="text-center">
-                  {/* <span class="total d-block pt-2">Investment Range</span> */}
-                  <span className="amt-range">Ksh100,000 - Ksh500,000</span>
-                </div>
-                <div class="text-center expertise">
-                  <span>Expertise</span>
-                  <p>Cars, Travel, Photography</p>
-                </div>
-                <div className="viewmore text-center align-items-center d-flex justify-content-center pt-2 pb-2">
-                  <Link to="InvViewProfile">
-                    <span className="details">View Details</span>
-                    <Icon className="arrow-right" icon={arrowRight} />
-                  </Link>
-                </div>
-              </div>
-            </div>
-            <div className="iCardinv col-md-3 text-center">
-              <div className="profile">
-                <img
-                  src="/img/user4.jpg"
-                  alt=""
-                  className="user justify-content-center"
-                />
-                <div className="text-center">
-                  <h6
-                    style={{ color: "#333" }}
-                    className="name justify-content-center"
-                  >
-                    Lucy Anne
-                  </h6>
-                  <p class="location justify-content-center">
-                    <Icon className="location-icon" icon={locationIcon} />{" "}
-                    Nakuru, Kenya
-                  </p>
-                </div>
-                <div class="text-center">
-                  {/* <span class="total d-block pt-2">Investment Range</span> */}
-                  <span className="amt-range">Ksh500,000 - Ksh1,000,000</span>
-                </div>
-                <div class="text-center expertise">
-                  <span>Expertise</span>
-                  <p>Forex, Stock Exchange</p>
-                </div>
-                <div className="viewmore text-center align-items-center d-flex justify-content-center pt-2 pb-2">
-                  <Link>
-                    <span className="details">View Details</span>
-                    <Icon className="arrow-right" icon={arrowRight} />
-                  </Link>
-                </div>
-              </div>
-            </div>
-            <div className="iCardinv col-md-3 text-center">
-              <div className="profile">
-                <img
-                  src="/img/user5.jpg"
-                  alt=""
-                  className="user justify-content-center"
-                />
-                <div className="text-center">
-                  <h6
-                    style={{ color: "#333" }}
-                    className="name justify-content-center"
-                  >
-                    Festus Ribiro
-                  </h6>
-                  <p class="location justify-content-center">
-                    <Icon className="location-icon" icon={locationIcon} />{" "}
-                    Nairobi, Kenya
-                  </p>
-                </div>
-                <div class="text-center">
-                  {/* <span class="total d-block pt-2">Investment Range</span> */}
-                  <span className="amt-range">Ksh500,000 - Ksh1,000,000</span>
-                </div>
-                <div class="text-center expertise">
-                  <span>Expertise</span>
-                  <p>Tech, Real Estate, Entertainment</p>
-                </div>
-                <div className="viewmore text-center align-items-center d-flex justify-content-center pt-2 pb-2">
-                  <Link>
-                    <span className="details">View Details</span>
-                    <Icon className="arrow-right" icon={arrowRight} />
-                  </Link>
-                </div>
-              </div>
-            </div>
-            <div className="iCardinv col-md-3 text-center">
-              <div className="profile">
-                <img
-                  src="/img/user6.jpg"
-                  alt=""
-                  className="user justify-content-center"
-                />
-                <div className="text-center">
-                  <h6
-                    style={{ color: "#333" }}
-                    className="name justify-content-center"
-                  >
-                    Festus Ribiro
-                  </h6>
-                  <p class="location justify-content-center">
-                    <Icon className="location-icon" icon={locationIcon} />{" "}
-                    Nairobi, Kenya
-                  </p>
-                </div>
-                <div class="text-center">
-                  {/* <span class="total d-block pt-2">Investment Range</span> */}
-                  <span className="amt-range">Ksh500,000 - Ksh1,000,000</span>
-                </div>
-                <div class="text-center expertise">
-                  <span>Expertise</span>
-                  <p>Tech, Real Estate, Entertainment</p>
-                </div>
-                <div className="viewmore text-center align-items-center d-flex justify-content-center pt-2 pb-2">
-                  <Link>
-                    <span className="details">View Details</span>
-                    <Icon className="arrow-right" icon={arrowRight} />
-                  </Link>
-                </div>
-              </div>
-            </div>
-            <div className="iCardinv col-md-3 text-center">
-              <div className="profile">
-                <img
-                  src="/img/user6.jpg"
-                  alt=""
-                  className="user justify-content-center"
-                />
-                <div className="text-center">
-                  <h6
-                    style={{ color: "#333" }}
-                    className="name justify-content-center"
-                  >
-                    Festus Ribiro
-                  </h6>
-                  <p class="location justify-content-center">
-                    <Icon className="location-icon" icon={locationIcon} />{" "}
-                    Nairobi, Kenya
-                  </p>
-                </div>
-                <div class="text-center">
-                  {/* <span class="total d-block pt-2">Investment Range</span> */}
-                  <span className="amt-range">Ksh500,000 - Ksh1,000,000</span>
-                </div>
-                <div class="text-center expertise">
-                  <span>Expertise</span>
-                  <p>Tech, Real Estate, Entertainment</p>
-                </div>
-                <div className="viewmore text-center align-items-center d-flex justify-content-center pt-2 pb-2">
-                  <Link>
-                    <span className="details">View Details</span>
-                    <Icon className="arrow-right" icon={arrowRight} />
-                  </Link>
-                </div>
-              </div>
-            </div>
-            <div className="iCardinv col-md-3 text-center">
-              <div className="profile">
-                <img
-                  src="/img/user6.jpg"
-                  alt=""
-                  className="user justify-content-center"
-                />
-                <div className="text-center">
-                  <h6
-                    style={{ color: "#333" }}
-                    className="name justify-content-center"
-                  >
-                    Festus Ribiro
-                  </h6>
-                  <p class="location justify-content-center">
-                    <Icon className="location-icon" icon={locationIcon} />{" "}
-                    Nairobi, Kenya
-                  </p>
-                </div>
-                <div class="text-center">
-                  {/* <span class="total d-block pt-2">Investment Range</span> */}
-                  <span className="amt-range">Ksh500,000 - Ksh1,000,000</span>
-                </div>
-                <div class="text-center expertise">
-                  <span>Expertise</span>
-                  <p>Tech, Real Estate, Entertainment</p>
-                </div>
-                <div className="viewmore text-center align-items-center d-flex justify-content-center pt-2 pb-2">
-                  <Link>
-                    <span className="details">View Details</span>
-                    <Icon className="arrow-right" icon={arrowRight} />
-                  </Link>
-                </div>
-              </div>
-            </div>
+              );
+            })}
+            <div className="clearboth"></div>
+            {users.length === 0 && <span>No records found to display!</span>}
           </div>
         </div>
       </section>
