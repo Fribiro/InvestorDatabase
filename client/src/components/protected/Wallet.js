@@ -1,27 +1,27 @@
-import React, { useState, useEffect } from "react";
+import React, { useState } from "react";
 import Footer from "../../components/headerFooter/Footer";
 import Header from "../../components/headerFooter/Header";
 import "./entcards.css";
 import { Icon } from "@iconify/react";
-import arrowRight from "@iconify-icons/mdi/arrow-right";
-import locationIcon from "@iconify-icons/codicon/location";
-import starOutline from "@iconify-icons/mdi/star-outline";
+//import arrowRight from "@iconify-icons/mdi/arrow-right";
+//import locationIcon from "@iconify-icons/codicon/location";
+//import starOutline from "@iconify-icons/mdi/star-outline";
 import { Link } from "react-router-dom";
-import { Redirect } from "react-router-dom";
-import { useSelector } from "react-redux";
-import { selectUser } from "../../state/user";
-import SearchIcon from "@material-ui/icons/Search";
-import IconButton from "@material-ui/core/IconButton";
-import StarOutlineIcon from "@material-ui/icons/StarOutline";
-import Tooltip from "@material-ui/core/Tooltip";
+//import { Redirect } from "react-router-dom";
+//import { useSelector } from "react-redux";
+//import { selectUser } from "../../state/user";
+//import SearchIcon from "@material-ui/icons/Search";
+//import IconButton from "@material-ui/core/IconButton";
+//import StarOutlineIcon from "@material-ui/icons/StarOutline";
+//import Tooltip from "@material-ui/core/Tooltip";
 import Axios from "axios";
-import $ from "jquery";
-import deleteIcon from "@iconify-icons/mdi/delete";
+//import $ from "jquery";
+//import deleteIcon from "@iconify-icons/mdi/delete";
 
 const Wallet = () => {
-  const [visible, setVisible] = useState(true);
+  //const [visible, setVisible] = useState(true);
   const [users, setUsers] = useState([]);
-  const [userdetails, setUserdetails] = useState([]);
+  //const [userdetails, setUserdetails] = useState([]);
   const [searchText, setSearchText] = useState("");
   const [wallet, setWallet] = useState([]);
 
@@ -131,7 +131,7 @@ const Wallet = () => {
                         <Icon
                           className="location-icon"
                           color={"#3DB2C7"}
-                          icon={locationIcon}
+                          icon="akar-icons:location"
                         />{" "}
                         {val.location}
                       </p>
@@ -190,15 +190,15 @@ const Wallet = () => {
                     <div className="viewmore text-center align-items-center d-flex justify-content-center pt-2 pb-2">
                       <Link to="EntViewProfile">
                         <span className="details">View Details</span>
-                        <Icon className="arrow-right" icon={arrowRight} />
+                        <Icon className="arrow-right" icon="bi:arrow-right" />
                       </Link>
                       <Icon
                         className="starOutline"
-                        icon={starOutline}
+                        icon="gridicons:star-outline"
                         style={{ cursor: "pointer" }}
                         onClick={() => addToWallet(users)}
                       />
-                      <Icon icon={deleteIcon} />
+                      <Icon icon="ant-design:delete-outlined" />
                     </div>
                   </div>
                 </div>

@@ -1,37 +1,34 @@
-import React, { useState,useEffect } from "react";
+import React, { useState, useEffect } from "react";
 import Footer from "../../components/headerFooter/Footer";
 import Header from "../../components/headerFooter/Header";
 import "./invcards.css";
 import { Icon } from "@iconify/react";
-import arrowRight from "@iconify-icons/mdi/arrow-right";
-import locationIcon from "@iconify-icons/codicon/location";
+//import arrowRight from "@iconify-icons/mdi/arrow-right";
+//import locationIcon from "@iconify-icons/codicon/location";
 import { Link } from "react-router-dom";
-import { Redirect } from "react-router-dom";
-import { useSelector } from "react-redux";
-import { selectUser } from "../../state/user";
 
-import SearchIcon from "@material-ui/icons/Search";
-import IconButton from "@material-ui/core/IconButton";
+//import SearchIcon from "@material-ui/icons/Search";
+//import IconButton from "@material-ui/core/IconButton";
 import Axios from "axios";
 import $ from "jquery";
 
 const InvestorCards = () => {
-  const [visible, setVisible] = useState(true);
+  //const [visible, setVisible] = useState(true);
   const [users, setUsers] = useState([]);
-  const [userdetails, setUserdetails] = useState([]);
+  //const [userdetails, setUserdetails] = useState([]);
   const [searchText, setSearchText] = useState("");
-  const user = useSelector(selectUser);
+  //const user = useSelector(selectUser);
   // if (!user.accesstoken) {
   //   return <Redirect from="" to="login" noThrow />;
   // }
 
-  const getUser = (id) => {
-    Axios.get("http://localhost:5500/investor/${id}").then((res) => {
-      console.log(res.data);
-      setUserdetails(res.data[0]);
-      $("#myModal").modal("show");
-    });
-  };
+  // const getUser = (id) => {
+  //   Axios.get("http://localhost:5000/investor/${id}").then((res) => {
+  //     console.log(res.data);
+  //     setUserdetails(res.data[0]);
+  //     $("#myModal").modal("show");
+  //   });
+  // };
   useEffect(() => {
     Axios.get("http://localhost:5500/investor").then((res) => {
       console.log(res.data);
@@ -45,10 +42,10 @@ const InvestorCards = () => {
         users.map((val) => {
           return val.id === id
             ? {
-                firstName: val.firstName,
-                lastName: val.lastName,
-                email: val.email,
-              }
+              firstName: val.firstName,
+              lastName: val.lastName,
+              email: val.email,
+            }
             : val;
         })
       );
@@ -133,7 +130,7 @@ const InvestorCards = () => {
                         <Icon
                           className="location-icon"
                           color={"#3DB2C7"}
-                          icon={locationIcon}
+                          icon="akar-icons:location"
                         />{" "}
                         {val.location}
                       </p>
@@ -149,7 +146,7 @@ const InvestorCards = () => {
                     <div className="viewmore text-center align-items-center d-flex justify-content-center pt-2 pb-2">
                       <Link to="InvViewProfile">
                         <span className="details">View Details</span>
-                        <Icon className="arrow-right" icon={arrowRight} />
+                        <Icon className="arrow-right" icon="bi:arrow-right" />
                       </Link>
                     </div>
                   </div>

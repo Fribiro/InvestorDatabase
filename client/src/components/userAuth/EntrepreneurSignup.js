@@ -18,17 +18,17 @@ export default class EntrepreneurSignup extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      efirstName: "",
-      elastName: null,
-      eemail: null,
-      epassword: null,
-      econfirmPassword: null,
+      EntrepreneurFirstName: "",
+      EntrepreneurLastName: "",
+      UserEmail: "",
+      UserPassword: "",
+      UserConfirmPassword: "",
       formErrors: {
-        efirstName: "",
-        elastName: "",
-        eemail: "",
-        epassword: "",
-        econfirmPassword: "",
+        EntrepreneurFirstName: "",
+        EntrepreneurLastName: "",
+        UserEmail: "",
+        UserPassword: "",
+        UserConfirmPassword: "",
       },
       message: "",
       redirect: null,
@@ -45,25 +45,25 @@ export default class EntrepreneurSignup extends Component {
     let formErrors = { ...this.state.formErrors };
 
     switch (name) {
-      case "efirstName":
-        formErrors.efirstName =
+      case "EntrepreneurFirstName":
+        formErrors.EntrepreneurFirstName =
           value.length < 3 ? "min. 3 characaters" : "";
         break;
-      case "elastName":
-        formErrors.elastName = value.length < 3 ? "min. 3 characaters" : "";
+      case "EntrepreneurLastName":
+        formErrors.EntrepreneurLastName = value.length < 3 ? "min. 3 characaters" : "";
         break;
-      case "eemail":
-        formErrors.eemail = emailRegex.test(value)
+      case "UserEmail":
+        formErrors.UserEmail = emailRegex.test(value)
           ? ""
           : "invalid email address";
         break;
-      case "epassword":
-        formErrors.epassword = strongPassword.test(value)
+      case "UserPassword":
+        formErrors.UserPassword = strongPassword.test(value)
           ? ""
           : "Weak password";
         break;
-      case "econfirmPassword":
-        formErrors.econfirmPassword =
+      case "UserConfirmPassword":
+        formErrors.UserConfirmPassword =
           value.length < 6 ? "minimum 6 characaters required" : "";
         break;
       default:
@@ -73,22 +73,22 @@ export default class EntrepreneurSignup extends Component {
     this.setState({ formErrors, [name]: value });
   };
 
-  addInvestor = (e) => {
+  addEntrepreneur = (e) => {
     let formData = { ...this.state };
-    console.log(formData.efirstName);
-    Axios.post("http://localhost:5500/auth/entrepreneursignup", {
-      efirstName: formData.efirstName,
-      elastName: formData.elastName,
-      eemail: formData.eemail,
-      epassword: formData.epassword,
-      econfirmPassword: formData.econfirmPassword,
+    console.log(formData.EntrepreneurFirstName);
+    Axios.post("http://localhost:5000/api/entrepreneur-signup", {
+      EntrepreneurFirstName: formData.EntrepreneurFirstName,
+      EntrepreneurLastName: formData.EntrepreneurLastName,
+      UserEmail: formData.UserEmail,
+      UserPassword: formData.UserPassword,
+      UserConfirmPassword: formData.UserConfirmPassword,
     }).then((res) => {
       console.log(res);
       if (res.status === 201) {
         this.setState({
           redirect: "/login",
         });
-      } 
+      }
     }, (e) => {
          this.setState({
            message: e.response.data.message,
@@ -97,7 +97,7 @@ export default class EntrepreneurSignup extends Component {
   }
 
   showEntrepreneurs = (e) => {
-    Axios.get("http://localhost:5500/admin").then((results) => {
+    Axios.get("http://localhost:5000/admin").then((results) => {
 
     })
   }
@@ -114,69 +114,69 @@ export default class EntrepreneurSignup extends Component {
         <div className="box">
           <div className="name-control">
             <div className="input-group ">
-              <label htmlFor="efirstName">First name</label>
+              <label htmlFor="EntrepreneurFirstName">First name</label>
               <input
                 type="text"
-                name="efirstName"
-                className={formErrors.efirstName.length > 0 ? "error" : null}
+                name="EntrepreneurFirstName"
+                className={formErrors.EntrepreneurFirstName.length > 0 ? "error" : null}
                 placeholder="First Name"
                 onChange={this.handleChange}
               />
-              {formErrors.efirstName.length > 0 && (
-                <small className="danger-error">{formErrors.efirstName}</small>
+              {formErrors.EntrepreneurFirstName.length > 0 && (
+                <small className="danger-error">{formErrors.EntrepreneurFirstName}</small>
               )}
             </div>
             <div className="input-group lastName">
-              <label htmlFor="elastName">Last Name</label>
+              <label htmlFor="EntrepreneurLastName">Last Name</label>
               <input
                 type="text"
-                name="elastName"
-                className={formErrors.elastName.length > 0 ? "error" : null}
+                name="EntrepreneurLastName"
+                className={formErrors.EntrepreneurLastName.length > 0 ? "error" : null}
                 placeholder="Last Name"
                 onChange={this.handleChange}
               />
-              {formErrors.elastName.length > 0 && (
-                <small className="danger-error">{formErrors.elastName}</small>
+              {formErrors.EntrepreneurLastName.length > 0 && (
+                <small className="danger-error">{formErrors.EntrepreneurLastName}</small>
               )}
             </div>
           </div>
 
           <div className="input-group">
-            <label htmlFor="eemail">Email</label>
+            <label htmlFor="UserEmail">Email</label>
             <input
               type="text"
-              name="eemail"
-              className={formErrors.eemail.length > 0 ? "error" : null}
+              name="UserEmail"
+              className={formErrors.UserEmail.length > 0 ? "error" : null}
               placeholder="Email"
               onChange={this.handleChange}
             />
-            {formErrors.eemail.length > 0 && (
-              <small className="danger-error">{formErrors.eemail}</small>
+            {formErrors.UserEmail.length > 0 && (
+              <small className="danger-error">{formErrors.UserEmail}</small>
             )}
           </div>
           <div className="input-group">
-            <label htmlFor="epassword">Password</label>
+            <label htmlFor="UserPassword">Password</label>
             <input
               type="password"
-              name="epassword"
-              className={formErrors.epassword.length > 0 ? "error" : null}
+              name="UserPassword"
+              className={formErrors.UserPassword.length > 0 ? "error" : null}
               placeholder="Password"
               onChange={this.handleChange}
             />
-            {/* {formErrors.epassword.length > 0 && (
-              <small className="danger-error">{formErrors.epassword}</small>
+            {/* {formErrors.UserPassword.length > 0 && (
+              <small className="danger-error">{formErrors.UserPassword}</small>
             )} */}
-            {formErrors.epassword.length > 0 && (
-              <small className="danger-error">{formErrors.epassword}</small>
+            {formErrors.UserPassword.length > 0 && (
+              <small className="danger-error">{formErrors.UserPassword}</small>
             )}
           </div>
           <div className="input-group">
-            <label htmlFor="econfirmPassword">Confirm Password</label>
+            <label htmlFor="UserConfirmPassword">Confirm Password</label>
             <input
               type="password"
-              name="econfirmPassword"
+              name="UserConfirmPassword"
               className={
-                formErrors.econfirmPassword.length > 0 ? "error" : null
+                formErrors.UserConfirmPassword.length > 0 ? "error" : null
               }
               placeholder="Password"
               onChange={this.handleChange}
@@ -188,7 +188,7 @@ export default class EntrepreneurSignup extends Component {
           <button
             type="button"
             className="login-btn"
-            onClick={this.addInvestor}
+            onClick={this.addEntrepreneur}
           >
             Register
           </button>

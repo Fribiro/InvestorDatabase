@@ -1,10 +1,18 @@
-import React from "react";
+import React, { useContext } from "react";
 import Footer from "../../components/headerFooter/Footer";
 import Header from "../../components/headerFooter/Header";
 import "./profile.css";
 import Iframe from "react-iframe";
+import { UserContext } from "../../App";
+import { Redirect } from "@reach/router";
 
 const EntViewProfile = () => {
+  const [user] = useContext(UserContext);
+
+  if (!user.accesstoken) {
+    return <Redirect to='/' />;
+  }
+
   return (
     <div>
       <Header />

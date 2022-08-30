@@ -13,17 +13,17 @@ export default class InvestorSignup extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      ifirstName: "",
-      ilastName: null,
-      iemail: null,
-      ipassword: null,
-      iconfirmPassword: null,
+      InvestorFirstName: "",
+      InvestorLastName: "",
+      UserEmail: "",
+      UserPassword: "",
+      UserConfirmPassword: "",
       formErrors: {
-        ifirstName: "",
-        ilastName: "",
-        iemail: "",
-        ipassword: "",
-        iconfirmPassword: "",
+        InvestorFirstName: "",
+        InvestorLastName: "",
+        UserEmail: "",
+        UserPassword: "",
+        UserConfirmPassword: "",
       },
       message: "",
       redirect: null,
@@ -41,24 +41,24 @@ export default class InvestorSignup extends Component {
     let formErrors = { ...this.state.formErrors };
 
     switch (name) {
-      case "ifirstName":
-        formErrors.ifirstName = value.length < 3 ? "Min. 3 characaters" : "";
+      case "InvestorFirstName":
+        formErrors.InvestorFirstName = value.length < 3 ? "Min. 3 characaters" : "";
         break;
-      case "ilastName":
-        formErrors.ilastName = value.length < 3 ? "Min. 3 characaters" : "";
+      case "InvestorLastName":
+        formErrors.InvestorLastName = value.length < 3 ? "Min. 3 characaters" : "";
         break;
-      case "iemail":
-        formErrors.iemail = emailRegex.test(value)
+      case "UserEmail":
+        formErrors.UserEmail = emailRegex.test(value)
           ? ""
           : "Invalid email address";
         break;
-      case "ipassword":
-        formErrors.ipassword = strongPassword.test(value)
+      case "UserPassword":
+        formErrors.UserPassword = strongPassword.test(value)
           ? ""
           : "Weak password";
         break;
-      case "iconfirmPassword":
-        formErrors.iconfirmPassword =
+      case "UserConfirmPassword":
+        formErrors.UserConfirmPassword =
           value.length < 6 ? "minimum 6 characaters required" : "";
         break;
       default:
@@ -70,28 +70,28 @@ export default class InvestorSignup extends Component {
 
   addInvestor = (e) => {
     let formData = { ...this.state };
-    console.log(formData.ifirstName);
-    Axios.post("http://localhost:5500/auth/investorsignup", {
-      ifirstName: formData.ifirstName,
-      ilastName: formData.ilastName,
-      iemail: formData.iemail,
-      ipassword: formData.ipassword,
-      iconfirmPassword: formData.iconfirmPassword,
+    console.log(formData.InvestorFirstName);
+    Axios.post("http://localhost:5000/api/investor-signup", {
+      InvestorFirstName: formData.InvestorFirstName,
+      InvestorLastName: formData.InvestorLastName,
+      UserEmail: formData.UserEmail,
+      UserPassword: formData.UserPassword,
+      UserConfirmPassword: formData.UserConfirmPassword,
     }).then((res) => {
       if (res.status === 201) {
         this.setState({
           redirect: "/login",
         });
-      } 
+      }
     }, (e) => {
-         this.setState({
-           message: e.response.data.message,
-         });    
-     });
+      this.setState({
+        message: e.response.data.message,
+      });
+    });
   };
 
   showEntrepreneurs = (e) => {
-    Axios.get("http://localhost:5500/admin").then((results) => {
+    Axios.get("http://localhost:5000/admin").then((results) => {
       
     });
   };
@@ -108,66 +108,66 @@ export default class InvestorSignup extends Component {
         <div className="box">
           <div className="name-control">
             <div className="input-group ">
-              <label htmlFor="ifirstName">First name</label>
+              <label htmlFor="InvestorFirstName">First name</label>
               <input
                 type="text"
-                name="ifirstName"
-                className={formErrors.ifirstName.length > 0 ? "error" : null}
+                name="InvestorFirstName"
+                className={formErrors.InvestorFirstName.length > 0 ? "error" : null}
                 placeholder="First Name"
                 onChange={this.handleChange}
               />
-              {formErrors.ifirstName.length > 0 && (
-                <small className="danger-error">{formErrors.ifirstName}</small>
+              {formErrors.InvestorFirstName.length > 0 && (
+                <small className="danger-error">{formErrors.InvestorFirstName}</small>
               )}
             </div>
             <div className="input-group lastName">
-              <label htmlFor="ilastName">Last Name</label>
+              <label htmlFor="InvestorLastName">Last Name</label>
               <input
                 type="text"
-                name="ilastName"
-                className={formErrors.ilastName.length > 0 ? "error" : null}
+                name="InvestorLastName"
+                className={formErrors.InvestorLastName.length > 0 ? "error" : null}
                 placeholder="Last Name"
                 onChange={this.handleChange}
               />
-              {formErrors.ilastName.length > 0 && (
-                <small className="danger-error">{formErrors.ilastName}</small>
+              {formErrors.InvestorLastName.length > 0 && (
+                <small className="danger-error">{formErrors.InvestorLastName}</small>
               )}
             </div>
           </div>
 
           <div className="input-group">
-            <label htmlFor="iemail">Email</label>
+            <label htmlFor="UserEmail">Email</label>
             <input
               type="text"
-              name="iemail"
-              className={formErrors.iemail.length > 0 ? "error" : null}
+              name="UserEmail"
+              className={formErrors.UserEmail.length > 0 ? "error" : null}
               placeholder="Email"
               onChange={this.handleChange}
             />
-            {formErrors.iemail.length > 0 && (
-              <small className="danger-error">{formErrors.iemail}</small>
+            {formErrors.UserEmail.length > 0 && (
+              <small className="danger-error">{formErrors.UserEmail}</small>
             )}
           </div>
           <div className="input-group">
-            <label htmlFor="ipassword">Password</label>
+            <label htmlFor="UserPassword">Password</label>
             <input
               type="password"
-              name="ipassword"
-              className={formErrors.ipassword.length > 0 ? "error" : null}
+              name="UserPassword"
+              className={formErrors.UserPassword.length > 0 ? "error" : null}
               placeholder="Password"
               onChange={this.handleChange}
             />
-            {formErrors.ipassword.length > 0 && (
-              <small className="danger-error">{formErrors.ipassword}</small>
+            {formErrors.UserPassword.length > 0 && (
+              <small className="danger-error">{formErrors.UserPassword}</small>
             )}
           </div>
           <div className="input-group">
-            <label htmlFor="iconfirmPassword">Confirm Password</label>
+            <label htmlFor="UserConfirmPassword">Confirm Password</label>
             <input
               type="password"
-              name="iconfirmPassword"
+              name="UserConfirmPassword"
               className={
-                formErrors.iconfirmPassword.length > 0 ? "error" : null
+                formErrors.UserConfirmPassword.length > 0 ? "error" : null
               }
               placeholder="Password"
               onChange={this.handleChange}

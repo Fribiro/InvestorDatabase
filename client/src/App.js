@@ -14,9 +14,6 @@ import Contact from "./components/public/Contact";
 import Profile from "./components/profile/Profile";
 import InvestorCards from "./components/protected/InvestorCards";
 import EntrepreneurCards from "./components/protected/EntrepreneurCards";
-//import UserContextProvider from './usercontext'
-//import { useDispatch } from "react-redux";
-//import { accesstoken, refreshtoken } from "./state/user";
 import PasswordForget from "./components/passwordReset/PasswordForget";
 import SignupOverlay from "./components/userAuth/signupOverlay";
 import ResetPassword from "./components/passwordReset/ResetPassword";
@@ -36,7 +33,7 @@ function App() {
   //const dispatch = useDispatch();
 
   const logoutCallback = async () => {
-    Axios.post("http://localhost:5500/logout", {
+    Axios.post("http://localhost:5000/api/logout", {
       method: "POST",
       credentials: "include",
     });
@@ -49,7 +46,7 @@ function App() {
   //get a new accesstoken if a refreshtoken exists
   useEffect(() => {
        
-         Axios.post("http://localhost:5500/auth/refresh_token", {
+         Axios.post("http://localhost:5000/api/refresh_token", {
            method: "POST",
            credentials: "include",
            headers: {

@@ -1,15 +1,15 @@
 import React, { useState, useContext } from "react";
 import Avatar from "@material-ui/core/Avatar";
-import SearchIcon from "@material-ui/icons/Search";
+//import SearchIcon from "@material-ui/icons/Search";
 import { UserContext } from "../../App";
 
-import { Link, Redirect } from "react-router-dom";
+import { Link } from "react-router-dom";
 
 const Header = () => {
   const [user, setUser] = useContext(UserContext);
   const [redirect, setRedirect] = useState("");
   const [searchText, setSearchText] = useState("");
-  const excludeColumns = ["id", "color"];
+  //const excludeColumns = ["id", "color"];
   //const [user, setUser] = useState([]);
 
   const logOutCallback = async () => {
@@ -27,9 +27,9 @@ const Header = () => {
     setSearchText(value);
   };
 
-  if (redirect) {
-    return <Redirect to={redirect} />;
-  }
+  // if (redirect) {
+  //   return <Redirect to={redirect} />;
+  // }
 
   return (
     <div>
