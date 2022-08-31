@@ -11,7 +11,6 @@ const Role = sequelize.define("Role", {
     RoleName: {
         type: Sequelize.STRING,
         allowNull: false
-
     }
 
 

@@ -55,7 +55,7 @@ export default class InvestorSignup extends Component {
       case "UserPassword":
         formErrors.UserPassword = strongPassword.test(value)
           ? ""
-          : "Weak password";
+          : "Min. 8 character, must contain an Uppercase, number & special character";
         break;
       case "UserConfirmPassword":
         formErrors.UserConfirmPassword =
@@ -78,7 +78,7 @@ export default class InvestorSignup extends Component {
       UserPassword: formData.UserPassword,
       UserConfirmPassword: formData.UserConfirmPassword,
     }).then((res) => {
-      if (res.status === 201) {
+      if (res.status === 200) {
         this.setState({
           redirect: "/login",
         });

@@ -84,7 +84,7 @@ export default class EntrepreneurSignup extends Component {
       UserConfirmPassword: formData.UserConfirmPassword,
     }).then((res) => {
       console.log(res);
-      if (res.status === 201) {
+      if (res.status === 200) {
         this.setState({
           redirect: "/login",
         });

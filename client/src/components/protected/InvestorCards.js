@@ -30,14 +30,14 @@ const InvestorCards = () => {
   //   });
   // };
   useEffect(() => {
-    Axios.get("http://localhost:5500/investor").then((res) => {
+    Axios.get("http://localhost:5000/investors").then((res) => {
       console.log(res.data);
       setUsers(res.data);
       //console.log(users);
     });
   }, []);
   const updateUsers = (id) => {
-    Axios.put("http://localhost:5500/investorupdate", {}).then((res) => {
+    Axios.put("http://localhost:5000/investorupdate", {}).then((res) => {
       setUsers(
         users.map((val) => {
           return val.id === id
@@ -60,7 +60,7 @@ const InvestorCards = () => {
   const excludeColumns = ["id"];
 
   const filterUsers = (value) => {
-    Axios.get("http://localhost:5500/investor").then((res) => {
+    Axios.get("http://localhost:5000/investor").then((res) => {
       console.log(res.data);
       //setUsers(res.data);
 

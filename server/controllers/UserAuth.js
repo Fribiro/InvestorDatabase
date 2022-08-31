@@ -112,12 +112,12 @@ exports.investorSignup = async (req, res) => {
                 .send("password is required and should be min 6 characters long");
         }
 
-        let role = await Role.findOne({ where: { RoleName: "investor" } })
+        let role = await Role.findOne({ where: { RoleId: 2 } })
 
         const user = await User.create({
             UserEmail,
             UserPassword,
-            UserRole: role,
+            UserRole: role.RoleId,
         });
 
         const investorSignup = await Investor.create({
@@ -159,10 +159,12 @@ exports.entrepreneurSignup = async (req, res) => {
                 .send("password is required and should be min 6 characters long");
         }
 
+        let role = await Role.findOne({ where: { RoleId: 3 } })
+
         const user = await User.create({
             UserEmail,
             UserPassword,
-            UserRole: 3,
+            UserRole: role.RoleId,
         });
 
         const entrepreneurSignup = await Entrepreneur.create({

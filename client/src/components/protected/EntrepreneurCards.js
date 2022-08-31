@@ -35,14 +35,14 @@ const EntrepreneurCards = () => {
   //   });
   // };
   useEffect(() => {
-    Axios.get("http://localhost:5500/users").then((res) => {
+    Axios.get("http://localhost:5000/entrepreneurs").then((res) => {
       console.log(res.data);
       setUsers(res.data);
       //console.log(users);
     });
   }, []);
   const updateUsers = (id) => {
-    Axios.put("http://localhost:5500/update", {}).then((res) => {
+    Axios.put("http://localhost:5000/entrepreneurupdate", {}).then((res) => {
       setUsers(
         users.map((val) => {
           return val.id === id
@@ -65,7 +65,7 @@ const EntrepreneurCards = () => {
   const excludeColumns = ["id"];
 
   const filterUsers = (value) => {
-    Axios.get("http://localhost:5500/users").then((res) => {
+    Axios.get("http://localhost:5000/entrepreneurs").then((res) => {
       console.log(res.data);
       //setUsers(res.data);
 

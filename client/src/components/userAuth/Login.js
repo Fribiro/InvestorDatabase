@@ -25,10 +25,10 @@ const Login = () => {
     let error;
     switch (name) {
       case "UserEmail":
-        error = emailRegex.test(value) ? "" : "invalid email address";
+        error = emailRegex.test(value) ? "" : "Invalid email address";
         break;
       case "UserPassword":
-        error = value.length < 6 ? "minimum 6 characaters required" : "";
+        error = value.length < 6 ? "Invalid password" : "";
         break;
       default:
         break;
@@ -55,45 +55,50 @@ const Login = () => {
           UserId: userId
         }
         console.log(userData);
-        debugger;
+        //debugger;
+        if(res) {
+          if (res.data.role === 1) {
+            localStorage.setItem("user", JSON.stringify(userData));
+            setStoredUser(storedUser);
+            const localUser = JSON.parse(localStorage.getItem("user"));
+            setUser({
+              accesstoken: localUser.accesstoken,
+            });
+            console.log(user);
+            setRedirect("/admin-dashboard");
 
-        if (res.data.role === 1) {
-          localStorage.setItem("user", JSON.stringify(userData));
-          setStoredUser(storedUser);
-          const localUser = JSON.parse(localStorage.getItem("user"));
-          setUser({
-            accesstoken: localUser.accesstoken,
-          });
-          console.log(user);
-          setRedirect("/admin-dashboard");
+          }
+          if (res.data.role === 2) {
+            localStorage.setItem("user", JSON.stringify(userData));
+            setStoredUser(storedUser);
+            const localUser = JSON.parse(localStorage.getItem("user"));
+            setUser({
+              accesstoken: localUser.accesstoken,
+            });
+            console.log(user);
+            setRedirect("/InvViewProfile");
+          }
+          if (res.data.role === 3) {
+            console.log('hello');
 
-        }
-        if (res.data.role === 2) {
-          localStorage.setItem("user", JSON.stringify(userData));
-          setStoredUser(storedUser);
-          const localUser = JSON.parse(localStorage.getItem("user"));
-          setUser({
-            accesstoken: localUser.accesstoken,
-          });
-          console.log(user);
-          setRedirect("/InvViewProfile");
-        }
-        if (res.data.role === 3) {
-          console.log('hello');
-          
-          localStorage.setItem("user", JSON.stringify(userData));
-          setStoredUser(storedUser);
-          const localUser = JSON.parse(localStorage.getItem("user"));
-          setUser({
-            accesstoken: localUser.accesstoken,
-          });
-          console.log(user);
-          setRedirect("/EntViewProfile");
-        }
+            localStorage.setItem("user", JSON.stringify(userData));
+            setStoredUser(storedUser);
+            const localUser = JSON.parse(localStorage.getItem("user"));
+            setUser({
+              accesstoken: localUser.accesstoken,
+            });
+            console.log(user);
+            setRedirect("/EntViewProfile");
+          }
 
-        if (res.data.error) {
-          setMessage(res.data.error);
-        }
+            if (res.data.error) {
+            setMessage(res.data.error);
+          }
+        }       
+
+        //   if (res.data.error) {
+        //     setMessage(res.data.error);
+        //   }
       },
       // (err) => {
       //   setMessage(err.response.data.message);
