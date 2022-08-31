@@ -56,29 +56,29 @@ const Login = () => {
         }
         console.log(userData);
         //debugger;
-        if(res) {
-          if (res.data.role === 1) {
-            localStorage.setItem("user", JSON.stringify(userData));
-            setStoredUser(storedUser);
-            const localUser = JSON.parse(localStorage.getItem("user"));
-            setUser({
-              accesstoken: localUser.accesstoken,
-            });
-            console.log(user);
-            setRedirect("/admin-dashboard");
+        
+          // if (res.data.role === 1) {
+          //   localStorage.setItem("user", JSON.stringify(userData));
+          //   setStoredUser(storedUser);
+          //   const localUser = JSON.parse(localStorage.getItem("user"));
+          //   setUser({
+          //     accesstoken: localUser.accesstoken,
+          //   });
+          //   console.log(user);
+          //   setRedirect("/admin-dashboard");
 
-          }
-          if (res.data.role === 2) {
-            localStorage.setItem("user", JSON.stringify(userData));
-            setStoredUser(storedUser);
-            const localUser = JSON.parse(localStorage.getItem("user"));
-            setUser({
-              accesstoken: localUser.accesstoken,
-            });
-            console.log(user);
-            setRedirect("/InvViewProfile");
-          }
-          if (res.data.role === 3) {
+          // }
+          // if (res.data.role === 2) {
+          //   localStorage.setItem("user", JSON.stringify(userData));
+          //   setStoredUser(storedUser);
+          //   const localUser = JSON.parse(localStorage.getItem("user"));
+          //   setUser({
+          //     accesstoken: localUser.accesstoken,
+          //   });
+          //   console.log(user);
+          //   setRedirect("/InvViewProfile");
+          // }
+          //if (res.data.role === 3) {
             console.log('hello');
 
             localStorage.setItem("user", JSON.stringify(userData));
@@ -89,12 +89,11 @@ const Login = () => {
             });
             console.log(user);
             setRedirect("/EntViewProfile");
-          }
+          //}
 
-            if (res.data.error) {
-            setMessage(res.data.error);
-          }
-        }       
+          //   if (res.data.error) {
+          //   setMessage(res.data.error);
+          // }      
 
         //   if (res.data.error) {
         //     setMessage(res.data.error);

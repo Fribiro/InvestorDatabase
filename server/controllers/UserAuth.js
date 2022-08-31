@@ -125,6 +125,8 @@ exports.investorSignup = async (req, res) => {
             InvestorLastName,
         })
 
+        await user.setInvestor(investorSignup);
+
 
 
         res.status(200).send({ user, investorSignup });
@@ -172,6 +174,7 @@ exports.entrepreneurSignup = async (req, res) => {
             EntrepreneurLastName,
         });
 
+        await user.setEntrepreneur(entrepreneurSignup);
 
 
         res.status(200).send({ user, entrepreneurSignup });

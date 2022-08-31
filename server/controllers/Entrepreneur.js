@@ -2,6 +2,23 @@ const mysql = require("mysql2");
 const Entrepreneur = require("../models/Entrepreneur");
 
 module.exports = {
+    async GetAllEntrepreneurs(req, res) {
+        try {
+            
+            let entrepreneurs = await Entrepreneur.findAll({});
+
+            res.status(200).send(entrepreneurs);
+
+        } catch (err) {
+            console.log(err);
+            return res.send({
+                error: `${err.message}`,
+            });
+
+        }
+
+    },
+
     async GetEntrepreneurById (req, res){
         try {
             let id = req.params.id;

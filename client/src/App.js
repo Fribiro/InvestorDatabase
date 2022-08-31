@@ -21,6 +21,7 @@ import InvViewProfile from "./components/profile/InvViewProfile";
 import EntViewProfile from "./components/profile/EntViewProfile";
 import LoginOverlay from "./components/userAuth/loginOverlay";
 import Wallet from "./components/protected/Wallet";
+import UpdateProfile from "./components/profile/UpdateProfile";
 
 
 export const UserContext = React.createContext([]);
@@ -91,16 +92,13 @@ function App() {
             <Route exact path="/about" component={About} />
             <Route exact path="/contact" component={Contact} />
             <Route exact path="/profile" component={Profile} />
+            <Route exact path="/update-profile" component={UpdateProfile} />
             <Route exact path="/login" component={Login} />
             <Route exact path="/forgotpassword" component={PasswordForget} />
             <Route exact path="/resetpassword" component={ResetPassword} />
             <Route exact path="/signup" component={SignupOverlay} />
             <Route exact path="/InvestorCards" component={InvestorCards} />
-            <Route
-              exact
-              path="/EntrepreneurCards"
-              component={EntrepreneurCards}
-            />
+            <Route exact path="/EntrepreneurCards" component={EntrepreneurCards} />
             <Route exact path="/InvViewProfile" component={InvViewProfile} />
             <Route exact path="/EntViewProfile" component={EntViewProfile} />
             <Route exact path="/Wallet" component={Wallet} />

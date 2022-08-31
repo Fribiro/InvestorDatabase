@@ -1,4 +1,5 @@
 import React, { Component } from 'react'
+import { Link } from 'react-router-dom';
 
 export default class PersonalDetails extends Component {
     render() {
@@ -12,12 +13,15 @@ export default class PersonalDetails extends Component {
                 </div>
               </div>
               <div className="col-md-6">
-                <input
-                  type="submit"
-                  className="profile-edit-btn"
-                  name="btnAddMore"
-                  value="Edit Profile"
-                />
+                <Link to="update-profile">
+                  <input
+                    type="submit"
+                    className="profile-edit-btn"
+                    name="btnAddMore"
+                    value="Edit Profile"
+                  />
+                </Link>
+                
               </div>
             </div>
 

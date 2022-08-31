@@ -3,7 +3,6 @@ const cors = require('cors');
 const cookieParser = require('cookie-parser');
 const dotenv = require('dotenv');
 const { readdirSync } = require('fs');
-//const sequelize = require('./config/db.Config');
 
 const app = express();
 app.use(cookieParser());
@@ -92,12 +91,6 @@ funds.hasOne(entrepreneur, {
 
 entrepreneur.belongsTo(funds);
 
-// user.hasOne(investor, {
-//     foreignKey: 'investorId'
-// });
-
-// investor.belongsTo(user);
-
 
 investor.sync();
 entrepreneur.sync();
@@ -106,11 +99,7 @@ user.sync();
 funds.sync();
 invAddress.sync();
 entAddress.sync();
-// sequelize.sync({ alter: true }).then(() => {
-//     //updated table
-// }).catch((err) => {
-//     console.log(err);
-// });
+
 console.log("All models were synchronized successfully.");
 
 app.listen(PORT, () => {
