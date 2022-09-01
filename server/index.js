@@ -91,12 +91,12 @@ funds.hasOne(entrepreneur, {
 
 entrepreneur.belongsTo(funds);
 
-
+funds.sync();
 investor.sync();
 entrepreneur.sync();
 role.sync();
 user.sync();
-funds.sync();
+
 invAddress.sync();
 entAddress.sync();
 

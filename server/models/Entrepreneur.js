@@ -37,7 +37,22 @@ const Entrepreneur = sequelize.define("Entrepreneur", {
     EntrepreneurDateOfBirth: {
         type: DataTypes.DATE,
         allowNull: true
-    }
+    },
+
+    InvestmentTarget: {
+        type: Sequelize.INTEGER,
+        allowNull: true
+    },
+
+    EntrepreneurIndustry: {
+        type: Sequelize.STRING,
+        allowNull: true
+    },
+
+    EntrepreneurBio: {
+        type: Sequelize.STRING,
+        allowNull: true
+    },
 });
 
 module.exports = Entrepreneur;

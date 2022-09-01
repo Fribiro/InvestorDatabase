@@ -55,31 +55,6 @@ const Login = () => {
           UserId: userId
         }
         console.log(userData);
-        //debugger;
-        
-          // if (res.data.role === 1) {
-          //   localStorage.setItem("user", JSON.stringify(userData));
-          //   setStoredUser(storedUser);
-          //   const localUser = JSON.parse(localStorage.getItem("user"));
-          //   setUser({
-          //     accesstoken: localUser.accesstoken,
-          //   });
-          //   console.log(user);
-          //   setRedirect("/admin-dashboard");
-
-          // }
-          // if (res.data.role === 2) {
-          //   localStorage.setItem("user", JSON.stringify(userData));
-          //   setStoredUser(storedUser);
-          //   const localUser = JSON.parse(localStorage.getItem("user"));
-          //   setUser({
-          //     accesstoken: localUser.accesstoken,
-          //   });
-          //   console.log(user);
-          //   setRedirect("/InvViewProfile");
-          // }
-          //if (res.data.role === 3) {
-            console.log('hello');
 
             localStorage.setItem("user", JSON.stringify(userData));
             setStoredUser(storedUser);
@@ -87,28 +62,20 @@ const Login = () => {
             setUser({
               accesstoken: localUser.accesstoken,
             });
-            console.log(user);
-            setRedirect("/EntViewProfile");
-          //}
+            console.log(localUser);
+            if (localUser.UserRole == 2) {
+                  setRedirect("/profile");
+                }
+            if (localUser.UserRole == 3) {
+              setRedirect("/EntViewProfile");
+            }      
 
-          //   if (res.data.error) {
-          //   setMessage(res.data.error);
-          // }      
-
-        //   if (res.data.error) {
-        //     setMessage(res.data.error);
-        //   }
+          if (res.data.error) {
+            setMessage(res.data.error);
+          }
       },
-      // (err) => {
-      //   setMessage(err.response.data.message);
-
-      //   //dispatch(userSet(null));
-      // }
     );
   };
-  // useEffect(() => {
-  //   console.log(user);
-  // }, [user]);
 
   if (redirect) {
     return <Redirect to={redirect} />;

@@ -13,9 +13,10 @@ const Header = () => {
   //const [user, setUser] = useState([]);
 
   const logOutCallback = async () => {
-    await fetch("http://localhost:5500/auth/logout", {
+    await fetch("http://localhost:5000/api/logout", {
       method: "POST",
     });
+    localStorage.clear();
     //create user from context
     setUser({});
     //navigate back to the home page

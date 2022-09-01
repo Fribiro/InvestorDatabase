@@ -2,6 +2,23 @@ const mysql = require("mysql2");
 const Investor = require("../models/Investor");
 
 module.exports = {
+    async GetAllInvestors(req, res) {
+        try {
+
+            let investors = await Investor.findAll({ include: ["InvestorAddress"] });
+
+            res.status(200).send(investors);
+
+        } catch (err) {
+            console.log(err);
+            return res.send({
+                error: `${err.message}`,
+            });
+
+        }
+
+    },
+
     async GetInvestorById(req, res) {
         try {
             let id = req.params.id;

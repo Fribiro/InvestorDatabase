@@ -22,64 +22,70 @@ import EntViewProfile from "./components/profile/EntViewProfile";
 import LoginOverlay from "./components/userAuth/loginOverlay";
 import Wallet from "./components/protected/Wallet";
 import UpdateProfile from "./components/profile/UpdateProfile";
-
+import jwt_decode from "jwt-decode"
 
 export const UserContext = React.createContext([]);
 
 function App() {
+  const [user, setUser] = useState({});
 
-  const [user, setUser] = useState([]);
-  const [loading, setLoading] = useState(true);
-  const [redirect, setRedirect] = useState("");
-  //const dispatch = useDispatch();
-
-  const logoutCallback = async () => {
-    Axios.post("http://localhost:5000/api/logout", {
-      method: "POST",
-      credentials: "include",
-    });
-    //create user from context
-    setUser({});
-    setRedirect("/");
-  };
-
-
-  //get a new accesstoken if a refreshtoken exists
   useEffect(() => {
-       
-         Axios.post("http://localhost:5000/api/refresh_token", {
-           method: "POST",
-           credentials: "include",
-           headers: {
-             "Content-Type": "application/json",
-           },
-         }).then((res) => {
-           setUser({
-             accesstoken: res.data.accesstoken,
-           });
-           //dispatch(refreshtoken(res.data.refreshtoken));
-           //dispatch(accesstoken(res.data.accesstoken));
+    let abortController = new AbortController();
+    let aborted = abortController.signal.aborted;
 
-           setLoading(false);
-         });
+    const refresh = async () => {
+      try {
+        const localUse = localStorage.getItem("user");
+        console.log(localUse);
+
+        if (localUse == null) {
+
+        } else {
+          const result = await Axios.post(`/api/refresh_token`, user.User_Email);
+
+          console.log(result);
+          const { accesstoken, User_Email, User_Role } = result.data;
+          const userData = {
+            accesstoken: accesstoken,
+            email: User_Email,
+            role: User_Role
+          }
+
+          localStorage.setItem("user", JSON.stringify(userData));
+          const localUser = JSON.parse(localStorage.getItem("user"));
+
+          // setUser({userData})
+          // console.log(user);
+        }
+
+      } catch (error) {
+        console.log(error);
+      }
+    };
+    refresh()
+
+
+    const axiosJwt = Axios.create();
+
+    axiosJwt.interceptors.request.use(
+      async (config) => {
+        let currentDate = new Date();
+        const decodedToken = jwt_decode(user.accesstoken);
+        if (decodedToken.exp * 1000 < currentDate.getTime()) {
+          const data = await refresh();
+
+          config.headers["authorization"] = data.data.accesstoken
+        }
+        return config;
+      }, (error) => {
+        return Promise.reject(error);
+      }
+    )
+
+    return () => {
+      abortController.abort();
+    };
   }, []);
-
-  // if (loading) return (
-  //   <div
-  //     className="loader"
-  //     style={{display: "flex", justifyContent: "center", textAlign: "center", alignItems: "center", verticalAlign: "middle", height: "100vh"}}
-  //   >
-  //     <DotLoader
-  //       color={"#3DB2C7"}
-  //       loading={loading}
-  //       size={60}
-  //     />
-  //   </div>
-  // );
-
-    if (redirect) {
-      return <Redirect to={redirect} />;
-    }
 
   return (
     <UserContext.Provider value={[user, setUser]}>

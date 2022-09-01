@@ -3,20 +3,8 @@ import Footer from "../../components/headerFooter/Footer";
 import Header from "../../components/headerFooter/Header";
 import "./entcards.css";
 import { Icon } from "@iconify/react";
-//import arrowRight from "@iconify-icons/mdi/arrow-right";
-//import locationIcon from "@iconify-icons/codicon/location";
-//import starOutline from "@iconify-icons/mdi/star-outline";
 import { Link } from "react-router-dom";
-//import { Redirect } from "react-router-dom";
-//import { useSelector } from "react-redux";
-//import { selectUser } from "../../state/user";
-//import SearchIcon from "@material-ui/icons/Search";
-//import IconButton from "@material-ui/core/IconButton";
-//import StarOutlineIcon from "@material-ui/icons/StarOutline";
-//import Tooltip from "@material-ui/core/Tooltip";
 import Axios from "axios";
-//import $ from "jquery";
-//import deleteIcon from "@iconify-icons/mdi/delete";
 
 const Wallet = () => {
   //const [visible, setVisible] = useState(true);

@@ -1,31 +1,31 @@
-import React, { useState, useEffect } from "react";
+import React, {  useContext, useEffect, useState } from "react";
 import Footer from '../../components/headerFooter/Footer';
 import Header from '../../components/headerFooter/Header';
 import "./entcards.css";
 import { Icon } from "@iconify/react";
-//import arrowRight from "@iconify-icons/mdi/arrow-right";
-//import locationIcon from "@iconify-icons/codicon/location";
-//import starOutline from "@iconify-icons/mdi/star-outline";
-import { Link } from 'react-router-dom';
-//import SearchIcon from "@material-ui/icons/Search";
-//import IconButton from "@material-ui/core/IconButton";
-//import StarOutlineIcon from "@material-ui/icons/StarOutline";
-//import Tooltip from "@material-ui/core/Tooltip";
+import { Link, Redirect } from 'react-router-dom';
 import Axios from "axios";
 import $ from "jquery";
+import { UserContext } from "../../App";
 
 const EntrepreneurCards = () => {
+  const [user] = useContext(UserContext);
   //const [visible, setVisible] = useState(true);
-  const [users, setUsers] = useState([]);
-  //const [userdetails, setUserdetails] = useState([]);
-  //const [firstName, setFirstName] = useState("");
-  //const [lastName, setLastName] = useState("");
   const [searchText, setSearchText] = useState("");
+  const [users, setUsers] = useState([]);
   const [wallet, setWallet] = useState([]);
 
-  // if (!user.accesstoken) {
-  //   return <Redirect from="" to="login" noThrow />;
-  // }
+  useEffect(() => {
+    Axios.get("http://localhost:5000/api/entrepreneurs").then((res) => {
+      console.log(res.data);
+      setUsers(res.data);
+      //console.log(users);
+    });
+  }, []);
+  
+  if (!user.accesstoken) {
+    return <Redirect to='/login' />;
+  }
 
   // const getUser = (id) => {
   //   Axios.get("http://localhost:5500/users/${id}").then((res) => {
@@ -34,13 +34,7 @@ const EntrepreneurCards = () => {
   //     $("#myModal").modal("show");
   //   });
   // };
-  useEffect(() => {
-    Axios.get("http://localhost:5000/api/entrepreneurs").then((res) => {
-      console.log(res.data);
-      setUsers(res.data);
-      //console.log(users);
-    });
-  }, []);
+  
   const updateUsers = (id) => {
     Axios.put("http://localhost:5000/api/entrepreneurupdate", {}).then((res) => {
       setUsers(
@@ -62,7 +56,7 @@ const EntrepreneurCards = () => {
     filterUsers(value);
   };
 
-  const excludeColumns = ["id"];
+  const excludeColumns = ["Id","UserUsersId", "FundId"];
 
   const filterUsers = (value) => {
     Axios.get("http://localhost:5000/api/entrepreneurs").then((res) => {
@@ -70,15 +64,15 @@ const EntrepreneurCards = () => {
       //setUsers(res.data);
 
       const lowercasedValue = value.toLowerCase().trim();
-      if (lowercasedValue === "") setUsers(res.data);
-      else {
+      if (lowercasedValue === "") {
+        setUsers(res.data);
+      } else {
         const filterUsers = users.filter((item) => {
-          
-          return Object.keys(item).some((key) =>
-            excludeColumns.includes(key)
+          return Object.keys(item).some((key) => {
+            return excludeColumns.includes(key)
               ? false
-              : item[key].toString().toLowerCase().includes(lowercasedValue)
-          );
+              : item[key].toString().toLowerCase().includes(lowercasedValue);
+          });
         });
         setUsers(filterUsers);
       }
@@ -110,15 +104,23 @@ const EntrepreneurCards = () => {
       </header>
       <div>
         <input
-          style={{ marginLeft: 5 }}
+          style={{
+            marginLeft: 5,
+            textAlign: "center",
+            marginLeft: "70%",
+            border: "none",
+            borderBottom: "1px solid #3DB2C7",
+            marginTop: "1rem",
+            outline: "none",
+          }}
           type="text"
           placeholder="Search for entrepreneurs..."
           value={searchText}
           onChange={(e) => handleChange(e.target.value)}
         />
-        <button>
+        {/* <button>
           <Link to='/Wallet'>Wallet ({wallet.length})</Link>
-        </button>
+        </button> */}
       </div>
       <section className="testimonials">
         <div className="testimonial-container">
@@ -133,6 +135,7 @@ const EntrepreneurCards = () => {
                   style={{
                     marginTop: "10px",
                   }}
+                  key={key}
                 >
                   <div className="profile">
                     <div
@@ -178,7 +181,7 @@ const EntrepreneurCards = () => {
                       className="text-justify"
                       style={{ padding: "0 20px", marginTop: "10px" }}
                     >
-                      <small>{val.bio}</small>
+                      <small>{val.EntrepreneurBio}</small>
                     </div>
                     <div
                       class="text-left expertise"
@@ -218,7 +221,7 @@ const EntrepreneurCards = () => {
                           </tr>
                           <tr>
                             <td style={{ textAlign: "left" }}>
-                              {val.investmenTarget}
+                              {val.InvestmentTarget}
                             </td>
                             <td style={{ textAlign: "left" }}>Finance</td>
                           </tr>
@@ -230,12 +233,12 @@ const EntrepreneurCards = () => {
                         <span className="details">View Details</span>
                         <Icon className="arrow-right" icon="bi:arrow-right" />
                       </Link>
-                      <Icon
+                      {/* <Icon
                         className="starOutline"
                         icon="gridicons:star-outline"
                         style={{ cursor: "pointer" }}
                         onClick={() => addToWallet(users)}
-                      />
+                      /> */}
                     </div>
                   </div>
                 </div>

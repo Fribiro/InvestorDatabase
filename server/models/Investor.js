@@ -36,7 +36,17 @@ const Investor = sequelize.define("Investor", {
     InvestorDateOfBirth: {
         type: DataTypes.DATE,
         allowNull: true
-    }
+    },
+
+    InvestmentRange: {
+        type: DataTypes.STRING,
+        allowNull: true
+    },
+
+    InvestorExpertise: {
+        type: DataTypes.STRING,
+        allowNull: true
+    },
 });
 
 module.exports = Investor;

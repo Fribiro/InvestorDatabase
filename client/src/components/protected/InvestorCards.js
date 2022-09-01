@@ -1,27 +1,17 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useContext } from "react";
 import Footer from "../../components/headerFooter/Footer";
 import Header from "../../components/headerFooter/Header";
 import "./invcards.css";
 import { Icon } from "@iconify/react";
-//import arrowRight from "@iconify-icons/mdi/arrow-right";
-//import locationIcon from "@iconify-icons/codicon/location";
-import { Link } from "react-router-dom";
-
-//import SearchIcon from "@material-ui/icons/Search";
-//import IconButton from "@material-ui/core/IconButton";
+import { Link, Redirect } from "react-router-dom";
 import Axios from "axios";
 import $ from "jquery";
+import { UserContext } from "../../App";
 
 const InvestorCards = () => {
-  //const [visible, setVisible] = useState(true);
+  const [user] = useContext(UserContext);
   const [users, setUsers] = useState([]);
-  //const [userdetails, setUserdetails] = useState([]);
   const [searchText, setSearchText] = useState("");
-  //const user = useSelector(selectUser);
-  // if (!user.accesstoken) {
-  //   return <Redirect from="" to="login" noThrow />;
-  // }
-
   // const getUser = (id) => {
   //   Axios.get("http://localhost:5000/investor/${id}").then((res) => {
   //     console.log(res.data);
@@ -30,14 +20,19 @@ const InvestorCards = () => {
   //   });
   // };
   useEffect(() => {
-    Axios.get("http://localhost:5000/investors").then((res) => {
+    Axios.get("http://localhost:5000/api/investors").then((res) => {
       console.log(res.data);
       setUsers(res.data);
-      //console.log(users);
+      console.log(users);
     });
   }, []);
+
+  if (!user.accesstoken) {
+    return <Redirect to='/login' />;
+  }
+
   const updateUsers = (id) => {
-    Axios.put("http://localhost:5000/investorupdate", {}).then((res) => {
+    Axios.put("http://localhost:5000/api/investorupdate", {}).then((res) => {
       setUsers(
         users.map((val) => {
           return val.id === id
@@ -57,10 +52,10 @@ const InvestorCards = () => {
     filterUsers(value);
   };
 
-  const excludeColumns = ["id"];
+  const excludeColumns = ["Id", "UserUsersId", "FundId"];
 
   const filterUsers = (value) => {
-    Axios.get("http://localhost:5000/investor").then((res) => {
+    Axios.get("http://localhost:5000/api/investors").then((res) => {
       console.log(res.data);
       //setUsers(res.data);
 
@@ -98,7 +93,15 @@ const InvestorCards = () => {
         </div>
       </header>
       <input
-        style={{ marginLeft: 5, textAlign: 'center' }}
+        style={{
+          marginLeft: 5,
+          textAlign: "center",
+          marginLeft: "70%",
+          border: "none",
+          borderBottom: "1px solid #3DB2C7",
+          marginTop: "1rem",
+          outline: "none",
+        }}
         type="text"
         placeholder="Search for investors..."
         value={searchText}
@@ -112,7 +115,7 @@ const InvestorCards = () => {
           <div className="row">
             {users.map((val, key) => {
               return (
-                <div className="iCardinv col-md-3 text-center">
+                <div className="iCardinv col-md-3 text-center" key={key}>
                   <div className="profile">
                     <img
                       src="/img/user1.jpg"
@@ -124,24 +127,24 @@ const InvestorCards = () => {
                         style={{ color: "#333" }}
                         className="name justify-content-center"
                       >
-                        {val.firstName} {val.lastName}
+                        {val.InvestorFirstName} {val.InvestorLastName}
                       </h6>
                       <p class="location justify-content-center">
                         <Icon
                           className="location-icon"
                           color={"#3DB2C7"}
                           icon="akar-icons:location"
-                        />{" "}
+                        />
                         {val.location}
                       </p>
                     </div>
                     <div class="text-center">
                       {/* <span class="total d-block pt-2">Investment Range</span> */}
-                      <span className="amt-range">{val.investmentRange}</span>
+                      <span className="amt-range">{val.InvestmentRange}</span>
                     </div>
                     <div class="text-center expertise">
                       <span>Expertise</span>
-                      <p>{val.expertise}</p>
+                      <p>{val.InvestorExpertise}</p>
                     </div>
                     <div className="viewmore text-center align-items-center d-flex justify-content-center pt-2 pb-2">
                       <Link to="InvViewProfile">

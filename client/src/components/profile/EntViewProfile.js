@@ -1,17 +1,35 @@
-import React, { useContext } from "react";
+import React, { useContext, useState } from "react";
 import Footer from "../../components/headerFooter/Footer";
 import Header from "../../components/headerFooter/Header";
 import "./profile.css";
 import Iframe from "react-iframe";
 import { UserContext } from "../../App";
 import { Redirect } from "@reach/router";
+import Axios from "axios";
 
 const EntViewProfile = () => {
   const [user] = useContext(UserContext);
+  const [sent, setSent] = useState(false);
+  const [text, setText] = useState("");
+  const [date, setDate] = useState("");
+  const [info, setInfo] = useState("");
 
   if (!user.accesstoken) {
     return <Redirect to='/' />;
   }
+
+  const handleSend = async (e) => {
+    setSent(true);
+    try {
+      await Axios.post("http://localhost:5000/api/send_mail", {
+        text,
+        info,
+        date,
+      });
+    } catch (error) {
+      console.error(error);
+    }
+  };
 
   return (
     <div>
@@ -173,6 +191,75 @@ const EntViewProfile = () => {
             have evolved over the years, sometimes by accident, sometimes on
             purpose
           </p>
+          
+        </div>
+        <div className="">
+          {!sent ? (
+            <form style={{ margin: "0 4rem 4rem 1rem" }} onSubmit={handleSend}>
+              <div class="form-group">
+                <h3
+                  for="exampleInputEmail1"
+                  style={{ fontFamily: "Poppins", color: "white" }}
+                >
+                  Schedule a virtual meeting
+                </h3>
+              </div>
+              <div class="form-group">
+                <input
+                  type="text"
+                  class="form-control"
+                  id="exampleInputEmail1"
+                  aria-describedby="emailHelp"
+                  placeholder="Enter your Full Name"
+                  value={text}
+                  style={{
+                    width: "23.9rem",
+                    fontFamily: "Poppins",
+                    outline: "none",
+                  }}
+                  onChange={(e) => setText(e.target.value)}
+                />
+              </div>
+              <div class="form-group">
+                <input
+                  type="date"
+                  class="form-control"
+                  id="exampleInputDate"
+                  value={date}
+                  style={{
+                    width: "23.9rem",
+                    fontFamily: "Poppins",
+                    outline: "none",
+                  }}
+                  onChange={(e) => setDate(e.target.value)}
+                />
+              </div>
+              <div class="form-group">
+                <textarea
+                  name="message"
+                  id="contactform"
+                  cols="40"
+                  rows="5"
+                  placeholder="Type your comments here ..."
+                  value={info}
+                  style={{ fontFamily: "Poppins", outline: "none" }}
+                  onChange={(e) => setInfo(e.target.value)}
+                ></textarea>
+              </div>
+              <button
+                type="submit"
+                class="btn btn-primary"
+                style={{
+                  backgroundColor: "#3DB2C7",
+                  border: "none",
+                }}
+              >
+                Schedule Meeting
+              </button>
+            </form>
+          ) : (
+              <h1 style={{ color: "white" }}>Email Sent</h1>
+          )}
         </div>
       </div>
       <Footer />

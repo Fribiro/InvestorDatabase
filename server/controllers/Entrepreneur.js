@@ -5,7 +5,7 @@ module.exports = {
     async GetAllEntrepreneurs(req, res) {
         try {
             
-            let entrepreneurs = await Entrepreneur.findAll({});
+            let entrepreneurs = await Entrepreneur.findAll({ include: ["EntrepreneurAddress"]});
 
             res.status(200).send(entrepreneurs);
 
