@@ -1,5 +1,6 @@
 const mysql = require("mysql2");
 const Investor = require("../models/Investor");
+const User = require("../models/User");
 
 module.exports = {
     async GetAllInvestors(req, res) {
@@ -22,7 +23,7 @@ module.exports = {
     async GetInvestorById(req, res) {
         try {
             let id = req.params.id;
-            let investor = await Investor.findOne({ where: { Id: id } });
+            let investor = await User.findOne({ where: { UsersId: id }, include: ["Investor"] });
 
             res.status(200).send(investor);
 

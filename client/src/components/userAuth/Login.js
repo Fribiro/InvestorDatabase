@@ -2,6 +2,7 @@ import React, { useState, useContext, useEffect } from "react";
 import Axios from "axios";
 import { Link, Redirect } from "react-router-dom";
 import { UserContext } from "../../App";
+import { useParams } from "@reach/router";
 
 const emailRegex = RegExp(
   /^[a-zA-Z0-9.!#$%&’*+/=?^_`{|}~-]+@[a-zA-Z0-9-]+(?:\.[a-zA-Z0-9-]+)*$/
@@ -47,27 +48,28 @@ const Login = () => {
       },
     }).then(
       (res) => {
-        console.log(res)
+        //console.log(res)
         const { accesstoken, userId, role } = res.data;
         const userData = {
           accesstoken: accesstoken,
           UserRole: role,
           UserId: userId
         }
-        console.log(userData);
+        //console.log(userData);
 
             localStorage.setItem("user", JSON.stringify(userData));
             setStoredUser(storedUser);
             const localUser = JSON.parse(localStorage.getItem("user"));
             setUser({
               accesstoken: localUser.accesstoken,
+              userId: localUser.UserId
             });
-            console.log(localUser);
+           // console.log(localUser);
             if (localUser.UserRole == 2) {
-                  setRedirect("/profile");
+              setRedirect("/profile");
                 }
             if (localUser.UserRole == 3) {
-              setRedirect("/EntViewProfile");
+              setRedirect("/entrepreneur-profile");
             }      
 
           if (res.data.error) {

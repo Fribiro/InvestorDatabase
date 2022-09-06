@@ -1,6 +1,23 @@
-import React from 'react'
+import React, { useContext, useEffect, useState } from 'react';
+import Axios from "axios";
+import "./profile.css";
+import { UserContext } from '../../App';
+import { useParams } from '@reach/router';
 
 const UpdateProfile = () => {
+  const [user] = useContext(UserContext);
+  const [users, setUsers] = useState([]);
+
+  useEffect(() => {
+    let u = JSON.parse(localStorage.getItem("user"));
+    let id = u.UserId;
+    Axios.get(`http://localhost:5000/api/update-investor/${id}`).then((res) => {
+      console.log(res.data);
+      setUsers(res.data);
+      //console.log(users);
+    });
+  }, []);
+
     return (
       <div>
         {/* <div className="row">
@@ -36,18 +53,19 @@ const UpdateProfile = () => {
               >
                 <div className="row">
                   <div className="col-md-6">
-                    <label>User Id</label>
-                  </div>
-                  <div className="col-md-6">
-                    <p>1</p>
-                  </div>
-                </div>
-                <div className="row">
-                  <div className="col-md-6">
                     <label>Name</label>
                   </div>
                   <div className="col-md-6">
-                    <p>Festus Ribiro</p>
+                    <input type="text" 
+                      style={{ 
+                        textAlign: "center",
+                        border: "none",
+                        borderBottom: "1px solid #3DB2C7",
+                        outline: "none"
+                       }} 
+                    name="fullName" id="">
+                      
+                    </input>
                   </div>
                 </div>
                 <div className="row">
@@ -55,7 +73,16 @@ const UpdateProfile = () => {
                     <label>Email</label>
                   </div>
                   <div className="col-md-6">
-                    <p>fesri@gmail.com</p>
+                    <input type="text"
+                      style={{
+                        textAlign: "center",
+                        border: "none",
+                        borderBottom: "1px solid #3DB2C7",
+                        outline: "none"
+                      }}
+                      name="fullName" id="">
+
+                    </input>
                   </div>
                 </div>
                 <div className="row">
@@ -63,7 +90,16 @@ const UpdateProfile = () => {
                     <label>National ID</label>
                   </div>
                   <div className="col-md-6">
-                    <p>24098674</p>
+                    <input type="text"
+                      style={{
+                        textAlign: "center",
+                        border: "none",
+                        borderBottom: "1px solid #3DB2C7",
+                        outline: "none"
+                      }}
+                      name="fullName" id="">
+
+                    </input>
                   </div>
                 </div>
                 <div className="row">
@@ -71,7 +107,16 @@ const UpdateProfile = () => {
                     <label>Gender</label>
                   </div>
                   <div className="col-md-6">
-                    <p>Male</p>
+                    <input type="text"
+                      style={{
+                        textAlign: "center",
+                        border: "none",
+                        borderBottom: "1px solid #3DB2C7",
+                        outline: "none"
+                      }}
+                      name="fullName" id="">
+
+                    </input>
                   </div>
                 </div>
                 <div className="row">
@@ -79,7 +124,16 @@ const UpdateProfile = () => {
                     <label>Phone</label>
                   </div>
                   <div className="col-md-6">
-                    <p>123 456 7890</p>
+                    <input type="text"
+                      style={{
+                        textAlign: "center",
+                        border: "none",
+                        borderBottom: "1px solid #3DB2C7",
+                        outline: "none"
+                      }}
+                      name="fullName" id="">
+
+                    </input>
                   </div>
                 </div>
                 <div className="row">
@@ -87,7 +141,16 @@ const UpdateProfile = () => {
                     <label>Profession</label>
                   </div>
                   <div className="col-md-6">
-                    <p>Web Developer and Designer</p>
+                    <input type="text"
+                      style={{
+                        textAlign: "center",
+                        border: "none",
+                        borderBottom: "1px solid #3DB2C7",
+                        outline: "none"
+                      }}
+                      name="fullName" id="">
+
+                    </input>
                   </div>
                 </div>
                 <div className="row">
@@ -95,7 +158,16 @@ const UpdateProfile = () => {
                     <label>Email</label>
                   </div>
                   <div className="col-md-6">
-                    <p>kshitighelani@gmail.com</p>
+                    <input type="text"
+                      style={{
+                        textAlign: "center",
+                        border: "none",
+                        borderBottom: "1px solid #3DB2C7",
+                        outline: "none"
+                      }}
+                      name="fullName" id="">
+
+                    </input>
                   </div>
                 </div>
               </div>
@@ -119,7 +191,16 @@ const UpdateProfile = () => {
                     <label>Street</label>
                   </div>
                   <div className="col-md-6">
-                    <p>Kimathi</p>
+                    <input type="text"
+                      style={{
+                        textAlign: "center",
+                        border: "none",
+                        borderBottom: "1px solid #3DB2C7",
+                        outline: "none"
+                      }}
+                      name="fullName" id="">
+
+                    </input>
                   </div>
                 </div>
                 <div className="row">
@@ -127,7 +208,16 @@ const UpdateProfile = () => {
                     <label>Town</label>
                   </div>
                   <div className="col-md-6">
-                    <p>Ruiru</p>
+                    <input type="text"
+                      style={{
+                        textAlign: "center",
+                        border: "none",
+                        borderBottom: "1px solid #3DB2C7",
+                        outline: "none"
+                      }}
+                      name="fullName" id="">
+
+                    </input>
                   </div>
                 </div>
                 <div className="row">
@@ -135,7 +225,17 @@ const UpdateProfile = () => {
                     <label>City</label>
                   </div>
                   <div className="col-md-6">
-                    <p>Nairobi</p>
+                    <input type="text"
+                      style={{
+                        textAlign: "center",
+                        border: "none",
+                        borderBottom: "1px solid #3DB2C7",
+                        outline: "none"
+                      }}
+                      name="fullName" id="">
+
+                    </input>
+
                   </div>
                 </div>
                 <div className="row">
@@ -143,7 +243,16 @@ const UpdateProfile = () => {
                     <label>Address</label>
                   </div>
                   <div className="col-md-6">
-                    <p>98674</p>
+                    <input type="text"
+                      style={{
+                        textAlign: "center",
+                        border: "none",
+                        borderBottom: "1px solid #3DB2C7",
+                        outline: "none"
+                      }}
+                      name="fullName" id="">
+
+                    </input>
                   </div>
                 </div>
                 <div className="row">
@@ -151,7 +260,16 @@ const UpdateProfile = () => {
                     <label>Postal Code</label>
                   </div>
                   <div className="col-md-6">
-                    <p>00100</p>
+                    <input type="text"
+                      style={{
+                        textAlign: "center",
+                        border: "none",
+                        borderBottom: "1px solid #3DB2C7",
+                        outline: "none"
+                      }}
+                      name="fullName" id="">
+
+                    </input>
                   </div>
                 </div>
                 <div className="row">
@@ -159,7 +277,16 @@ const UpdateProfile = () => {
                     <label>County</label>
                   </div>
                   <div className="col-md-6">
-                    <p>Nairobi</p>
+                    <input type="text"
+                      style={{
+                        textAlign: "center",
+                        border: "none",
+                        borderBottom: "1px solid #3DB2C7",
+                        outline: "none"
+                      }}
+                      name="fullName" id="">
+
+                    </input>
                   </div>
                 </div>
               </div>

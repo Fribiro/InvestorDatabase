@@ -135,3 +135,10 @@ table {
     margin: 0 40px;
     text-align: justify;
 }
+
+.profileInput {
+    text-align: "center";
+    border: "none";
+    border-Bottom: "1px solid #3DB2C7";
+    outline: "none";
+}

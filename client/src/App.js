@@ -23,6 +23,7 @@ import LoginOverlay from "./components/userAuth/loginOverlay";
 import Wallet from "./components/protected/Wallet";
 import UpdateProfile from "./components/profile/UpdateProfile";
 import jwt_decode from "jwt-decode"
+//import EntProfile from "./components/profile/EntProfile";
 
 export const UserContext = React.createContext([]);
 
@@ -41,14 +42,15 @@ function App() {
         if (localUse == null) {
 
         } else {
-          const result = await Axios.post(`/api/refresh_token`, user.User_Email);
+          const result = await Axios.post(`http://localhost:5000/api/refresh_token`, user.UserEmail);
 
           console.log(result);
-          const { accesstoken, User_Email, User_Role } = result.data;
+          const { accesstoken, userId, UserRole } = result.data;
           const userData = {
             accesstoken: accesstoken,
-            email: User_Email,
-            role: User_Role
+            //email: UserEmail,
+            userId: userId,
+            role: UserRole
           }
 
           localStorage.setItem("user", JSON.stringify(userData));
@@ -98,6 +100,7 @@ function App() {
             <Route exact path="/about" component={About} />
             <Route exact path="/contact" component={Contact} />
             <Route exact path="/profile" component={Profile} />
+            {/* <Route exact path="/entrepreneur-profile" component={EntProfile} /> */}
             <Route exact path="/update-profile" component={UpdateProfile} />
             <Route exact path="/login" component={Login} />
             <Route exact path="/forgotpassword" component={PasswordForget} />
