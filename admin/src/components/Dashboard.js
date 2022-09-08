@@ -1,6 +1,32 @@
-import React from 'react'
+import React, { useEffect, useState } from 'react';
+import Axios from "axios";
+
 
 const Dashboard = () => {
+    const [investors, setInvestors] = useState([]);
+    const [entrepreneurs, setEntrepreneurs] = useState([]);
+
+    useEffect(() => {
+
+        const getEnt = async () => {
+            Axios.get("http://localhost:5000/api/entrepreneurs").then((res) => {
+                setEntrepreneurs(res.data);
+            });
+        };
+
+        const getInv = async () => {
+            Axios.get("http://localhost:5000/api/investors").then((res) => {
+                setInvestors(res.data);
+            });
+         };
+
+         getEnt();
+         getInv();
+        
+    }, []);
+
+    const entNo = entrepreneurs.length;
+    const invNo = investors.length;
     return (
     <div>
         <div class="main-content">
@@ -28,11 +54,11 @@ const Dashboard = () => {
                         <span class="ti-briefcase"></span>
                         <div>
                             <h5>Entrepreneurs</h5>
-                            <h4>17</h4>
+                            <h4>{entNo}</h4>
                         </div>
                     </div>
                     <div class="card-footer">
-                        <a href="">View all</a>
+                    <a href="/entrepreneurs">View All</a>
                     </div>
                 </div>
                 
@@ -41,11 +67,11 @@ const Dashboard = () => {
                         <span class="ti-reload"></span>
                         <div>
                             <h5>Investors</h5>
-                            <h4>7</h4>
+                            <h4>{invNo}</h4>
                         </div>
                     </div>
                     <div class="card-footer">
-                        <a href="">View all</a>
+                        <a href="/investors">View all</a>
                     </div>
                 </div>
                 

@@ -112,7 +112,7 @@ const Profile = () => {
                 <div className="row">
                   <div className="row">
                     <div className="col-md-6 profile-sub-headers">
-                <Link to="update-investor">Update</Link>
+                {/* <Link to="update-investor">Update</Link> */}
                     </div>
                   </div>
                   <div className="row">
