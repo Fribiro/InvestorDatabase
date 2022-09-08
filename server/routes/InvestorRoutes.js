@@ -1,5 +1,5 @@
 const express = require('express');
-const { GetInvestorById, UpdateInvestorProfile, GetAllInvestors } = require('../controllers/Investor');
+const { GetInvestorById, UpdateInvestorProfile, GetAllInvestors, GetInvestorAddress } = require('../controllers/Investor');
 const { investorSignup, } = require('../controllers/UserAuth');
 const router = express.Router();
 
@@ -9,6 +9,8 @@ router.get('/investors', GetAllInvestors);
 
 router.get('/investor-dashboard/:id', GetInvestorById);
 
-router.post('/update-investor/:id', UpdateInvestorProfile);
+router.put('/update-investor/:id', UpdateInvestorProfile);
+
+router.get('/investor-address/:id', GetInvestorAddress);
 
 module.exports = router;

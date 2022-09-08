@@ -34,7 +34,7 @@ exports.Login = async (req, res) => {
                 { UserToken: refreshtoken },
                 { where: { UserEmail: UserEmail } }
             );
-            console.log(user);
+            //console.log(user);
 
             sendRefreshToken(res, refreshtoken);
             sendAccessToken(req, res, accesstoken, user.UsersId ,user.UserRole);
@@ -55,7 +55,7 @@ exports.Login = async (req, res) => {
 
 exports.Refreshtoken = async (req, res) => {
     const token = req.cookies.refreshtoken;
-    console.log(req.cookies.refreshtoken);
+    //console.log(req.cookies.refreshtoken);
 
 
     if (!token) return res.send("No refreshtoken");

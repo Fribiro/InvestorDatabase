@@ -1,4 +1,4 @@
-import React, {  useContext, useEffect, useState } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import Footer from '../../components/headerFooter/Footer';
 import Header from '../../components/headerFooter/Header';
 import "./entcards.css";
@@ -22,7 +22,7 @@ const EntrepreneurCards = () => {
       //console.log(users);
     });
   }, []);
-  
+
   if (!user.accesstoken) {
     return <Redirect to='/login' />;
   }
@@ -34,7 +34,7 @@ const EntrepreneurCards = () => {
   //     $("#myModal").modal("show");
   //   });
   // };
-  
+
   const updateUsers = (id) => {
     Axios.put("http://localhost:5000/api/entrepreneurupdate", {}).then((res) => {
       setUsers(
@@ -56,25 +56,25 @@ const EntrepreneurCards = () => {
     filterUsers(value);
   };
 
-  const excludeColumns = ["Id","UserUsersId", "FundId"];
+  const excludeColumns = ["Id", "UserUsersId", "Fundid", "entrepreneurId", "EntrepreneurAddress"];
 
   const filterUsers = (value) => {
     Axios.get("http://localhost:5000/api/entrepreneurs").then((res) => {
-      console.log(res.data);
-      //setUsers(res.data);
 
       const lowercasedValue = value.toLowerCase().trim();
-      if (lowercasedValue === "") {
+      if (lowercasedValue == "") {
         setUsers(res.data);
+        console.log(users);
       } else {
         const filterUsers = users.filter((item) => {
+          console.log(item);
           return Object.keys(item).some((key) => {
             return excludeColumns.includes(key)
               ? false
               : item[key].toString().toLowerCase().includes(lowercasedValue);
           });
         });
-        setUsers(filterUsers);
+        setUsers(filterUsers)
       }
     });
   };
@@ -184,7 +184,7 @@ const EntrepreneurCards = () => {
                       <small>{val.EntrepreneurBio}</small>
                     </div>
                     <div
-                      class="text-left expertise"
+                      className="text-left expertise"
                       style={{
                         padding: "0 20px",
                         marginTop: "10px",
@@ -192,7 +192,7 @@ const EntrepreneurCards = () => {
                       }}
                     >
                       <table
-                        class=""
+                        className=""
                         style={{
                           padding: "0 20px",
                           marginTop: "10px",

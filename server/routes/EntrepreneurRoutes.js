@@ -1,5 +1,5 @@
 const express = require('express');
-const { GetEntrepreneurById, UpdateEntrepreneurProfile, GetAllEntrepreneurs } = require('../controllers/Entrepreneur');
+const { GetEntrepreneurById, UpdateEntrepreneurProfile, GetAllEntrepreneurs, GetEntrepreneurAddress } = require('../controllers/Entrepreneur');
 const { entrepreneurSignup } = require('../controllers/UserAuth');
 const router = express.Router();
 const cors = require("cors");
@@ -12,6 +12,8 @@ router.get('/entrepreneurs', GetAllEntrepreneurs);
 router.get('/entrepreneur-dashboard/:id', GetEntrepreneurById);
 
 router.post('/update-entrepreneur/:id', UpdateEntrepreneurProfile);
+
+router.get('/entrepreneur-address/:id', GetEntrepreneurAddress);
 
 router.post("/send_mail", cors(), async (req, res) => {
   let { text, info, date } = req.body;

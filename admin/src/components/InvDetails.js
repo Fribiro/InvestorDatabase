@@ -48,7 +48,7 @@ const InvDetails = () => {
     });
   };
   useEffect(() => {
-    Axios.get("http://localhost:5500/investor").then((res) => {
+    Axios.get("http://localhost:5000/api/investors").then((res) => {
       console.log(res.data);
       setUsers(res.data);
       //console.log(users);
@@ -90,7 +90,9 @@ const InvDetails = () => {
                 <th>ID</th>
                 <th>Firstname</th>
                 <th>Lastname</th>
-                <th>Email</th>
+                {/* <th>Email</th> */}
+                <th>Profession</th>
+                <th>Phone</th>
                 <th>Actions</th>
               </tr>
             </thead>
@@ -98,10 +100,12 @@ const InvDetails = () => {
               {users.map((val, key) => {
                 return (
                   <tr>
-                    <td>{val.id}</td>
-                    <td>{val.firstName}</td>
-                    <td>{val.lastName}</td>
-                    <td>{val.email}</td>
+                    <td>{val.Id}</td>
+                    <td>{val.InvestorFirstName}</td>
+                    <td>{val.InvestorLastName}</td>
+                    {/* <td>{val.UserEmail}</td> */}
+                    <td>{val.InvestorProfession}</td>
+                    <td>{val.InvestorPhone}</td>
                     <td>
                       <Tooltip title="View user" placement="top">
                         <IconButton

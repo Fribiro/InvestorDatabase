@@ -30,6 +30,14 @@ const EntDetails = () => {
     const [currentPage, setCurrentPage] = useState()
     const ITEMS_PER_PAGE = 10;
 
+  useEffect(() => {
+    Axios.get("http://localhost:5000/api/entrepreneurs").then((res) => {
+      console.log(res.data);
+      setUsers(res.data);
+      //console.log(users);
+    });
+  }, []);
+
     const addUsers = () => {
       Axios.post("http://localhost:5500/create", {
         firstName: firstName,
@@ -47,28 +55,22 @@ const EntDetails = () => {
       });
     };
 
-    const getUsers = () => {
-      Axios.get("http://localhost:5500/users").then((res) => {
-        console.log(res.data);
-        setUsers(res.data);
-      });
-    };
+    // const getUsers = () => {
+    //   Axios.get("http://localhost:5500/users").then((res) => {
+    //     console.log(res.data);
+    //     setUsers(res.data);
+    //   });
+    // };
     const getUser = (id) => {
-      Axios.get("http://localhost:5500/users/${id}").then((res) => {
+      Axios.get("http://localhost:5000/api/entrepreneur/${id}").then((res) => {
         console.log(res.data);
         setUserdetails(res.data[0]);
         $("#myModal").modal("show");
       });
     };
-    useEffect(() => {
-       Axios.get("http://localhost:5500/users").then((res) => {
-         console.log(res.data);
-         setUsers(res.data);
-         //console.log(users);
-       });
-    }, []);
+    
     const updateUsers = (id) => {
-      Axios.put("http://localhost:5500/update", {}).then(
+      Axios.put("http://localhost:5000/api/entrepreneurs-update", {}).then(
         (res) => {
           setUsers(
             users.map((val) => {
@@ -88,7 +90,7 @@ const EntDetails = () => {
     };
 
     const deleteUsers = (id) => {
-      Axios.delete(`http://localhost:5500/users/${id}`).then((res) => {
+      Axios.delete(`http://localhost:5000/api/entrepreneur/${id}`).then((res) => {
         setUsers(
           users.filter((val) => {
             return val.id !== id;
@@ -102,6 +104,7 @@ const EntDetails = () => {
       });
     };
 
+    if (users) {
     return (
       <div className="main-content">
         <div className="maincontainer">
@@ -112,7 +115,9 @@ const EntDetails = () => {
                   <th>ID</th>
                   <th>Firstname</th>
                   <th>Lastname</th>
-                  <th>Email</th>
+                  {/* <th>Email</th> */}
+                  <th>Profession</th>
+                  <th>Phone</th>
                   <th>Actions</th>
                 </tr>
               </thead>
@@ -120,10 +125,12 @@ const EntDetails = () => {
                 {users.map((val, key) => {
                   return (
                     <tr>
-                      <td>{val.id}</td>
-                      <td>{val.firstName}</td>
-                      <td>{val.lastName}</td>
-                      <td>{val.email}</td>
+                      <td>{val.Id}</td>
+                      <td>{val.EntrepreneurFirstName}</td>
+                      <td>{val.EntrepreneurLastName}</td>
+                      {/* <td>{val.email}</td> */}
+                      <td>{val.EntrepreneurProfession}</td>
+                      <td>{val.EntrepreneurPhone}</td>
                       <td>
                         <Tooltip title="View user" placement="top">
                           <IconButton
@@ -205,6 +212,7 @@ const EntDetails = () => {
         </div>
       </div>
     );
+  }
 }
 
 export default EntDetails

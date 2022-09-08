@@ -66,7 +66,7 @@ const Login = () => {
             });
            // console.log(localUser);
             if (localUser.UserRole == 2) {
-              setRedirect("/profile");
+              setRedirect("/investor-profile");
                 }
             if (localUser.UserRole == 3) {
               setRedirect("/entrepreneur-profile");

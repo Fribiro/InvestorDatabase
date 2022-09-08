@@ -23,6 +23,8 @@ import LoginOverlay from "./components/userAuth/loginOverlay";
 import Wallet from "./components/protected/Wallet";
 import UpdateProfile from "./components/profile/UpdateProfile";
 import jwt_decode from "jwt-decode"
+import EntProfile from "./components/profile/EntProfile";
+import InvUpdate from "./components/profile/InvUpdate";
 //import EntProfile from "./components/profile/EntProfile";
 
 export const UserContext = React.createContext([]);
@@ -99,9 +101,9 @@ function App() {
             <Route exact path="/investor" component={Investor} />
             <Route exact path="/about" component={About} />
             <Route exact path="/contact" component={Contact} />
-            <Route exact path="/profile" component={Profile} />
-            {/* <Route exact path="/entrepreneur-profile" component={EntProfile} /> */}
-            <Route exact path="/update-profile" component={UpdateProfile} />
+            <Route exact path="/investor-profile" component={Profile} />
+            <Route exact path="/entrepreneur-profile" component={EntProfile} />
+            <Route exact path="/update-investor" component={InvUpdate} />
             <Route exact path="/login" component={Login} />
             <Route exact path="/forgotpassword" component={PasswordForget} />
             <Route exact path="/resetpassword" component={ResetPassword} />

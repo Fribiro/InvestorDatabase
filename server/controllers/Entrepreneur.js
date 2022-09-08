@@ -1,5 +1,6 @@
 const mysql = require("mysql2");
 const Entrepreneur = require("../models/Entrepreneur");
+const EntrepreneurAddress = require("../models/EntrepreneurAddress");
 const Investor = require("../models/Investor");
 const User = require("../models/User");
 
@@ -24,9 +25,10 @@ module.exports = {
     async GetEntrepreneurById (req, res){
         try {
             let id = req.params.id;
-            let entrepreneur = await Investor.findOne({ where: { investorId: id }, include: ["User"] });
+            let entrepreneur = await User.findOne({ where: { UsersId: id }, include: ["Entrepreneur"] });
 
             res.status(200).send(entrepreneur);
+            console.log(entrepreneur)
             
         } catch (err) {
             console.log(err);
@@ -36,6 +38,25 @@ module.exports = {
 
         }
         
+    },
+
+    async GetEntrepreneurAddress(req, res) {
+        try {
+            let id = req.params.id;
+            let entrepreneur = await Entrepreneur.findOne({ where: { entrepreneurId: id }});
+
+            let entAddress = await EntrepreneurAddress.findOne({ where: { entAddressId: entrepreneur.Id }});
+
+            res.status(200).send(entAddress);
+
+        } catch (err) {
+            console.log(err);
+            return res.send({
+                error: `${err.message}`,
+            });
+
+        }
+
     },
 
     async UpdateEntrepreneurProfile(req, res) {

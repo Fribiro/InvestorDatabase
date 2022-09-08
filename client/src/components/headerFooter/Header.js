@@ -11,7 +11,7 @@ const Header = () => {
   const [searchText, setSearchText] = useState("");
   //const excludeColumns = ["id", "color"];
   //const [user, setUser] = useState([]);
-
+  const localUser = JSON.parse(localStorage.getItem("user"));
   const logOutCallback = async () => {
     await fetch("http://localhost:5000/api/logout", {
       method: "POST",
@@ -118,20 +118,31 @@ const Header = () => {
                   </button>
                 </div>
               ) : null} */}
-              {user.accesstoken ? (
+              
+              {(user.accesstoken && (localUser.UserRole == 2 )) ? (
                 <li>
-                  <Link className="nav-link" to="" onClick={logOutCallback}>
-                    Logout
+                  <Link className="nav-link" to="investor-profile">
+                    <Avatar
+                      icon="user"
+                      style={{ height: "30px", width: "30px" }}
+                    />
+                  </Link>
+                </li>
+              ) : null}
+              {(user.accesstoken && (localUser.UserRole == 3)) ? (
+                <li>
+                  <Link className="nav-link" to="entrepreneur-profile">
+                    <Avatar
+                      icon="user"
+                      style={{ height: "30px", width: "30px" }}
+                    />
                   </Link>
                 </li>
               ) : null}
               {user.accesstoken ? (
                 <li>
-                  <Link className="nav-link" to="profile">
-                    <Avatar
-                      icon="user"
-                      style={{ height: "30px", width: "30px" }}
-                    />
+                  <Link className="nav-link" to="" onClick={logOutCallback}>
+                    Logout
                   </Link>
                 </li>
               ) : null}
